@@ -24,8 +24,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    //film auth route
-    Route::resource('films', FilmController::class);
+    //film auth routes
+    Route::get("film/index", [FilmController::class, 'index']);
+    Route::get("film/indexGenres", [FilmController::class, 'indexGenres']);
+    Route::get("film/show/{id}", [FilmController::class, 'show']);
 
     //reviews auth route
     Route::resource('reviews', ReviewController::class);

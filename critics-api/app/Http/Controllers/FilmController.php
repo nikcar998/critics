@@ -7,11 +7,6 @@ use Illuminate\Support\Facades\Http;
 
 class FilmController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $apiKey=env('MOVIES_DATABASE_API_KEY');
@@ -19,36 +14,12 @@ class FilmController extends Controller
         if($response)
         {
             return $response->json();
+        }else{
+            return response('Could not get film from api',500);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $apiKey=env('MOVIES_DATABASE_API_KEY');
@@ -56,40 +27,21 @@ class FilmController extends Controller
         if($response)
         {
             return $response->json();
+        }else{
+            return response('Could not get film from api',500);
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function indexGenres()
     {
-        //
+        $apiKey=env('MOVIES_DATABASE_API_KEY');
+        $response = Http::get("https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US");
+        if($response)
+        {
+            return $response->json();
+        }else{
+            return response('Could not get list of genres from api',500);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
