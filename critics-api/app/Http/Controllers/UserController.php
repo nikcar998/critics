@@ -46,7 +46,7 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 401);
+            return response()->json($validator->errors(), 400);
         } else {
             $user = new User;
             $user->name = $request->name;
@@ -64,7 +64,7 @@ class UserController extends Controller
 
                 return response($response, 201);
             } else {
-                return ["result" => "operation failed"];
+                return response('error during saving', 500);
             }
         }
     }
@@ -103,14 +103,14 @@ class UserController extends Controller
 
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                return response()->json($validator->errors(), 401);
+                return response()->json($validator->errors(), 400);
             } else {
                 $user = User::find($id);
                 $user->name = $request->name;
                 $user->email = $request->email;
                 $user->username = $request->username;
                 $user->password = Hash::make($request->password);
-                $result = $user->save();
+                $result = $user->update();
                 if ($result) {
 
                     $response = [
@@ -119,7 +119,7 @@ class UserController extends Controller
 
                     return response($response, 201);
                 } else {
-                    return ["result" => "operation failed"];
+                    return response('error during update', 500);;
                 }
             }
         } else {

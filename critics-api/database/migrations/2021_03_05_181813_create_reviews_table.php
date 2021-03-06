@@ -25,6 +25,16 @@ class CreateReviewsTable extends Migration
             $table->integer('film_id');
             $table->timestamps();
         });
+
+        Schema::create('comments', function (Blueprint $table) {
+            $table->id();
+            $table->integer('user_id')->unsigned();
+            $table->integer('review_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
+            $table->text('body');
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**

@@ -22,5 +22,12 @@ class UserSeeder extends Seeder
             'username'=>'MarioRossi',
             'description'=>"Tipico profilo seeder fatto da un italiano."
         ]);
+        DB::table('users')->insert([
+            'name' => 'John Doe',
+            'email' => 'john@doe.com',
+            'password' => Hash::make('password'),
+            'username'=>'JohnDoe',
+            'description'=>"Tipico profilo seeder."
+        ]);
     }
 }

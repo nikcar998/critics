@@ -100,7 +100,7 @@ class ReviewController extends Controller
                 $review->year = $request->year;
                 $review->genres = $request->genres;
                 $review->rating = $request->rating;
-                $result = $review->save();
+                $result = $review->update();
                 return $result;
             } else {
                 return response('Unauthorized', 404);
