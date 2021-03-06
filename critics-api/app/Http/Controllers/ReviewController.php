@@ -14,7 +14,12 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        $result = auth()->user()->userReviews()->get();
+        if ($result) {
+            return $result;
+        } else {
+            return response('Not found', 404);
+        }
     }
 
     /**
@@ -35,7 +40,17 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $review = new Review();
+        $review->user_id = $request->user_id;
+        $review->film_id = $request->film_id;
+        $review->title = $request->title;
+        $review->cover = $request->cover;
+        $review->opinion = $request->opinion;
+        $review->year = $request->year;
+        $review->genres = $request->genres;
+        $review->rating = $request->rating;
+        $result = $review->save();
+        return $result;
     }
 
     /**
@@ -44,9 +59,14 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function show(Review $review)
+    public function show($id)
     {
-        //
+        $result = auth()->user()->userReviews()->find($id);
+        if ($result) {
+            return $result;
+        } else {
+            return response('Not found', 404);
+        }
     }
 
     /**
@@ -67,9 +87,27 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request, $id)
     {
-        //
+        $review = Review::find($id);
+        if ($review) {
+            if (auth()->user()->id == $review->user_id) {
+                $review->user_id = $request->user_id;
+                $review->film_id = $request->film_id;
+                $review->title = $request->title;
+                $review->cover = $request->cover;
+                $review->opinion = $request->opinion;
+                $review->year = $request->year;
+                $review->genres = $request->genres;
+                $review->rating = $request->rating;
+                $result = $review->save();
+                return $result;
+            } else {
+                return response('Unauthorized', 404);
+            }
+        } else {
+            return response('Not found', 404);
+        }
     }
 
     /**
@@ -78,8 +116,14 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function destroy($id)
     {
-        //
+        //$result= userReviews()->find($id);
+        $result = Review::find($id)->delete();
+        if ($result) {
+            return $result;
+        } else {
+            return response('Not found', 404);
+        }
     }
 }

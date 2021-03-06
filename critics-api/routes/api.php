@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\FilmController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,14 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    //All secure URL's
+    Route::resource('films', FilmController::class);
+    Route::resource('reviews', ReviewController::class);
+    Route::post("logout", [UserController::class, 'logout']);
+    Route::put("edit/{id}", [UserController::class, 'edit']);
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function(){
-    //All secure URL's
 
-    });
-
-
-Route::post("login",[UserController::class,'index']);
+Route::post("login", [UserController::class, 'login']);
+Route::get("details/{id}", [UserController::class, 'details']);
+Route::get("list", [UserController::class, 'list']);
+Route::post("register", [UserController::class, 'register']);

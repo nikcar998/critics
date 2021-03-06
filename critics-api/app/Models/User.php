@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+
+    function userReviews()
+    {
+        return Review::where('user_id',$this->id);
+    }
 }

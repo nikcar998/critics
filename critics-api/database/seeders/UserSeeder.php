@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
             'name' => 'Mario Rossi',
             'email' => 'mario@rossi.com',
             'password' => Hash::make('password'),
-            'username'=>'MarioRossi'
+            'username'=>'MarioRossi',
+            'description'=>"Tipico profilo seeder fatto da un italiano."
         ]);
     }
 }
