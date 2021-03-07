@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //user auth route
     Route::post("logout", [UserController::class, 'logout']);
     Route::put("edit/{id}", [UserController::class, 'edit']);
+    Route::post("edit/avatar/{id}", [UserController::class, 'updateAvatar']);
+    Route::delete('user/delete/{id}', [UserController::class, 'destroy']);
 
     //comment auth route
     Route::post("comment/store", [CommentController::class, 'store']);
@@ -46,6 +48,7 @@ Route::post("login", [UserController::class, 'login']);
 Route::get("details/{id}", [UserController::class, 'details']);
 Route::get("list", [UserController::class, 'list']);
 Route::post("register", [UserController::class, 'register']);
+Route::get("show/avatar", [UserController::class, 'showAvatar']);
 
 //comments not secure routes
 Route::get("comment/index/{id}", [CommentController::class, 'index']);

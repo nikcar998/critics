@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $result = auth()->user()->userReviews()->get();
+        $result = auth()->user()->userReviews()->paginate(10);
         if ($result) {
             return $result;
         } else {

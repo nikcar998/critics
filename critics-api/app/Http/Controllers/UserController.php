@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -80,7 +80,7 @@ class UserController extends Controller
 
     function details($id)
     {
-        $result = User::where('id', $id)->get();
+        $result = User::find($id);
         if ($result) {
             return $result;
         } else {
@@ -91,14 +91,10 @@ class UserController extends Controller
     {
         if (auth()->user()->id == $id) {
             $rules = array(
-                'name' => 'required|min:4|max:150',
-                'password' => [
-                    'required',
-                    'min:6',
-                    'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'
-                ],
-                'email' => ['required', 'email', \Illuminate\Validation\Rule::unique('users')->ignore($id)],
-                'username' => ['required', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user())],
+                'name' => 'min:4|max:150',
+                'email' => ['email', \Illuminate\Validation\Rule::unique('users')->ignore($id)],
+                'username' => [\Illuminate\Validation\Rule::unique('users')->ignore(auth()->user())],
+                'description'=> 'max:500'
             );
 
             $validator = Validator::make($request->all(), $rules);
@@ -106,13 +102,12 @@ class UserController extends Controller
                 return response()->json($validator->errors(), 400);
             } else {
                 $user = User::find($id);
-                $user->name = $request->name;
-                $user->email = $request->email;
-                $user->username = $request->username;
-                $user->password = Hash::make($request->password);
+                $request->name && $user->name = $request->name;
+                $request->email && $user->email = $request->email;
+                $request->username && $user->username = $request->username;
+                $request->description && $user->description = $request->description;
                 $result = $user->update();
                 if ($result) {
-
                     $response = [
                         'user' => $user,
                     ];
@@ -125,5 +120,62 @@ class UserController extends Controller
         } else {
             return response('Unauthorized', 401);
         }
+    }
+    public function updateAvatar(Request $request, $id)
+    {
+        if (auth()->user()->id == $id) {
+            $rules = array(
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            );
+
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            } else {
+                $user = User::find($id);
+                $user->avatar = request('avatar')->store('avatars');
+                $user->save();
+                return $user;
+            }
+        }
+    }
+
+    public function showAvatar(Request $request)
+    {
+        if ($request->url) {
+            if (!Storage::missing($request->url)) {
+                $avatar = Storage::get($request->url);
+                if ($avatar) {
+                    $type = Storage::mimeType($request->url);
+                    return response($avatar)->header('Content-type', $type);
+                } else {
+                    return response('Error - not being able to get image', 500);
+                }
+            } else {
+                return response('Url not found', 404);
+            }
+        } else {
+            return response('Missing url', 400);
+        }
+    }
+
+    public function destroy($id)
+    {
+        if(auth()->user()->id == $id){
+            $result= User::find($id)->delete();
+            if($result)
+            {
+                return response('User deleted', 200);
+            }else{
+                return response('Error during the delete operation',500);
+            }
+        }else{
+            return response('Unauthorized',401);
+        }
+    }
+
+    public function list()
+    {
+        return User::paginate(10);
     }
 }

@@ -14,7 +14,7 @@ class CommentController extends Controller
     {
         $review = Review::find($id);
         if ($review) {
-            $result = $review->comment()->get();
+            $result = $review->comment()->paginate(20);
             if ($result) {
                 return $result;
             } else {
