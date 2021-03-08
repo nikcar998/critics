@@ -94,7 +94,7 @@ class UserController extends Controller
                 'name' => 'min:4|max:150',
                 'email' => ['email', \Illuminate\Validation\Rule::unique('users')->ignore($id)],
                 'username' => [\Illuminate\Validation\Rule::unique('users')->ignore(auth()->user())],
-                'description'=> 'max:500'
+                'description' => 'max:500'
             );
 
             $validator = Validator::make($request->all(), $rules);
@@ -161,21 +161,35 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        if(auth()->user()->id == $id){
-            $result= User::find($id)->delete();
-            if($result)
-            {
+        if (auth()->user()->id == $id) {
+            $result = User::find($id)->delete();
+            if ($result) {
                 return response('User deleted', 200);
-            }else{
-                return response('Error during the delete operation',500);
+            } else {
+                return response('Error during the delete operation', 500);
             }
-        }else{
-            return response('Unauthorized',401);
+        } else {
+            return response('Unauthorized', 401);
         }
     }
 
     public function list()
     {
         return User::paginate(10);
+    }
+
+    public function search($query)
+    {
+        if (strlen($query) > 2) {
+            $result = User::where('name', 'like', '%' . $query . '%')
+                ->orWhere('email', 'like', '%' . $query . '%')->orWhere('username', 'like', '%' . $query . '%')->get();
+            if ($result) {
+                return response($result, 200);
+            } else {
+                return response('Search had returned no values.', 404);
+            }
+        } else {
+            return response('Bad request. Insert a minimum of 3 characters.', 400);
+        }
     }
 }

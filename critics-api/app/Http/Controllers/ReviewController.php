@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
@@ -40,17 +41,35 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        $review = new Review();
-        $review->user_id = $request->user_id;
-        $review->film_id = $request->film_id;
-        $review->title = $request->title;
-        $review->cover = $request->cover;
-        $review->opinion = $request->opinion;
-        $review->year = $request->year;
-        $review->genres = $request->genres;
-        $review->rating = $request->rating;
-        $result = $review->save();
-        return $result;
+        $rules = array(
+            'film_id' => 'required|integer|numeric',
+            'title' => 'required|max:200',
+            'cover' => 'required',
+            'opinion' => 'required|max:2000',
+            'year' => 'required',
+            'genres' => 'required',
+            'rating' => 'required|integer|numeric|between:0,5'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        } else {
+            $review = new Review();
+            $review->user_id = $request->user_id;
+            $review->film_id = $request->film_id;
+            $review->title = $request->title;
+            $review->cover = $request->cover;
+            $review->opinion = $request->opinion;
+            $review->year = $request->year;
+            $review->genres = $request->genres;
+            $review->rating = $request->rating;
+            $result = $review->save();
+            if ($result) {
+                return response($review, 200);
+            } else {
+                return response('Error saving review', 500);
+            }
+        }
     }
 
     /**
@@ -92,18 +111,25 @@ class ReviewController extends Controller
         $review = Review::find($id);
         if ($review) {
             if (auth()->user()->id == $review->user_id) {
-                $review->user_id = $request->user_id;
-                $review->film_id = $request->film_id;
-                $review->title = $request->title;
-                $review->cover = $request->cover;
-                $review->opinion = $request->opinion;
-                $review->year = $request->year;
-                $review->genres = $request->genres;
-                $review->rating = $request->rating;
-                $result = $review->update();
-                return $result;
+                $rules = array(
+                    'opinion' => 'max:2000',
+                    'rating' => 'integer|numeric|between:0,5'
+                );
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return response()->json($validator->errors(), 400);
+                } else {
+                    $request->opinion && $review->opinion = $request->opinion;
+                    $request->rating && $review->rating = $request->rating;
+                    $result = $review->update();
+                    if ($result) {
+                        return response('Updated.', 200);
+                    } else {
+                        return response('Error updating.', 500);
+                    }
+                }
             } else {
-                return response('Unauthorized', 404);
+                return response('Unauthorized', 401);
             }
         } else {
             return response('Not found', 404);
@@ -118,12 +144,22 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        //$result= userReviews()->find($id);
-        $result = Review::find($id)->delete();
+        $result = auth()->user()->userReviews()->find($id)->delete();
         if ($result) {
-            return $result;
+            return response('Deleted', 200);
         } else {
             return response('Not found', 404);
+        }
+    }
+
+    function search($query)
+    {
+        $result = auth()->user()->userReviews()->where('title', 'like', '%' . $query . '%')
+            ->orWhere('opinion', 'like', '%' . $query . '%')->orWhere('genres', 'like', '%' . $query . '%')->get();
+        if ($result) {
+            return response($result, 200);
+        } else {
+            return response('Search had returned no values.', 404);
         }
     }
 }

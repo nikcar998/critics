@@ -28,8 +28,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get("film/index", [FilmController::class, 'index']);
     Route::get("film/indexGenres", [FilmController::class, 'indexGenres']);
     Route::get("film/show/{id}", [FilmController::class, 'show']);
+    Route::get("film/search/{query}", [FilmController::class, 'search']);
 
     //reviews auth route
+    Route::get("reviews/search/{query}", [ReviewController::class, 'search']);
     Route::resource('reviews', ReviewController::class);
 
     //user auth route
@@ -46,9 +48,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //user not secure routes
 Route::post("login", [UserController::class, 'login']);
 Route::get("details/{id}", [UserController::class, 'details']);
-Route::get("list", [UserController::class, 'list']);
+Route::get("user/list", [UserController::class, 'list']);
 Route::post("register", [UserController::class, 'register']);
 Route::get("show/avatar", [UserController::class, 'showAvatar']);
+Route::get("user/search/{query}", [UserController::class, 'search']);
 
 //comments not secure routes
 Route::get("comment/index/{id}", [CommentController::class, 'index']);
