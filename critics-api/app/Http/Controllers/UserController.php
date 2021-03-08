@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -61,10 +62,10 @@ class UserController extends Controller
                     'user' => $user,
                     'token' => $token
                 ];
-
+                event(new Registered($user));
                 return response($response, 201);
             } else {
-                return response('error during saving', 500);
+                return response('Error saving', 500);
             }
         }
     }
@@ -87,6 +88,8 @@ class UserController extends Controller
             return response('Not Found', 404);
         }
     }
+
+
     function edit(Request $request, $id)
     {
         if (auth()->user()->id == $id) {
@@ -166,7 +169,7 @@ class UserController extends Controller
             if ($result) {
                 return response('User deleted', 200);
             } else {
-                return response('Error during the delete operation', 500);
+                return response('Error deleting', 500);
             }
         } else {
             return response('Unauthorized', 401);

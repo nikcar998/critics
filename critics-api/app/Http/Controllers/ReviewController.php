@@ -15,7 +15,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $result = auth()->user()->userReviews()->paginate(10);
+        $result = auth()->user()->timeline()->paginate(10);
         if ($result) {
             return $result;
         } else {
@@ -154,12 +154,16 @@ class ReviewController extends Controller
 
     function search($query)
     {
-        $result = auth()->user()->userReviews()->where('title', 'like', '%' . $query . '%')
-            ->orWhere('opinion', 'like', '%' . $query . '%')->orWhere('genres', 'like', '%' . $query . '%')->get();
-        if ($result) {
-            return response($result, 200);
+        if (strlen($query) > 2) {
+            $result = auth()->user()->userReviews()->where('title', 'like', '%' . $query . '%')
+                ->orWhere('opinion', 'like', '%' . $query . '%')->orWhere('genres', 'like', '%' . $query . '%')->get();
+            if ($result) {
+                return response($result, 200);
+            } else {
+                return response('Search had returned no values.', 404);
+            }
         } else {
-            return response('Search had returned no values.', 404);
+            return response('Bad request. Insert a minimum of 3 characters.', 400);
         }
     }
 }

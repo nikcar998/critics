@@ -9,9 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Review;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Followable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,7 +50,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
-    
+
     function comment()
     {
         return $this->hasMany(Comment::class);
@@ -57,6 +58,14 @@ class User extends Authenticatable
 
     function userReviews()
     {
-        return Review::where('user_id',$this->id);
+        return Review::where('user_id', $this->id);
+    }
+
+    public function timeline()
+    {
+        $follows = $this->follows()->pluck('id');
+        return Review::whereIn('user_id', $follows)
+            ->orWhere('user_id', $this->id)
+            ->latest();
     }
 }

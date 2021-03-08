@@ -49,7 +49,7 @@ class CommentController extends Controller
             if ($request->parent_id) {
                 $comment->parent_id = $request->parent_id;
             }
-            $comment->body=$request->body;
+            $comment->body = $request->body;
             $comment->user_id = auth()->user()->id;
             $comment->review_id = $request->review_id;
             $result = $comment->save();
@@ -67,12 +67,12 @@ class CommentController extends Controller
     function edit(Request $request, $id)
     {
         $comment = Comment::find($id);
-        if($comment){
+        if ($comment) {
             if (auth()->user()->id == $comment->user_id) {
                 $rules = array(
                     'body' => 'required|min:4|max:1000',
                 );
-    
+
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {
                     return response()->json($validator->errors(), 400);
@@ -88,9 +88,8 @@ class CommentController extends Controller
             } else {
                 return response('Unauthorized', 401);
             }
-        }else{
-            return response('Comment not found.',404);
+        } else {
+            return response('Comment not found.', 404);
         }
-       
     }
 }
