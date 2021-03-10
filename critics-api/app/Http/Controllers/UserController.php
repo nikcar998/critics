@@ -47,7 +47,7 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return response()->json($validator->errors(), 403);
         } else {
             $user = new User;
             $user->name = $request->name;
@@ -102,7 +102,7 @@ class UserController extends Controller
 
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
+                return response()->json($validator->errors(), 403);
             } else {
                 $user = User::find($id);
                 $request->name && $user->name = $request->name;
@@ -133,13 +133,15 @@ class UserController extends Controller
 
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
+                return response()->json($validator->errors(), 403);
             } else {
                 $user = User::find($id);
                 $user->avatar = request('avatar')->store('avatars');
                 $user->save();
                 return $user;
             }
+        } else {
+            return response('unauthorized', 401);
         }
     }
 
@@ -158,7 +160,7 @@ class UserController extends Controller
                 return response('Url not found', 404);
             }
         } else {
-            return response('Missing url', 400);
+            return response('Missing url', 403);
         }
     }
 
@@ -192,7 +194,7 @@ class UserController extends Controller
                 return response('Search had returned no values.', 404);
             }
         } else {
-            return response('Bad request. Insert a minimum of 3 characters.', 400);
+            return response('Bad request. Insert a minimum of 3 characters.', 403);
         }
     }
 }

@@ -56,16 +56,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Comment::class);
     }
 
-    function userReviews()
-    {
-        return Review::where('user_id', $this->id);
-    }
-
     public function timeline()
     {
         $follows = $this->follows()->pluck('id');
         return Review::whereIn('user_id', $follows)
             ->orWhere('user_id', $this->id)
             ->latest();
+    }
+
+    public function likedReviews()
+    {
+        return $this->morphedByMany('App\Models\Review', 'likeable')->whereDeletedAt(null);
+    }
+
+    public function likedComments()
+    {
+        return $this->morphedByMany('App\Models\Comment', 'likeable')->whereDeletedAt(null);
     }
 }

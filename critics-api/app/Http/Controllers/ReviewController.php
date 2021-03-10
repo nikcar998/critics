@@ -44,6 +44,7 @@ class ReviewController extends Controller
         $rules = array(
             'film_id' => 'required|integer|numeric',
             'title' => 'required|max:200',
+            'film_title'=>'required|max:500',
             'cover' => 'required',
             'opinion' => 'required|max:2000',
             'year' => 'required',
@@ -52,7 +53,7 @@ class ReviewController extends Controller
         );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return response()->json($validator->errors(), 403);
         } else {
             $review = new Review();
             $review->user_id = $request->user_id;
@@ -80,7 +81,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $result = auth()->user()->userReviews()->find($id);
+        $result = auth()->user()->review()->find($id);
         if ($result) {
             return $result;
         } else {
@@ -117,7 +118,7 @@ class ReviewController extends Controller
                 );
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {
-                    return response()->json($validator->errors(), 400);
+                    return response()->json($validator->errors(), 403);
                 } else {
                     $request->opinion && $review->opinion = $request->opinion;
                     $request->rating && $review->rating = $request->rating;
@@ -144,7 +145,7 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        $result = auth()->user()->userReviews()->find($id)->delete();
+        $result = auth()->user()->review()->find($id)->delete();
         if ($result) {
             return response('Deleted', 200);
         } else {
@@ -155,7 +156,7 @@ class ReviewController extends Controller
     function search($query)
     {
         if (strlen($query) > 2) {
-            $result = auth()->user()->userReviews()->where('title', 'like', '%' . $query . '%')
+            $result = auth()->user()->review()->where('title', 'like', '%' . $query . '%')
                 ->orWhere('opinion', 'like', '%' . $query . '%')->orWhere('genres', 'like', '%' . $query . '%')->get();
             if ($result) {
                 return response($result, 200);
@@ -163,7 +164,7 @@ class ReviewController extends Controller
                 return response('Search had returned no values.', 404);
             }
         } else {
-            return response('Bad request. Insert a minimum of 3 characters.', 400);
+            return response('Bad request. Insert a minimum of 3 characters.', 403);
         }
     }
 }

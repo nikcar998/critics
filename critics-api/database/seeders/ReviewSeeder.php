@@ -18,7 +18,8 @@ class ReviewSeeder extends Seeder
         DB::table('reviews')->insert([
             'user_id' => 1,
             'film_id' => 155,
-            'title' => "The Dark Knight",
+            'title'=>'My wonderful review',
+            'film_title' => "The Dark Knight",
             'cover' => 'https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
             'opinion'=>'Great film. Great Cast',
             'year'=>"2008-07-16",

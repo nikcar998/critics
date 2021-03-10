@@ -18,4 +18,15 @@ class Review extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function likes()
+    {
+        return $this->morphToMany('App\Models\User', 'likeable')->whereDeletedAt(null);
+    }
+
+    public function getIsLikedAttribute()
+    {
+        $like = $this->likes()->whereUserId(auth()->id())->first();
+        return (!is_null($like)) ? true : false;
+    }
+
 }

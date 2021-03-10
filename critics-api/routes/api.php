@@ -3,6 +3,8 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -20,10 +22,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     //film auth routes
@@ -32,9 +30,20 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get("film/show/{id}", [FilmController::class, 'show']);
     Route::get("film/search/{query}", [FilmController::class, 'search']);
 
+    //Notifications auth routes
+    Route::get("notifications/index", [NotificationController::class, 'index']);
+    Route::get("notifications/indexUnread", [NotificationController::class, 'indexUnread']);
+    Route::post("notifications/read", [NotificationController::class, 'readNotifications']);
+
     //reviews auth route
     Route::get("reviews/search/{query}", [ReviewController::class, 'search']);
     Route::resource('reviews', ReviewController::class);
+
+    //likes routes
+    Route::post("reviews/likes/store/{id}", [LikeController::class, 'storelikeReview']);
+    Route::post("comment/likes/store/{id}", [LikeController::class, 'storelikeComment']);
+    Route::get("comment/likes/show/{id}", [LikeController::class, 'showCommentLike']);
+    Route::get("review/likes/show/{id}", [LikeController::class, 'showReviewLike']);
 
     //user auth route
     Route::post("logout", [UserController::class, 'logout']);
@@ -65,8 +74,9 @@ Route::get("user/search/{query}", [UserController::class, 'search']);
 Route::get("comment/index/{id}", [CommentController::class, 'index']);
 Route::get("comment/show/{id}", [CommentController::class, 'show']);
 
+
 //route use to redirect unauthorized action
-Route::get('/error', function (Request $request) {
+Route::get('/error', function () {
     return response('Unauthenticated.', 401);
 })->name('accessError');
 

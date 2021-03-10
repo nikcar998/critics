@@ -3,21 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 
 class FollowController extends Controller
 {
     function store($id)
     {
-        if (auth()->user()->id == $id) {
-            return response('Bad request. You cannot follow yourself', 400);
+        $user_id=auth()->user()->id;
+        if ($user_id == $id) {
+            return response('Bad request. You cannot follow yourself', 403);
         } else {
             $user = User::find($id);
             if ($user) {
                 auth()
                     ->user()
                     ->toggleFollow($user);
-
+                //Notification
+                $userToNotify = auth()->user()->follows()->find($id);
+                if ($userToNotify) {
+                    $type = 'follows';
+                    $message = auth()->user()->username . " is now one of your follower.";
+                    $userToNotify->notify(new UserNotification($type, $message, $id));
+                } else {
+                    $type = 'follows';
+                    $message = auth()->user()->username . " is not one of your follower anymore.";
+                    $user->notify(new UserNotification($type, $message, $id));
+                }
                 return response('Success', 200);
             } else {
                 return response('User not found', 404);
