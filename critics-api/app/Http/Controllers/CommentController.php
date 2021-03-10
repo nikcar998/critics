@@ -19,7 +19,7 @@ class CommentController extends Controller
         if ($review) {
             $result = $review->comment()->paginate(20);
             if ($result) {
-                return $result;
+                return response($result, 200);
             } else {
                 return response('Comments not found', 404);
             }
@@ -32,7 +32,7 @@ class CommentController extends Controller
     {
         $comment = Comment::find($id);
         if ($comment) {
-            return [$comment, $comment->replies];
+            return response([$comment, $comment->replies], 200);
         } else {
             return response('Comments not found', 404);
         }
@@ -58,13 +58,14 @@ class CommentController extends Controller
                 $userToNotify = Comment::find($request->parent_id)->user()->first();
                 $userToNotify->notify(new UserNotification($type, $message, $request->parent_id));
 
+                //Assigning parent_id value to the new comment
                 $comment->parent_id = $request->parent_id;
             } else {
                 //Notification
                 //if "parent_id" field doesn't exists in the request, the creator of the review receives a notification
                 $type = 'comment';
                 $review = Review::find($request->review_id);
-                $message = auth()->user()->username . " has has commented your review about " . $review->title;
+                $message = auth()->user()->username . " has commented your review about " . $review->title;
                 $userToNotify = $review->user()->first();
                 $userToNotify->notify(new UserNotification($type, $message, $request->review_id));
             }
@@ -78,7 +79,7 @@ class CommentController extends Controller
                 ];
                 return response($response, 200);
             } else {
-                return response('error during saving', 500);
+                return response('Error saving', 500);
             }
         }
     }

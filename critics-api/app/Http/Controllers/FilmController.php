@@ -12,7 +12,7 @@ class FilmController extends Controller
         $apiKey = env('MOVIES_DATABASE_API_KEY');
         $response = Http::get("https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=1");
         if ($response) {
-            return $response->json();
+            return response($response->json(), 200);
         } else {
             return response('Could not get film from api', 500);
         }

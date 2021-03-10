@@ -42,14 +42,17 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //likes routes
     Route::post("reviews/likes/store/{id}", [LikeController::class, 'storelikeReview']);
     Route::post("comment/likes/store/{id}", [LikeController::class, 'storelikeComment']);
-    Route::get("comment/likes/show/{id}", [LikeController::class, 'showCommentLike']);
-    Route::get("review/likes/show/{id}", [LikeController::class, 'showReviewLike']);
+    Route::get("comment/likes/show/{id}", [LikeController::class, 'showCommentLikes']);
+    Route::get("review/likes/show/{id}", [LikeController::class, 'showReviewLikes']);
 
     //user auth route
     Route::post("logout", [UserController::class, 'logout']);
     Route::put("edit/{id}", [UserController::class, 'edit']);
     Route::post("edit/avatar/{id}", [UserController::class, 'updateAvatar']);
     Route::delete('user/delete/{id}', [UserController::class, 'destroy']);
+    Route::get("details/{id}", [UserController::class, 'details']);
+    Route::get("user/list", [UserController::class, 'list']);
+    Route::get("user/search/{query}", [UserController::class, 'search']);
 
     //follows routes
     Route::post("follow/toggle/{id}", [FollowController::class, 'store']);
@@ -64,11 +67,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 //user not secure routes
 Route::post("login", [UserController::class, 'login']);
-Route::get("details/{id}", [UserController::class, 'details']);
-Route::get("user/list", [UserController::class, 'list']);
 Route::post("register", [UserController::class, 'register']);
 Route::get("show/avatar", [UserController::class, 'showAvatar']);
-Route::get("user/search/{query}", [UserController::class, 'search']);
+
 
 //comments not secure routes
 Route::get("comment/index/{id}", [CommentController::class, 'index']);

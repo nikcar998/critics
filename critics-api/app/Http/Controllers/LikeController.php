@@ -13,14 +13,21 @@ class LikeController extends Controller
 
     public function storelikeReview($id)
     {
-        // here you can check if product exists or is valid or whatever
-        $result = $this->handleLike('App\Models\Review', $id);
-        return response($result, 200);
+        if (Review::find($id)) {
+            $result = $this->handleLike('App\Models\Review', $id);
+            return response($result, 200);
+        } else {
+            return response('Review not found', 404);
+        }
     }
     public function storelikeComment($id)
     {
-        $result = $this->handleLike('App\Models\Comment', $id);
-        return response($result, 200);
+        if (Comment::find($id)) {
+            $result = $this->handleLike('App\Models\Comment', $id);
+            return response($result, 200);
+        } else {
+            return response('Comment not found', 404);
+        }
     }
 
     public function handleLike($type, $id)
@@ -64,33 +71,40 @@ class LikeController extends Controller
     }
 
 
-    public function showCommentLike($id)
+    public function showCommentLikes($id)
     {
-        $result = $this->showLike('App\Models\Comment', $id);
-        if($result){
-            return response($result, 200);
-        }else{
-            return response('there are no like in this comment', 404);
+        if (Comment::find($id)) {
+            $result = $this->showLike('App\Models\Comment', $id);
+            if ($result) {
+                return response($result, 200);
+            } else {
+                return response('there are no like in this comment', 404);
+            }
+        } else {
+            return response('Comment not found', 404);
         }
     }
 
-    public function showReviewLike($id)
+    public function showReviewLikes($id)
     {
-        $result = $this->showLike('App\Models\Review', $id);
-        if($result){
-            return response($result, 200);
-        }else{
-            return response('there are no like in this comment', 404);
+        if (Review::find($id)) {
+            $result = $this->showLike('App\Models\Review', $id);
+            if ($result) {
+                return response($result, 200);
+            } else {
+                return response('there are no like in this review', 404);
+            }
+        } else {
+            return response('Review not found', 404);
         }
-        
     }
 
 
     public function showLike($type, $id)
     {
-        $like = Like::withTrashed()->whereLikeableType($type)->whereLikeableId($id)->whereUserId(auth()->id())->where('deleted_at', NULL)->first();
-        if ($like) {
-            return $like;
+        $likes = Like::withTrashed()->whereLikeableType($type)->whereLikeableId($id)->where('deleted_at', NULL)->get();
+        if ($likes) {
+            return $likes;
         } else {
             return null;
         }

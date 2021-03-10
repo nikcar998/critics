@@ -17,7 +17,7 @@ class ReviewController extends Controller
     {
         $result = auth()->user()->timeline()->paginate(10);
         if ($result) {
-            return $result;
+            return response($result, 200);
         } else {
             return response('Not found', 404);
         }
@@ -44,7 +44,7 @@ class ReviewController extends Controller
         $rules = array(
             'film_id' => 'required|integer|numeric',
             'title' => 'required|max:200',
-            'film_title'=>'required|max:500',
+            'film_title' => 'required|max:500',
             'cover' => 'required',
             'opinion' => 'required|max:2000',
             'year' => 'required',
@@ -58,6 +58,7 @@ class ReviewController extends Controller
             $review = new Review();
             $review->user_id = $request->user_id;
             $review->film_id = $request->film_id;
+            $review->film_title = $request->film_title;
             $review->title = $request->title;
             $review->cover = $request->cover;
             $review->opinion = $request->opinion;
@@ -83,7 +84,7 @@ class ReviewController extends Controller
     {
         $result = auth()->user()->review()->find($id);
         if ($result) {
-            return $result;
+            return response($result, 200);
         } else {
             return response('Not found', 404);
         }
@@ -157,7 +158,7 @@ class ReviewController extends Controller
     {
         if (strlen($query) > 2) {
             $result = auth()->user()->review()->where('title', 'like', '%' . $query . '%')
-                ->orWhere('opinion', 'like', '%' . $query . '%')->orWhere('genres', 'like', '%' . $query . '%')->get();
+                ->orWhere('opinion', 'like', '%' . $query . '%')->orWhere('film_title', 'like', '%' . $query . '%')->get();
             if ($result) {
                 return response($result, 200);
             } else {

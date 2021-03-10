@@ -14,22 +14,38 @@ class UserController extends Controller
 {
     function login(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-        // print_r($data);
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response([
-                'message' => ['These credentials do not match our records.']
-            ], 404);
+        $rules = array(
+            //the validator for the password field will be implemented in production
+            //to do not slow down testing
+            // 'password' => [
+            //     'required',
+            //     'min:6',
+            //     'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'
+            // ],
+            'email' => 'required|email',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 403);
+        } else {
+            $user = User::where('email', $request->email)->first();
+            // print_r($data);
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return response([
+                    'message' => ['These credentials do not match our records.']
+                ], 404);
+            }
+
+            $token = $user->createToken(env("VAR_TOKEN_KEY"))->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+
+            return response($response, 201);
         }
-
-        $token = $user->createToken(env("VAR_TOKEN_KEY"))->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
     }
 
     function register(Request $request)
@@ -95,7 +111,6 @@ class UserController extends Controller
         if (auth()->user()->id == $id) {
             $rules = array(
                 'name' => 'min:4|max:150',
-                'email' => ['email', \Illuminate\Validation\Rule::unique('users')->ignore($id)],
                 'username' => [\Illuminate\Validation\Rule::unique('users')->ignore(auth()->user())],
                 'description' => 'max:500'
             );
@@ -106,7 +121,6 @@ class UserController extends Controller
             } else {
                 $user = User::find($id);
                 $request->name && $user->name = $request->name;
-                $request->email && $user->email = $request->email;
                 $request->username && $user->username = $request->username;
                 $request->description && $user->description = $request->description;
                 $result = $user->update();
@@ -138,7 +152,7 @@ class UserController extends Controller
                 $user = User::find($id);
                 $user->avatar = request('avatar')->store('avatars');
                 $user->save();
-                return $user;
+                return response($user, 200);
             }
         } else {
             return response('unauthorized', 401);
@@ -187,7 +201,7 @@ class UserController extends Controller
     {
         if (strlen($query) > 2) {
             $result = User::where('name', 'like', '%' . $query . '%')
-                ->orWhere('email', 'like', '%' . $query . '%')->orWhere('username', 'like', '%' . $query . '%')->get();
+                ->orWhere('email', 'like', '%' . $query . '%')->orWhere('username', 'like', '%' . $query . '%')->first();
             if ($result) {
                 return response($result, 200);
             } else {
