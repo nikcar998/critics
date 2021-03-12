@@ -106,56 +106,48 @@ class UserController extends Controller
     }
 
 
-    function edit(Request $request, $id)
+    function edit(Request $request)
     {
-        if (auth()->user()->id == $id) {
-            $rules = array(
-                'name' => 'min:4|max:150',
-                'username' => [\Illuminate\Validation\Rule::unique('users')->ignore(auth()->user())],
-                'description' => 'max:500'
-            );
+        $rules = array(
+            'name' => 'min:4|max:150',
+            'username' => [\Illuminate\Validation\Rule::unique('users')->ignore(auth()->user())],
+            'description' => 'max:500'
+        );
 
-            $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 403);
-            } else {
-                $user = User::find($id);
-                $request->name && $user->name = $request->name;
-                $request->username && $user->username = $request->username;
-                $request->description && $user->description = $request->description;
-                $result = $user->update();
-                if ($result) {
-                    $response = [
-                        'user' => $user,
-                    ];
-
-                    return response($response, 201);
-                } else {
-                    return response('error during update', 500);;
-                }
-            }
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 403);
         } else {
-            return response('Unauthorized', 401);
+            $result = auth()->user()->update($request->only([
+                'name',
+                'username',
+                'description'
+            ]));
+            if ($result) {
+                $response = [
+                    'user' => $user,
+                ];
+
+                return response($response, 201);
+            } else {
+                return response('error during update', 500);;
+            }
         }
     }
-    public function updateAvatar(Request $request, $id)
+    public function updateAvatar(Request $request)
     {
-        if (auth()->user()->id == $id) {
-            $rules = array(
-                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-            );
+        $rules = array(
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        );
 
-            $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 403);
-            } else {
-                $user = User::find($id);
-                $user->avatar = request('avatar')->store('avatars');
-                $user->save();
-                return response($user, 200);
-            }
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 403);
         } else {
-            return response('unauthorized', 401);
+            $user = auth()->user();
+            $user->avatar = request('avatar')->store('avatars');
+            $user->update();
+            return response($user, 200);
         }
     }
 
@@ -178,17 +170,13 @@ class UserController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy()
     {
-        if (auth()->user()->id == $id) {
-            $result = User::find($id)->delete();
-            if ($result) {
-                return response('User deleted', 200);
-            } else {
-                return response('Error deleting', 500);
-            }
+        $result = auth()->user()->delete();
+        if ($result) {
+            return response('User deleted', 200);
         } else {
-            return response('Unauthorized', 401);
+            return response('Error deleting', 500);
         }
     }
 

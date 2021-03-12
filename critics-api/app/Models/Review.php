@@ -9,6 +9,17 @@ class Review extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'film_id',
+        'film_title',
+        'title',
+        'cover',
+        'opinion',
+        'year',
+        'genres',
+        'rating'
+    ];
+
     function user()
     {
         return $this->belongsTo(User::class);
