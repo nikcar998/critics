@@ -42,6 +42,6 @@ class FollowController extends Controller
     }
     function index()
     {
-        return User::find(auth()->user()->id)->follows;
+        return auth()->user()->follows;
     }
 }
