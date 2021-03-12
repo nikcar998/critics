@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
+import { Header, List } from "semantic-ui-react";
 
 function App() {
   let config = {
@@ -20,17 +21,14 @@ function App() {
       });
   }, []);
   return (
-    <div>
+    <List>
       {film.map((oneFilm: any) => (
-        <div
-          key={oneFilm.id}
-          style={{ backgroundColor: "black", color: "white" }}
-        >
-          <h3>{oneFilm.title}</h3>
-          <p>{oneFilm.overview}</p>
-        </div>
+        <List.Item key={oneFilm.id}>
+          <Header as="h3" icon="film" content={oneFilm.title} />
+          <List.Content>{oneFilm.overview}</List.Content>
+        </List.Item>
       ))}
-    </div>
+    </List>
   );
 }
 
