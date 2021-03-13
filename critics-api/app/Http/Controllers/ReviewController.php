@@ -15,7 +15,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $result = auth()->user()->timeline()->paginate(10);
+        $result = auth()->user()->timeline()->with('comment')->paginate(10);
         if ($result) {
             return response($result, 200);
         } else {
@@ -82,7 +82,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $result = auth()->user()->review()->find($id);
+        $result = auth()->user()->review()->with('comment')->find($id);
         if ($result) {
             return response($result, 200);
         } else {
