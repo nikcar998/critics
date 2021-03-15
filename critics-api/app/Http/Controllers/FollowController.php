@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Follow;
 use App\Models\User;
 use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
@@ -42,4 +43,8 @@ class FollowController extends Controller
         return auth()->user()->follows;
     }
 
+    function indexFollowers()
+    {
+        return Follow::where('following_user_id', auth()->id())->with('user')->get();
+    }
 }
