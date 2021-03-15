@@ -9,7 +9,7 @@ export const Navbar = () => {
           <Icon name="film" />
           Critics
         </Menu.Item>
-        <Menu.Item name="Films" />
+        <Menu.Item name="Movies" />
         <Menu.Item name="Reviews" />
         <Menu.Item>
           <Button positive content="Create review" />
