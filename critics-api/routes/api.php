@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/ 
+*/
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //follows routes
     Route::post("follow/toggle/{id}", [FollowController::class, 'store']);
     Route::get("follow/index", [FollowController::class, 'index']);
+    Route::get("follow/index/followers", [FollowController::class, 'indexFollowers']);
 
     //comment auth route
     Route::post("comment/store", [CommentController::class, 'store']);
