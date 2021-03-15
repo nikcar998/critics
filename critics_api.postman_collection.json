@@ -587,6 +587,11 @@
 								"key": "Authorization",
 								"value": "Bearer {{token}}",
 								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -626,6 +631,11 @@
 								"key": "Authorization",
 								"value": "Bearer {{token}}",
 								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -664,6 +674,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -706,6 +721,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -745,6 +765,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -789,6 +814,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -830,6 +860,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -874,6 +909,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -918,6 +958,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -967,6 +1012,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1009,6 +1059,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1041,7 +1096,7 @@
 					"response": []
 				},
 				{
-					"name": "get-follows Copy",
+					"name": "get-followers",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1052,6 +1107,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1092,6 +1152,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1140,6 +1205,11 @@
 								"key": "Authorization",
 								"value": "Bearer {{token}}",
 								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1181,6 +1251,11 @@
 							{
 								"key": "Authorization",
 								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
 								"type": "text"
 							}
 						],
@@ -1341,6 +1416,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -1378,6 +1458,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -1409,6 +1494,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer  {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1448,6 +1538,11 @@
 								"key": "Authorization",
 								"type": "text",
 								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
 							}
 						],
 						"body": {
