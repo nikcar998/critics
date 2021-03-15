@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post("follow/toggle/{id}", [FollowController::class, 'store']);
     Route::get("follow/index", [FollowController::class, 'index']);
     Route::get("follow/index/followers", [FollowController::class, 'indexFollowers']);
+    Route::get("follow/isFollowing/{id}", [FollowController::class, 'isFollowing']);
 
     //comment auth route
     Route::post("comment/store", [CommentController::class, 'store']);

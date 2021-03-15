@@ -47,4 +47,13 @@ class FollowController extends Controller
     {
         return Follow::where('following_user_id', auth()->id())->with('user')->get();
     }
+
+    public function isFollowing($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return response('User not found', 404);
+        }
+        return response(['isFollowing' => auth()->user()->isFollowing($id)], 200);
+    }
 }

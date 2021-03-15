@@ -886,7 +886,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/comment/likes/show/1",
+							"raw": "http://127.0.0.1:8000/api/comment/likes/show/3",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -900,7 +900,7 @@
 								"comment",
 								"likes",
 								"show",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -998,6 +998,49 @@
 					"response": []
 				},
 				{
+					"name": "get-if-is-following-user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/follow/isFollowing/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"follow",
+								"isFollowing",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get-follows Copy",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -1021,7 +1064,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/follow/index",
+							"raw": "http://127.0.0.1:8000/api/follow/index/followers",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1033,7 +1076,8 @@
 							"path": [
 								"api",
 								"follow",
-								"index"
+								"index",
+								"followers"
 							]
 						}
 					},
@@ -1060,7 +1104,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/follow/toggle/6",
+							"raw": "http://127.0.0.1:8000/api/follow/toggle/2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1073,7 +1117,7 @@
 								"api",
 								"follow",
 								"toggle",
-								"6"
+								"2"
 							]
 						}
 					},
@@ -1300,7 +1344,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/comment/index/4?page=1",
+							"raw": "http://127.0.0.1:8000/api/comment/index/2?page=1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1313,7 +1357,7 @@
 								"api",
 								"comment",
 								"index",
-								"4"
+								"2"
 							],
 							"query": [
 								{
