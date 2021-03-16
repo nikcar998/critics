@@ -12,25 +12,25 @@ export const FollowingSide = () => {
           <List divided>
             <List.Item className="itemsColor" style={{margin:"5px"}}>
               <Header as="h4">
-                <Icon name="user" />
+                <Icon name="user circle" />
                 Mario Rossi
               </Header>
             </List.Item>
             <List.Item className="itemsColor" style={{margin:"5px"}}>
               <Header as="h4">
-                <Icon name="user" />
+                <Icon name="user circle" />
                 Mario Rossi
               </Header>
             </List.Item>
             <List.Item className="itemsColor"  style={{margin:"5px"}}>
               <Header as="h4">
-                <Icon name="user" />
+                <Icon name="user circle" />
                 Mario Rossi
               </Header>
             </List.Item>
             <List.Item className="itemsColor" style={{margin:"5px"}}>
               <Header as="h4">
-                <Icon name="user" />
+                <Icon name="user circle" />
                 Mario Rossi
               </Header>
             </List.Item>

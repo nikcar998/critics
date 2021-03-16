@@ -6,10 +6,10 @@ export const OptionSide = () => {
     <Grid.Column width={3}>
       <Segment.Group raised>
         <Segment className="itemsColor">
-          <Header as="h2" content="Options" />
+          <Header as="h3" icon="options" content="Options" />
         </Segment>
         <Segment className="itemsColor">
-          <Header as="h3" content="Film" />
+          <Header as="h4" icon="film" content="Film" />
           <List bulleted>
             <List.Item>
               <Header as="h5">Latest</Header>
@@ -26,14 +26,14 @@ export const OptionSide = () => {
           </List>
         </Segment>
         <Segment className="itemsColor">
-          <Header as="h3" content="Reviews" />
+          <Header as="h4" icon="th list" content="Reviews" />
           <List bulleted>
             <List.Item><Header as="h5">Timeline</Header></List.Item>
             <List.Item><Header as="h5">Search</Header></List.Item>
           </List>
         </Segment>
         <Segment className="itemsColor">
-          <Header as="h3" content="Profile" />
+          <Header as="h4" icon="user outline" content="Profile" />
           <List bulleted>
             <List.Item><Header as="h5">My Profile</Header></List.Item>
             <List.Item><Header as="h5">Edit</Header></List.Item>

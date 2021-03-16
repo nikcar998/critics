@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Grid,
   List,
@@ -8,8 +8,12 @@ import {
   Image,
   Divider,
   Button,
+  Card,
+  Icon,
+  CardGroup,
 } from "semantic-ui-react";
 import { Film } from "../app/models/film";
+import { Movie } from "./Movie";
 
 export const LatestMovies = () => {
   let config = {
@@ -28,64 +32,12 @@ export const LatestMovies = () => {
       });
   }, []);
   return (
-    <Grid.Column width={8} style={{ margin: "50px", marginTop: "10px" }}>
-      <List style={{ margin: "10px" }}>
-        {film.map((oneFilm) => {
-          const imageUrl =
-            "https://image.tmdb.org/t/p/w500" + oneFilm.poster_path;
-          console.log(imageUrl);
-          return (
-            <List.Item key={oneFilm.id} style={{ margin: "5px" }}>
-              <Segment className="itemsColor">
-                <Grid divided>
-                  <Grid.Row>
-                    <Grid.Column
-                      width={3}
-                      style={{ textAlign: "start", padding: 0 }}
-                    >
-                      <Image src={imageUrl} size="tiny" centered />
-                      <Header
-                        as="h5"
-                        style={{ marginLeft: "5px", marginTop: "10px" }}
-                      >
-                        Year: {oneFilm.release_date}
-                      </Header>
-                    </Grid.Column>
-
-                    <Grid.Column width={12}>
-                      <Header as="h3" content={oneFilm.title} />
-                      <List.Content style={{ marginTop: "10px" }}>
-                        <Header as="h5" floated="left" content="Plot:" />
-                        {oneFilm.overview}
-                      </List.Content>
-                      <List.Content style={{ marginTop: "10px" }}>
-                        <Header as="h5" floated="left">
-                          Rating:
-                        </Header>
-                        {oneFilm.vote_average}
-                        
-                      </List.Content>
-                      <Divider horizontal >review</Divider>
-                      <List.Content style={{textAlign:"center"}}>
-                      <Button
-                        color="blue"
-                        size="mini"
-                        content="Create"
-                        style={{marginTop:"5px"}}
-                        centered
-                      />
-                      </List.Content>
-                      
-                    
-                      
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Segment>
-            </List.Item>
-          );
-        })}
-      </List>
+    <Grid.Column width={9} style={{ margin: "10px" }}>
+      <Card.Group centered>
+        {film.map((oneFilm) => (
+          <Movie oneFilm={oneFilm} />
+        ))}
+      </Card.Group>
     </Grid.Column>
   );
 };

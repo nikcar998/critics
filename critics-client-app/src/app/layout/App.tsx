@@ -10,9 +10,9 @@ import { LatestMovies } from "../../features/LatestMovies";
 function App() {
 
   return (
-    <Fragment>
+    <Fragment >
       <Navbar />
-      <Grid columns={3} divided style={{ margin: "2px", marginTop: "12px" }}>
+      <Grid columns={3} divided style={{ margin: "2px", marginTop: "12px" }}  className="reactBody">
         <Grid.Row>
           <OptionSide />
           <LatestMovies />
