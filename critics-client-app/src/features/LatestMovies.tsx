@@ -28,7 +28,7 @@ export const LatestMovies = () => {
       });
   }, []);
   return (
-    <Grid.Column width={9} style={{ margin: "10px" }}>
+    <Grid.Column width={8} style={{ margin: "50px", marginTop: "10px" }}>
       <List style={{ margin: "10px" }}>
         {film.map((oneFilm) => {
           const imageUrl =
@@ -36,7 +36,7 @@ export const LatestMovies = () => {
           console.log(imageUrl);
           return (
             <List.Item key={oneFilm.id} style={{ margin: "5px" }}>
-              <Segment>
+              <Segment className="itemsColor">
                 <Grid divided>
                   <Grid.Row>
                     <Grid.Column

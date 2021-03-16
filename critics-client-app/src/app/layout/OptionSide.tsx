@@ -5,34 +5,42 @@ export const OptionSide = () => {
   return (
     <Grid.Column width={3}>
       <Segment.Group raised>
-        <Segment>
+        <Segment className="itemsColor">
           <Header as="h2" content="Options" />
         </Segment>
-        <Segment>
+        <Segment className="itemsColor">
           <Header as="h3" content="Film" />
           <List bulleted>
-            <List.Item>Latest</List.Item>
-            <List.Item>Popular</List.Item>
-            <List.Item>Top Rated</List.Item>
-            <List.Item>Search</List.Item>
+            <List.Item>
+              <Header as="h5">Latest</Header>
+            </List.Item>
+            <List.Item>
+              <Header as="h5">Popular</Header>
+            </List.Item>
+            <List.Item>
+              <Header as="h5">Top Rated</Header>
+            </List.Item>
+            <List.Item>
+              <Header as="h5">Search</Header>
+            </List.Item>
           </List>
         </Segment>
-        <Segment>
+        <Segment className="itemsColor">
           <Header as="h3" content="Reviews" />
           <List bulleted>
-            <List.Item>Timeline</List.Item>
-            <List.Item>Search</List.Item>
+            <List.Item><Header as="h5">Timeline</Header></List.Item>
+            <List.Item><Header as="h5">Search</Header></List.Item>
           </List>
         </Segment>
-        <Segment>
+        <Segment className="itemsColor">
           <Header as="h3" content="Profile" />
           <List bulleted>
-            <List.Item>My Profile</List.Item>
-            <List.Item>Edit</List.Item>
-            <List.Item>List</List.Item>
-            <List.Item>Search</List.Item>
-            <List.Item>Logout</List.Item>
-            <List.Item>Delete</List.Item>
+            <List.Item><Header as="h5">My Profile</Header></List.Item>
+            <List.Item><Header as="h5">Edit</Header></List.Item>
+            <List.Item><Header as="h5">List</Header></List.Item>
+            <List.Item><Header as="h5">Search</Header></List.Item>
+            <List.Item><Header as="h5">Logout</Header></List.Item>
+            <List.Item><Header as="h5">Delete</Header></List.Item>
           </List>
         </Segment>
       </Segment.Group>

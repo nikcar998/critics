@@ -5,42 +5,34 @@ export const FollowingSide = () => {
   return (
     <Grid.Column width={3}>
       <Segment.Group raised>
-        <Segment>
+        <Segment className="itemsColor">
           <Header as="h3" content="Who you are following:" />
         </Segment>
-        <Segment>
-          <List>
-            <List.Item>
-              <Segment>
-                <Header as="h4">
-                  <Icon name="user" />
-                  Mario Rossi
-                </Header>
-              </Segment>
+        <Segment className="itemsColor">
+          <List divided>
+            <List.Item className="itemsColor" style={{margin:"5px"}}>
+              <Header as="h4">
+                <Icon name="user" />
+                Mario Rossi
+              </Header>
             </List.Item>
-            <List.Item>
-              <Segment>
-                <Header as="h4">
-                  <Icon name="user" />
-                  Mario Rossi
-                </Header>
-              </Segment>
+            <List.Item className="itemsColor" style={{margin:"5px"}}>
+              <Header as="h4">
+                <Icon name="user" />
+                Mario Rossi
+              </Header>
             </List.Item>
-            <List.Item>
-              <Segment>
-                <Header as="h4">
-                  <Icon name="user" />
-                  Mario Rossi
-                </Header>
-              </Segment>
+            <List.Item className="itemsColor"  style={{margin:"5px"}}>
+              <Header as="h4">
+                <Icon name="user" />
+                Mario Rossi
+              </Header>
             </List.Item>
-            <List.Item>
-              <Segment>
-                <Header as="h4">
-                  <Icon name="user" />
-                  Mario Rossi
-                </Header>
-              </Segment>
+            <List.Item className="itemsColor" style={{margin:"5px"}}>
+              <Header as="h4">
+                <Icon name="user" />
+                Mario Rossi
+              </Header>
             </List.Item>
           </List>
         </Segment>

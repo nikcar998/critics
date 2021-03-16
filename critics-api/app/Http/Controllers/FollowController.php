@@ -40,12 +40,12 @@ class FollowController extends Controller
     }
     function index()
     {
-        return auth()->user()->follows;
+        return auth()->user()->follows()->paginate(20);
     }
 
     function indexFollowers()
     {
-        return Follow::where('following_user_id', auth()->id())->with('user')->get();
+        return Follow::where('following_user_id', auth()->id())->with('user')->paginate(20);
     }
 
     public function isFollowing($id)
