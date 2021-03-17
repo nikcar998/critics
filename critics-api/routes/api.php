@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     //film auth routes
-    Route::get("film/index", [FilmController::class, 'index']);
+    Route::get("film/index/latest", [FilmController::class, 'indexLatest']);
+    Route::get("film/index/popular", [FilmController::class, 'indexPopular']);
+    Route::get("film/index/topRated", [FilmController::class, 'indexTopRated']);
     Route::get("film/indexGenres", [FilmController::class, 'indexGenres']);
     Route::get("film/show/{id}", [FilmController::class, 'show']);
     Route::get("film/search/{query}", [FilmController::class, 'search']);
