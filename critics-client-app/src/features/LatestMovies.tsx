@@ -23,12 +23,12 @@ const LatestMovies = () => {
   const { filmStore } = useStore();
 
   useEffect(() => {
-    filmStore.loadLatest();
-  }, [filmStore]);
+    filmStore.loadMovies();
+  }, [filmStore, filmStore.whatToLoad]);
 
   //if (filmStore.loadingInitial) return <LoadingComponent />;
   return (
-    <Grid.Column width={9} style={{ margin: "10px" }}>
+    <Grid.Column width={12} style={{ margin: "10px" }}>
       {filmStore.loadingInitial ? (
         <LoadingComponent />
       ) : (

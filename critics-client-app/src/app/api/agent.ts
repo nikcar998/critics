@@ -39,7 +39,7 @@ const requests = {
 };
 
 const Movies = {
-  listLatest: () => requests.get<Pagination<Film>>("/film/index/latest"),
+  listNowPlaying: () => requests.get<Pagination<Film>>("/film/index/nowPlaying"),
   listPopular: () => requests.get<Pagination<Film>>("/film/index/popular"),
   listTopRated: () => requests.get<Pagination<Film>>("/film/index/topRated"),
   show: () => requests.get<Film>("/film/index/topRated"),

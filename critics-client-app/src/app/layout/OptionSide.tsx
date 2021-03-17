@@ -1,49 +1,152 @@
+import { observer } from "mobx-react-lite";
 import React from "react";
-import { Grid, Header, List, Segment } from "semantic-ui-react";
+import { Button, Grid, Header, List, Segment } from "semantic-ui-react";
+import { useStore } from "../stores/store";
 
-export const OptionSide = () => {
+const OptionSide = () => {
+  const { filmStore } = useStore();
+
+  const changeWhichMoviesToUpload = (filmKind: string) => {
+    filmStore.changeWhatToLoad(filmKind);
+  };
   return (
     <Grid.Column width={3}>
       <Segment.Group raised>
-        <Segment className="itemsColor">
-          <Header as="h3" icon="options" content="Options" />
+        {/* FILM SECTION  **********************************************/}
+        <Segment className="itemsColor" style={{ padding: 0 }}>
+          <Header
+            as="h3"
+            icon="film"
+            content="Film"
+            style={{ padding: 3, marginTop: 5 }}
+            color="red"
+          />
+          <Button.Group vertical fluid color="black">
+            <Button
+              onClick={() => {
+                changeWhichMoviesToUpload("nowPlaying");
+              }}
+              fluid
+            >
+              Now Playing
+            </Button>
+            <Button
+              onClick={() => {
+                changeWhichMoviesToUpload("popular");
+              }}
+              fluid
+            >
+              Popular
+            </Button>
+            <Button
+              onClick={() => {
+                changeWhichMoviesToUpload("top rated");
+              }}
+              fluid
+            >
+              Top Rated
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              Search
+            </Button>
+          </Button.Group>
         </Segment>
-        <Segment className="itemsColor">
-          <Header as="h4" icon="film" content="Film" />
-          <List bulleted>
-            <List.Item>
-              <Header as="h5">Latest</Header>
-            </List.Item>
-            <List.Item>
-              <Header as="h5">Popular</Header>
-            </List.Item>
-            <List.Item>
-              <Header as="h5">Top Rated</Header>
-            </List.Item>
-            <List.Item>
-              <Header as="h5">Search</Header>
-            </List.Item>
-          </List>
+        {/************* REVIEWS SECTION *********************************** */}
+        <Segment className="itemsColor" style={{ padding: 0 }}>
+          <Header
+            as="h4"
+            icon="th list"
+            content="Reviews"
+            style={{ padding: 2, marginTop: 5 }}
+            color="red"
+          />
+          <Button.Group vertical fluid color="black">
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              Timeline
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              Search
+            </Button>
+          </Button.Group>
         </Segment>
-        <Segment className="itemsColor">
-          <Header as="h4" icon="th list" content="Reviews" />
-          <List bulleted>
-            <List.Item><Header as="h5">Timeline</Header></List.Item>
-            <List.Item><Header as="h5">Search</Header></List.Item>
-          </List>
-        </Segment>
-        <Segment className="itemsColor">
-          <Header as="h4" icon="user outline" content="Profile" />
-          <List bulleted>
-            <List.Item><Header as="h5">My Profile</Header></List.Item>
-            <List.Item><Header as="h5">Edit</Header></List.Item>
-            <List.Item><Header as="h5">List</Header></List.Item>
-            <List.Item><Header as="h5">Search</Header></List.Item>
-            <List.Item><Header as="h5">Logout</Header></List.Item>
-            <List.Item><Header as="h5">Delete</Header></List.Item>
-          </List>
+        {/************** PROFILE SECTION ************************* */}
+        <Segment className="itemsColor" style={{ padding: 0 }}>
+          <Header
+            as="h4"
+            icon="user outline"
+            content="Profile"
+            style={{ padding: 2, marginTop: 5 }}
+            color="red"
+          />
+          <Button.Group vertical fluid color="black">
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              My Profile
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              Edit
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              List
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              Search
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              <Header as="h5">Logout</Header>
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              <Header as="h5">Delete</Header>
+            </Button>
+          </Button.Group>
         </Segment>
       </Segment.Group>
     </Grid.Column>
   );
 };
+
+export default observer(OptionSide);

@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Http;
 
 class FilmController extends Controller
 {
-    public function indexLatest()
+    public function indexNowPlaying()
     {
         $apiKey = env('MOVIES_DATABASE_API_KEY');
-        $response = Http::get("https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=1");
+        $response = Http::get("https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1");
         return response($response->json(), 200);
     }
     public function indexPopular()

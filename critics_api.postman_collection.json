@@ -1194,7 +1194,7 @@
 			"name": "FilmController",
 			"item": [
 				{
-					"name": "get-latest-films-ex.-api",
+					"name": "get-nowPlaying-films-ex.-api",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1222,7 +1222,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/film/index",
+							"raw": "http://127.0.0.1:8000/api/film/index/nowPlaying",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1234,7 +1234,104 @@
 							"path": [
 								"api",
 								"film",
-								"index"
+								"index",
+								"nowPlaying"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-popular-films-ex.-api",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"john doe\",\r\n    \"email\":\"john@doe.com\",\r\n    \"password\":\"Pa$$w0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/film/index/popular",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"film",
+								"index",
+								"popular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-top-rated-films-ex.-api",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "Application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"john doe\",\r\n    \"email\":\"john@doe.com\",\r\n    \"password\":\"Pa$$w0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/film/index/topRated",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"film",
+								"index",
+								"topRated"
 							]
 						}
 					},

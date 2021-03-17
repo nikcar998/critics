@@ -6,24 +6,59 @@ import { Pagination } from "../models/pagination";
 export default class FilmStore {
   movies: Film[] = [];
   selectedFilm: Film | null = null;
-  loading = false;
   loadingInitial = false;
+  whatToLoad = "nowPlaying";
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  loadLatest = async () => {
+  changeWhatToLoad = (query: string) => {
+    this.whatToLoad = query;
+    console.log(this.whatToLoad)
+  }
+
+
+  loadMovies = async () => {
     this.loadingInitial = true;
-    try {
-      const pagination = await agent.Movies.listLatest();
-      runInAction(() => {
-        this.movies = pagination.results;
-        this.loadingInitial = false;
-      });
-    } catch (error) {
-      console.log(error);
-      this.loadingInitial = false;
+    switch (this.whatToLoad) {
+      case "nowPlaying":
+        try {
+          const pagination = await agent.Movies.listNowPlaying();
+          runInAction(() => {
+            this.movies = pagination.results;
+            this.loadingInitial = false;
+          });
+        } catch (error) {
+          console.log(error);
+          this.loadingInitial = false;
+        }
+        break;
+      case "popular":
+        try {
+          const pagination = await agent.Movies.listPopular();
+          runInAction(() => {
+            this.movies = pagination.results;
+            this.loadingInitial = false;
+          });
+        } catch (error) {
+          console.log(error);
+          this.loadingInitial = false;
+        }
+        break;
+      case "top rated":
+      default:
+        try {
+          const pagination = await agent.Movies.listTopRated();
+          runInAction(() => {
+            this.movies = pagination.results;
+            this.loadingInitial = false;
+          });
+        } catch (error) {
+          console.log(error);
+          this.loadingInitial = false;
+        }
+        break;
     }
   };
 }
