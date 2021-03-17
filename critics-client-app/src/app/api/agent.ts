@@ -1,34 +1,53 @@
 import axios, { AxiosResponse } from "axios";
+import { Film } from "../models/film";
+import {Pagination} from "../models/pagination";
+
+
+const sleep = (delay: number) => {
+  return new Promise((resolve)=>{
+    setTimeout(resolve, delay)
+  })
+}
 
 axios.defaults.baseURL = "http://localhost:8000/api";
+
+axios.interceptors.response.use(async response => {
+  try {
+    await sleep(1000);
+    return response;
+  } catch (error) {
+    console.log(error);
+    return await Promise.reject(error);
+  }
+})
+
 axios.interceptors.request.use((config) => {
-    //const token = localStorage.getItem("TR_token");
-    //if (token) config.headers.Authorization = `Bearer ${token}`;
-    config.headers.Authorization = `Bearer 18|o0SliifQoV49ih34zAj8THCVqHfl8kQywduP0lqN`
-    return config;
-  });
-  
-const responseBody = (response: AxiosResponse) => response.data;
+  //const token = localStorage.getItem("TR_token");
+  //if (token) config.headers.Authorization = `Bearer ${token}`;
+  config.headers.Authorization = `Bearer 18|o0SliifQoV49ih34zAj8THCVqHfl8kQywduP0lqN`;
+  return config;
+});
+
+const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
-  get: (url: string) => axios.get(url).then(responseBody),
-  post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
-  put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
-  del: (url: string) => axios.delete(url).then(responseBody),
+  get: <T>(url: string) => axios.get<T>(url).then(responseBody),
+  post: <T>(url: string, body: {}) =>
+    axios.post<T>(url, body).then(responseBody),
+  put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+  del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
 const Movies = {
-    listLatest: ()=> requests.get('/film/index/latest'),
-    listPopular: ()=> requests.get('/film/index/popular'),
-    listTopRated: ()=> requests.get('/film/index/topRated'),
-    show: ()=> requests.get('/film/index/topRated'),
-    search: ()=> requests.get('/film/index/topRated'),
-
-    
-}
+  listLatest: () => requests.get<Pagination<Film>>("/film/index/latest"),
+  listPopular: () => requests.get<Pagination<Film>>("/film/index/popular"),
+  listTopRated: () => requests.get<Pagination<Film>>("/film/index/topRated"),
+  show: () => requests.get<Film>("/film/index/topRated"),
+  search: () => requests.get<Film[]>("/film/index/topRated"),
+};
 
 const agent = {
-    Movies
-}
+  Movies,
+};
 
 export default agent;
