@@ -1,7 +1,13 @@
 import React from "react";
-import { Button, Container, Icon, Menu } from "semantic-ui-react";
+import { Button, Container, Dropdown, Icon, Menu } from "semantic-ui-react";
+import { useMediaQuery } from "react-responsive";
+import { DropdownOptions } from "./DropdownOptions";
 
 export const Navbar = () => {
+  const isDesktop = useMediaQuery({
+    query: "(max-width: 1050px)",
+  });
+
   return (
     <Menu inverted fixed="top">
       <Container>
@@ -11,9 +17,9 @@ export const Navbar = () => {
         </Menu.Item>
         <Menu.Item name="Movies" />
         <Menu.Item name="Reviews" />
-        <Menu.Item>
-          <Button positive content="Create review" />
-        </Menu.Item>
+        {isDesktop && (
+         <DropdownOptions />
+        )}
       </Container>
     </Menu>
   );

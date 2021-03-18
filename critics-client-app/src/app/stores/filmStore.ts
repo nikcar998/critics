@@ -15,9 +15,8 @@ export default class FilmStore {
 
   changeWhatToLoad = (query: string) => {
     this.whatToLoad = query;
-    console.log(this.whatToLoad)
-  }
-
+    console.log(this.whatToLoad);
+  };
 
   loadMovies = async () => {
     this.loadingInitial = true;
@@ -59,6 +58,22 @@ export default class FilmStore {
           this.loadingInitial = false;
         }
         break;
+    }
+  };
+
+  searchFilm = async (query: string) => {
+    if (query.length > 2) {
+      this.loadingInitial = true;
+      try {
+        const pagination = await agent.Movies.search(query);
+        runInAction(() => {
+          this.movies = pagination.results;
+          this.loadingInitial = false;
+        });
+      } catch (error) {
+        console.log(error);
+        this.loadingInitial = false;
+      }
     }
   };
 }

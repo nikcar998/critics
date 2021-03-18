@@ -11,7 +11,8 @@ export const Movie: React.FC<IProps> = ({ oneFilm }) => {
   const [visibleImage, setVisibleImage] = useState(true);
 
   const imageUrl = "https://image.tmdb.org/t/p/w500" + oneFilm.poster_path;
-  console.log(imageUrl);
+  const defaultImageUrl = "/no_picture_available.jpg"
+
   return (
     <Card
       key={oneFilm.id}
@@ -29,7 +30,7 @@ export const Movie: React.FC<IProps> = ({ oneFilm }) => {
           duration={500}
         >
           <Image
-            src={imageUrl}
+            src={oneFilm.poster_path ? imageUrl : defaultImageUrl}
             centered
             onClick={() => {
               setVisibleImage(false);
@@ -38,6 +39,7 @@ export const Movie: React.FC<IProps> = ({ oneFilm }) => {
                 setVisible(true);
               }, 500);
             }}
+            style={{height:"100%"}}
           />
         </Transition>
       ) : (

@@ -46,14 +46,6 @@ const OptionSide = () => {
             >
               Top Rated
             </Button>
-            <Button
-              onClick={() => {
-                console.log("hello");
-              }}
-              fluid
-            >
-              Search
-            </Button>
           </Button.Group>
         </Segment>
         {/************* REVIEWS SECTION *********************************** */}
@@ -132,7 +124,7 @@ const OptionSide = () => {
               }}
               fluid
             >
-              <Header as="h5">Logout</Header>
+              Logout
             </Button>
             <Button
               onClick={() => {
@@ -140,7 +132,7 @@ const OptionSide = () => {
               }}
               fluid
             >
-              <Header as="h5">Delete</Header>
+              Delete
             </Button>
           </Button.Group>
         </Segment>

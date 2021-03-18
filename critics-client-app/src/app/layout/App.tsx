@@ -9,19 +9,24 @@ import LatestMovies from "../../features/LatestMovies";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
 import { LoadingComponent } from "./LoadingComponent";
+import { useMediaQuery } from 'react-responsive'
+
 
 function App() {
+  const isDesktop = useMediaQuery({
+    query: '(min-width: 1050px)'
+  })
   return (
     <Fragment>
       <Navbar />
       <Grid
-        columns={2}
+        columns={isDesktop ? 2 : 1}
         divided
         style={{ margin: "2px", marginTop: "12px" }}
         className="reactBody"
       >
         <Grid.Row>
-          <OptionSide />
+          {isDesktop && <OptionSide /> }
           <LatestMovies />
         </Grid.Row>
       </Grid>
