@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Card, Grid } from "semantic-ui-react";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
@@ -16,9 +16,9 @@ const ReviewsList = () => {
   // DA AGGIUNGERE BOTTONE PER PAGINAZIONE ///////////////////
   useEffect(() => {
     reviewStore.loadReviews(1);
-  }, []);
+  }, [reviewStore]);
   return (
-    <Grid.Column width={isDesktop ? 12 : 15} style={{ margin: "10px" }}>
+    <Fragment></Fragment>
       {reviewStore.loading ? (
         <LoadingComponent />
       ) : (
@@ -28,7 +28,7 @@ const ReviewsList = () => {
           ))}
         </Card.Group>
       )}
-    </Grid.Column>
+    </Fragment>
   );
 };
 
