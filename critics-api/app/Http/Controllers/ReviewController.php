@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $result = auth()->user()->timeline()->with('comment')->paginate(10);
+        $result = auth()->user()->timeline()->with('comment')->with('likes')->paginate(10);
         return response($result, 200);
     }
 
@@ -72,7 +72,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $result = auth()->user()->review()->with('comment')->find($id);
+        $result = auth()->user()->review()->with('comment')->with('likes')->find($id);
         if (!$result) {
             return response('Not found', 404);
         }

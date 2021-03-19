@@ -2,16 +2,16 @@ import React, { Fragment, useState } from "react";
 import { Button, Card, Icon, Image, Transition } from "semantic-ui-react";
 import { Film } from "../../app/models/film";
 
-interface IProps {
+interface Props {
   oneFilm: Film;
 }
-export const Movie: React.FC<IProps> = ({ oneFilm }) => {
+export const Movie = ({ oneFilm }: Props) => {
   const [isClicked, setIsClicked] = useState(true);
   const [visible, setVisible] = useState(true);
   const [visibleImage, setVisibleImage] = useState(true);
 
   const imageUrl = "https://image.tmdb.org/t/p/w500" + oneFilm.poster_path;
-  const defaultImageUrl = "/no_picture_available.jpg"
+  const defaultImageUrl = "/no_picture_available.jpg";
 
   return (
     <Card
@@ -39,7 +39,7 @@ export const Movie: React.FC<IProps> = ({ oneFilm }) => {
                 setVisible(true);
               }, 500);
             }}
-            style={{height:"100%"}}
+            style={{ height: "100%" }}
           />
         </Transition>
       ) : (
@@ -56,7 +56,7 @@ export const Movie: React.FC<IProps> = ({ oneFilm }) => {
               </Card.Meta>
               <Card.Description>
                 {oneFilm.overview.length > 271
-                  ? (oneFilm.overview.slice(0, 270) + "...")
+                  ? oneFilm.overview.slice(0, 270) + "..."
                   : oneFilm.overview}
               </Card.Description>
             </Card.Content>

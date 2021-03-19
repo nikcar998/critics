@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container, Dropdown, Icon, Menu } from "semantic-ui-react";
 import { useMediaQuery } from "react-responsive";
 import { DropdownOptions } from "./DropdownOptions";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const isDesktop = useMediaQuery({
@@ -15,8 +16,8 @@ export const Navbar = () => {
           <Icon name="film" />
           Critics
         </Menu.Item>
-        <Menu.Item name="Movies" />
-        <Menu.Item name="Reviews" />
+        <Menu.Item  > <Link to="/">Movies</Link></Menu.Item>
+        <Menu.Item > <Link to="/reviews">Reviews</Link></Menu.Item>
         {isDesktop && (
          <DropdownOptions />
         )}

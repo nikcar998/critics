@@ -20,10 +20,10 @@ export default class ReviewStore {
       try {
         this.reviewsPagination = await agent.Reviews.listReviews(pageString);
         this.reviews = this.reviewsPagination.data
-        this.setLoading(true);
+        this.setLoading(false);
       } catch (error) {
         console.log(error);
-        this.setLoading(true);
+        this.setLoading(false);
       }
     }
   };

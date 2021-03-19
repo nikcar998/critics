@@ -9,5 +9,6 @@ export interface Review {
     genres:string,
     rating:number,
     film_id:number,
-    comment: []
+    comment: [],
+    likes: []
 }
