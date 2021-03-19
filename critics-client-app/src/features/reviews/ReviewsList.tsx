@@ -18,7 +18,7 @@ const ReviewsList = () => {
     reviewStore.loadReviews(1);
   }, [reviewStore]);
   return (
-    <Fragment></Fragment>
+    <Fragment>
       {reviewStore.loading ? (
         <LoadingComponent />
       ) : (
