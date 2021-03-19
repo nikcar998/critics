@@ -1,6 +1,6 @@
 import { Film } from "./film";
 
-export interface Pagination<Type> {
+export interface PaginationExtApi<Type> {
   page: number;
   results: Type[];
   total_results: number;

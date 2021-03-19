@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Button, Card, Icon, Image, Transition } from "semantic-ui-react";
-import { Film } from "../app/models/film";
+import { Film } from "../../app/models/film";
 
 interface IProps {
   oneFilm: Film;

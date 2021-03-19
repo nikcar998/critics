@@ -1,27 +1,16 @@
-import axios from "axios";
 import { observer } from "mobx-react-lite";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
-  List,
-  Segment,
-  Header,
-  Image,
-  Divider,
-  Button,
   Card,
-  Icon,
-  CardGroup,
   Input,
 } from "semantic-ui-react";
-import agent from "../app/api/agent";
-import { LoadingComponent } from "../app/layout/LoadingComponent";
-import { Film } from "../app/models/film";
-import { useStore } from "../app/stores/store";
+import { LoadingComponent } from "../../app/layout/LoadingComponent";
+import { useStore } from "../../app/stores/store";
 import { Movie } from "./Movie";
 import { useMediaQuery } from "react-responsive";
 
-const LatestMovies = () => {
+const MoviesList = () => {
   const { filmStore } = useStore();
 
   const [searchedFilm, setSearchedFilm] = useState("");
@@ -64,4 +53,4 @@ const LatestMovies = () => {
   );
 };
 
-export default observer(LatestMovies);
+export default observer(MoviesList);

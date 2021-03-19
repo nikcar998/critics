@@ -129,10 +129,11 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        $result = auth()->user()->review()->find($id)->delete();
+        $result = auth()->user()->review()->find($id);
         if (!$result) {
             return response('Not found', 404);
         }
+        $result->delete();
         return response('Deleted', 200);
     }
 

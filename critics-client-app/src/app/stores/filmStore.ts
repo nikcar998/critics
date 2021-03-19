@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Film } from "../models/film";
-import { Pagination } from "../models/pagination";
+import { PaginationExtApi } from "../models/paginationExtApi";
 
 export default class FilmStore {
   movies: Film[] = [];
@@ -19,6 +19,7 @@ export default class FilmStore {
   };
 
   loadMovies = async () => {
+    this.setLoadingInitial(true);
     this.loadingInitial = true;
     switch (this.whatToLoad) {
       case "nowPlaying":
@@ -26,11 +27,11 @@ export default class FilmStore {
           const pagination = await agent.Movies.listNowPlaying();
           runInAction(() => {
             this.movies = pagination.results;
-            this.loadingInitial = false;
           });
+          this.setLoadingInitial(false);
         } catch (error) {
           console.log(error);
-          this.loadingInitial = false;
+          this.setLoadingInitial(false);
         }
         break;
       case "popular":
@@ -38,11 +39,11 @@ export default class FilmStore {
           const pagination = await agent.Movies.listPopular();
           runInAction(() => {
             this.movies = pagination.results;
-            this.loadingInitial = false;
           });
+          this.setLoadingInitial(false);
         } catch (error) {
           console.log(error);
-          this.loadingInitial = false;
+          this.setLoadingInitial(false);
         }
         break;
       case "top rated":
@@ -51,11 +52,11 @@ export default class FilmStore {
           const pagination = await agent.Movies.listTopRated();
           runInAction(() => {
             this.movies = pagination.results;
-            this.loadingInitial = false;
           });
+          this.setLoadingInitial(false);
         } catch (error) {
           console.log(error);
-          this.loadingInitial = false;
+          this.setLoadingInitial(false);
         }
         break;
     }
@@ -63,17 +64,21 @@ export default class FilmStore {
 
   searchFilm = async (query: string) => {
     if (query.length > 2) {
-      this.loadingInitial = true;
+      this.setLoadingInitial(true);
       try {
         const pagination = await agent.Movies.search(query);
         runInAction(() => {
           this.movies = pagination.results;
-          this.loadingInitial = false;
         });
+        this.setLoadingInitial(false);
       } catch (error) {
         console.log(error);
-        this.loadingInitial = false;
+        this.setLoadingInitial(false);
       }
     }
+  };
+
+  setLoadingInitial = (state: boolean) => {
+    this.loadingInitial = state;
   };
 }

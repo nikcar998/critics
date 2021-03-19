@@ -32,6 +32,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'review_id'=>['required', 'exists:reviews,id'],
             'body' => ['required', 'min:4', 'max:1000'],
         ]);
 
