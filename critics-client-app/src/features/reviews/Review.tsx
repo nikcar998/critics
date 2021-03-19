@@ -42,10 +42,10 @@ const Review = ({ review }: Props) => {
         </Header>
         <Divider />
 
-        <p style={{ fontSize: "90%", color: "white", height: "90px" }}>
+        <Header as="h6" style={{ fontSize: "90%", color: "white", height: "90px",marginTop:0 }}>
           {review.opinion}.{review.opinion}.{review.opinion}.{review.opinion}.
           {review.opinion}.
-        </p>
+        </Header>
         <Divider />
         <p style={{ display: "inline-block", width:"40%" }}>
             <Icon name="comments" />

@@ -1,12 +1,16 @@
 import React from "react";
+import { useHistory } from "react-router";
 import { Dropdown, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 
 export const DropdownOptions = () => {
   const { filmStore } = useStore();
 
+  const history = useHistory();
+
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);
+    history.push("/");
   };
 
   return (

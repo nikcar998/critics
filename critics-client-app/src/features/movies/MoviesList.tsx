@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Grid,
   Card,
@@ -29,7 +29,7 @@ const MoviesList = () => {
   }, [filmStore, filmStore.whatToLoad]);
 
   return (
-    <Grid.Column width={isDesktop ? 12 :15} style={{ margin: "10px" }}>
+    <Fragment>
       <Input
         fluid
         icon="search"
@@ -49,7 +49,7 @@ const MoviesList = () => {
           ))}
         </Card.Group>
       )}
-    </Grid.Column>
+    </Fragment>
   );
 };
 

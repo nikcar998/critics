@@ -1,11 +1,23 @@
 import React, { Fragment, useState } from "react";
+import { useHistory } from "react-router";
 import { Button, Card, Icon, Image, Transition } from "semantic-ui-react";
 import { Film } from "../../app/models/film";
+import { useStore } from "../../app/stores/store";
 
 interface Props {
   oneFilm: Film;
 }
 export const Movie = ({ oneFilm }: Props) => {
+  const { filmStore } = useStore();
+
+  const history = useHistory();
+
+  const changeSelectedFilm = (id: number) => {
+    filmStore.selectFilm(id);
+    console.log(filmStore.selectedFilm);
+    history.push("/reviews/store");
+  };
+
   const [isClicked, setIsClicked] = useState(true);
   const [visible, setVisible] = useState(true);
   const [visibleImage, setVisibleImage] = useState(true);
@@ -71,7 +83,11 @@ export const Movie = ({ oneFilm }: Props) => {
                   }, 500);
                 }}
               />
-              <Button>
+              <Button
+                onClick={() => {
+                  changeSelectedFilm(oneFilm.id);
+                }}
+              >
                 <Icon name="address card" />
                 Create review
               </Button>

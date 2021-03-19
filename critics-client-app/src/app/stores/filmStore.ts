@@ -78,6 +78,15 @@ export default class FilmStore {
     }
   };
 
+  selectFilm = async (id: number) => {
+    try {
+      const stringId = id.toString();
+      this.selectedFilm = await agent.Movies.show(stringId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   setLoadingInitial = (state: boolean) => {
     this.loadingInitial = state;
   };

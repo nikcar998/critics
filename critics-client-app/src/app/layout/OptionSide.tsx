@@ -1,13 +1,17 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
+import { useHistory } from "react-router";
 import { Button, Grid, Header, List, Segment } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 
 const OptionSide = () => {
   const { filmStore } = useStore();
 
+  const history = useHistory();
+
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);
+    history.push("/");
   };
   return (
     <Grid.Column width={3}>
