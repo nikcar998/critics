@@ -13,9 +13,10 @@ export const Movie = ({ oneFilm }: Props) => {
   const history = useHistory();
 
   const changeSelectedFilm = (id: number) => {
-    filmStore.selectFilm(id);
-    console.log(filmStore.selectedFilm);
-    history.push("/reviews/store");
+    filmStore.selectFilm(id).then(() => {
+      console.log(filmStore.selectedFilm);
+      history.push("/reviews/store");
+    });
   };
 
   const [isClicked, setIsClicked] = useState(true);

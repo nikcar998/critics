@@ -25,6 +25,10 @@ export default class ReviewStore {
     }
   };
 
+  storeReview = async () => {
+    
+  }
+
   setPage = (plusOrNot: boolean) => {
     if (plusOrNot) {
       if (
