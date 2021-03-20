@@ -1,19 +1,17 @@
 import { observer } from "mobx-react-lite";
 import React, { Fragment, useEffect, useState } from "react";
-import {
-  Grid,
-  Card,
-  Input,
-} from "semantic-ui-react";
+import { Grid, Card, Input, Button, Icon, GridColumn } from "semantic-ui-react";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { useStore } from "../../app/stores/store";
 import { Movie } from "./Movie";
 import { useMediaQuery } from "react-responsive";
+import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
 
 const MoviesList = () => {
   const { filmStore } = useStore();
 
   const [searchedFilm, setSearchedFilm] = useState("");
+  const [page, setPage] = useState(1);
 
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchedFilm(event.currentTarget.value);
@@ -26,8 +24,8 @@ const MoviesList = () => {
 
   useEffect(() => {
     filmStore.loadMovies();
-  }, [filmStore, filmStore.whatToLoad]);
-
+  }, [filmStore, filmStore.whatToLoad, filmStore.page]);
+  const wsefw = "38%";
   return (
     <Fragment>
       <Input
@@ -43,11 +41,14 @@ const MoviesList = () => {
       {filmStore.loadingInitial ? (
         <LoadingComponent />
       ) : (
-        <Card.Group centered>
-          {filmStore.movies.map((oneFilm) => (
-            <Movie oneFilm={oneFilm} key={oneFilm.id} />
-          ))}
-        </Card.Group>
+        <Fragment>
+          <Card.Group centered>
+            {filmStore.movies.map((oneFilm) => (
+              <Movie oneFilm={oneFilm} key={oneFilm.id} />
+            ))}
+          </Card.Group>
+          <ButtonGroupNextBack store={"filmStore"} />
+        </Fragment>
       )}
     </Fragment>
   );

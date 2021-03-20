@@ -8,26 +8,37 @@ export default class ReviewStore {
   reviews: Review[] = [];
   selectedReview: Review | null = null;
   loading = false;
-
+  page = 1;
   constructor() {
     makeAutoObservable(this);
   }
 
-  loadReviews = async (page: number) => {
-    if (0 <= page && page <= 5) {
-      this.setLoading(true);
-      const pageString = Math.floor(page).toString();
-      try {
-        this.reviewsPagination = await agent.Reviews.listReviews(pageString);
-        this.reviews = this.reviewsPagination.data
-        this.setLoading(false);
-      } catch (error) {
-        console.log(error);
-        this.setLoading(false);
-      }
+  loadReviews = async () => {
+    this.setLoading(true);
+    try {
+      this.reviewsPagination = await agent.Reviews.listReviews(this.page);
+      this.reviews = this.reviewsPagination.data;
+      this.setLoading(false);
+    } catch (error) {
+      console.log(error);
+      this.setLoading(false);
     }
   };
 
+  setPage = (plusOrNot: boolean) => {
+    if (plusOrNot) {
+      if (
+        this.reviewsPagination &&
+        this.page < this.reviewsPagination.last_page
+      ) {
+        this.page++;
+      }
+    } else {
+      if (this.reviewsPagination && this.page > 1) {
+        this.page--;
+      }
+    }
+  };
   setLoading = (state: boolean) => {
     this.loading = state;
   };

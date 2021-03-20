@@ -40,17 +40,17 @@ const requests = {
 };
 
 const Movies = {
-  listNowPlaying: () =>
-    requests.get<PaginationExtApi<Film>>("/film/index/nowPlaying"),
-  listPopular: () => requests.get<PaginationExtApi<Film>>("/film/index/popular"),
-  listTopRated: () => requests.get<PaginationExtApi<Film>>("/film/index/topRated"),
+  listNowPlaying: (page: number) =>
+    requests.get<PaginationExtApi<Film>>("/film/index/nowPlaying/"+page),
+  listPopular: (page:number) => requests.get<PaginationExtApi<Film>>("/film/index/popular/"+page),
+  listTopRated: (page:number) => requests.get<PaginationExtApi<Film>>("/film/index/topRated/"+page),
   show: (id: string) => requests.get<Film>("/film/show/" + id),
   search: (query: string) =>
     requests.get<PaginationExtApi<Film>>("/film/search/" + query),
 };
 
 const Reviews = {
-  listReviews: (page: string) =>
+  listReviews: (page: number) =>
     requests.get<PaginationMyApi<Review>>("/reviews?page=" + page),
   search: (query: string) =>
     requests.get<PaginationMyApi<Review>>("/reviews/search/" + query),

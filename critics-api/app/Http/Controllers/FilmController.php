@@ -7,22 +7,22 @@ use Illuminate\Support\Facades\Http;
 
 class FilmController extends Controller
 {
-    public function indexNowPlaying()
+    public function indexNowPlaying($page)
     {
         $apiKey = env('MOVIES_DATABASE_API_KEY');
-        $response = Http::get("https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1");
+        $response = Http::get("https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}");
         return response($response->json(), 200);
     }
-    public function indexPopular()
+    public function indexPopular($page)
     {
         $apiKey = env('MOVIES_DATABASE_API_KEY');
-        $response = Http::get("https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1");
+        $response = Http::get("https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=${page}");
         return response($response->json(), 200);
     }
-    public function indexTopRated()
+    public function indexTopRated($page)
     {
         $apiKey = env('MOVIES_DATABASE_API_KEY');
-        $response = Http::get("https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=1");
+        $response = Http::get("https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=${page}");
         return response($response->json(), 200);
     }
 
