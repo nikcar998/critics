@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { Fragment } from "react";
+import { Link, useHistory } from "react-router-dom";
 import {
   Button,
   Card,
@@ -17,6 +18,8 @@ interface Props {
 
 const Review = ({ review }: Props) => {
   const defaultImageUrl = "/no_picture_available.jpg";
+  const reviewLink = "/reviews/" + review.id;
+  const history=useHistory();
   return (
     <Fragment>
       <Segment
@@ -25,8 +28,11 @@ const Review = ({ review }: Props) => {
           width: "400px",
           maxHeight: 300,
           padding: 0,
+          cursor:"pointer"
         }}
+        raised
         inverted
+        onClick={()=>{history.push(reviewLink)}}
       >
         <Image
           src={review.cover ? review.cover : defaultImageUrl}
@@ -42,16 +48,28 @@ const Review = ({ review }: Props) => {
         </Header>
         <Divider />
 
-        <Header as="h6" style={{ fontSize: "90%", color: "white", height: "90px",marginTop:0 }}>
-          {review.opinion}.{review.opinion}.{review.opinion}.{review.opinion}.
-          {review.opinion}.
+        <Header
+          as="h6"
+          style={{
+            fontSize: "90%",
+            color: "white",
+            height: "90px",
+            marginTop: 0,
+          }}
+        >
+          {review.opinion.length > 190
+            ? review.opinion.slice(0, 190) + "..."
+            : review.opinion}
         </Header>
         <Divider />
-        <p style={{ display: "inline-block", width:"40%" }}>
-            <Icon name="comments" />
+        <p style={{ display: "inline-block", width: "40%" }}>
+          <Icon name="comments" />
           Commenti:{review.comment.length}{" "}
         </p>
-        <p style={{ display: "inline-block" }}> <Icon name="like" /> likes: {review.likes.length}</p>
+        <p style={{ display: "inline-block" }}>
+          {" "}
+          <Icon name="like" /> likes: {review.likes.length}
+        </p>
       </Segment>
     </Fragment>
   );

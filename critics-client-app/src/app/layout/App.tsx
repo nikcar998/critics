@@ -8,6 +8,7 @@ import MoviesList from "../../features/movies/MoviesList";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ReviewsList from "../../features/reviews/ReviewsList";
 import { ReviewForm } from "../../features/reviews/ReviewForm";
+import { ReviewShow } from "../../features/reviews/ReviewShow";
 function App() {
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/" exact component={MoviesList} />
                 <Route path="/reviews/store" exact component={ReviewForm} />
                 <Route path="/reviews" exact component={ReviewsList} />
+                <Route path="/reviews/:id" component={ReviewShow} />
               </Switch>
             </Grid.Column>
           </Grid.Row>

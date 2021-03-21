@@ -16,7 +16,7 @@ class Review extends Model
         'cover',
         'opinion',
         'year',
-        'genres',
+        //'genres',
         'rating'
     ];
 

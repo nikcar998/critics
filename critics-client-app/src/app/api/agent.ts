@@ -26,7 +26,7 @@ axios.interceptors.response.use(async (response) => {
 axios.interceptors.request.use((config) => {
   //const token = localStorage.getItem("TR_token");
   //if (token) config.headers.Authorization = `Bearer ${token}`;
-  config.headers.Authorization = `Bearer 18|o0SliifQoV49ih34zAj8THCVqHfl8kQywduP0lqN`;
+  config.headers.Authorization = `Bearer 1|VSVTncHYD8S7oP7JZHav3L2HR9McOcC5Dm7rG0U8`;
   config.headers.Accept = "Application/json"
   return config;
 });
