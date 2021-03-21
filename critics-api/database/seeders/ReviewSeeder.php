@@ -23,7 +23,7 @@ class ReviewSeeder extends Seeder
             'cover' => 'https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
             'opinion'=>'Great film. Great Cast',
             'year'=>"2008-07-16",
-            'genres'=>"Drama, Action, Crime, Thriller",
+           // 'genres'=>"Drama, Action, Crime, Thriller",
             'rating'=>5
         ]);
     }

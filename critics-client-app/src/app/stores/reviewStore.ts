@@ -25,8 +25,15 @@ export default class ReviewStore {
     }
   };
 
-  storeReview = async () => {
-    
+  storeReview = async (review: Review) => {
+    this.setLoading(true);
+    try {
+      await agent.Reviews.store(review);
+      this.setLoading(false);
+    } catch (error) {
+      console.log(error);
+      this.setLoading(false);
+    }
   }
 
   setPage = (plusOrNot: boolean) => {

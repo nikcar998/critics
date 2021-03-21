@@ -1,6 +1,6 @@
-import React, { ChangeEvent, Fragment, useState } from "react";
+import React, { ChangeEvent, Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Redirect } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import {
   DropdownProps,
   Form,
@@ -12,10 +12,14 @@ import {
   Select,
 } from "semantic-ui-react";
 import { Review } from "../../app/models/review";
+import ReviewStore from "../../app/stores/reviewStore";
 import { useStore } from "../../app/stores/store";
+import { Comment } from "../../app/models/comment";
+import axios from "axios";
 
 export const ReviewForm = () => {
-  const { filmStore } = useStore();
+  const { filmStore, reviewStore } = useStore();
+const history = useHistory();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
@@ -35,26 +39,28 @@ export const ReviewForm = () => {
 
   //bisongna rendere non statico lo user_id /////////////////////////////////////////////
   const initialState = {
+    id: 0,
     user_id: 1,
     title: "",
-    film_title: filmStore.selectedFilm?.title,
-    cover:
-      "https://image.tmdb.org/t/p/w500" + filmStore.selectedFilm?.poster_path,
-    year: filmStore.selectedFilm?.release_date,
+    film_title: "",
+    cover: "",
+    year: "",
     opinion: "",
-    genres: "",
     rating: 0,
-    film_id: filmStore.selectedFilm?.id,
+    film_id: 0,
+    comment: [],
+    likes: [],
   };
 
   const [review, setReview] = useState(initialState);
 
-  if (filmStore.selectedFilm == null) {
-    return <Redirect to="/" />;
-  }
-
   const handleSubmit = () => {
     console.log(review);
+
+        axios.get("/sanctum/csrf-cookie").then((response) => {
+          reviewStore.storeReview(review);
+          history.push("/reviews");
+        });
   };
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -72,12 +78,31 @@ export const ReviewForm = () => {
     }
   };
 
+  useEffect(() => {
+    const newReview = initialState;
+
+    if (filmStore.selectedFilm != null) {
+      newReview.film_id = filmStore.selectedFilm.id;
+      newReview.film_title = filmStore.selectedFilm.title;
+      newReview.cover = imageUrl;
+      newReview.year = filmStore.selectedFilm.release_date;
+      setReview(newReview);
+      // setReview({...review, film_title:})
+      // setReview({...review, cover:"https://image.tmdb.org/t/p/w500" + filmStore.selectedFilm?.poster_path})
+      // setReview({...review, year:filmStore.selectedFilm?.release_date})
+      // setReview({...review, film_id: filmStore.selectedFilm?.id})
+    }
+  }, []);
+
+  if (filmStore.selectedFilm == null) {
+    return <Redirect to="/" />;
+  }
   return (
     <Fragment>
       <Segment>
-        <Grid columns={2} style={{padding:0}}>
+        <Grid columns={2} style={{ padding: 0 }}>
           <Grid.Row>
-            <Grid.Column width={isDesktop ? 4 : 15} >
+            <Grid.Column width={isDesktop ? 4 : 15}>
               <Image
                 src={
                   filmStore.selectedFilm.poster_path
@@ -89,9 +114,11 @@ export const ReviewForm = () => {
               />
             </Grid.Column>
             <Grid.Column width={isDesktop ? 12 : 16}>
-              <Header as="h3" style={{marginTop:10}}>{filmStore.selectedFilm.title}</Header>
+              <Header as="h3" style={{ marginTop: 10 }}>
+                {filmStore.selectedFilm.title}
+              </Header>
 
-              <Form onSubmit={handleSubmit} inline>
+              <Form onSubmit={handleSubmit}>
                 <Form.Input
                   name="title"
                   required

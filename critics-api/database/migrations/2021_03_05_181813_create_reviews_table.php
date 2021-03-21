@@ -21,7 +21,7 @@ class CreateReviewsTable extends Migration
             $table->string('cover');
             $table->string('year');
             $table->string('opinion');
-            $table->string('genres');
+           // $table->array('genres');
             $table->integer('rating');
             $table->integer('film_id');
             $table->timestamps();

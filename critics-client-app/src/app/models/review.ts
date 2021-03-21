@@ -1,3 +1,5 @@
+import { Like } from "./like";
+
 export interface Review {
     id: number,
     user_id:number,
@@ -6,9 +8,8 @@ export interface Review {
     cover:string,
     year:string,
     opinion:string,
-    genres:string,
     rating:number,
     film_id:number,
-    comment: [],
-    likes: []
+    comment: Comment[],
+    likes: Like[],
 }

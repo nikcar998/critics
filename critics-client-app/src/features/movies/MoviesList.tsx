@@ -6,6 +6,8 @@ import { useStore } from "../../app/stores/store";
 import { Movie } from "./Movie";
 import { useMediaQuery } from "react-responsive";
 import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
+import axios from "axios";
+import agent from "../../app/api/agent";
 
 const MoviesList = () => {
   const { filmStore } = useStore();
@@ -23,9 +25,11 @@ const MoviesList = () => {
   });
 
   useEffect(() => {
-    filmStore.loadMovies();
+ 
+      filmStore.loadMovies();
+  
   }, [filmStore, filmStore.whatToLoad, filmStore.page]);
-  const wsefw = "38%";
+
   return (
     <Fragment>
       <Input

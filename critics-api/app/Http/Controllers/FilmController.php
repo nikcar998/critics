@@ -34,12 +34,12 @@ class FilmController extends Controller
         return response($response->json(), 200);
     }
 
-    public function indexGenres()
-    {
-        $apiKey = env('MOVIES_DATABASE_API_KEY');
-        $response = Http::get("https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US");
-        return response($response->json(), 200);
-    }
+    // // public function indexGenres()
+    // // {
+    // //     $apiKey = env('MOVIES_DATABASE_API_KEY');
+    // //     $response = Http::get("https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US");
+    // //     return response($response->json(), 200);
+    // // }
 
     public function search($query)
     {

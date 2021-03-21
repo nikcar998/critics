@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get("film/index/nowPlaying/{page}", [FilmController::class, 'indexNowPlaying']);
     Route::get("film/index/popular/{page}", [FilmController::class, 'indexPopular']);
     Route::get("film/index/topRated/{page}", [FilmController::class, 'indexTopRated']);
-    Route::get("film/indexGenres", [FilmController::class, 'indexGenres']);
+   // Route::get("film/indexGenres", [FilmController::class, 'indexGenres']);
     Route::get("film/show/{id}", [FilmController::class, 'show']);
     Route::get("film/search/{query}", [FilmController::class, 'search']);
 

@@ -43,7 +43,7 @@ class ReviewController extends Controller
             'cover' => ['required'],
             'opinion' => ['required', 'max:2000'],
             'year' => ['required'],
-            'genres' => ['required'],
+           // 'genres' => ['required'],
             'rating' => ['required', 'integer', 'numeric', 'between:0,5']
         ]);
 
@@ -55,7 +55,7 @@ class ReviewController extends Controller
         $review->cover = $request->cover;
         $review->opinion = $request->opinion;
         $review->year = $request->year;
-        $review->genres = $request->genres;
+       // $review->genres = $request->genres;
         $review->rating = $request->rating;
         $result = $review->save();
         if ($result) {

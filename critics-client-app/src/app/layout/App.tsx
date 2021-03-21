@@ -1,12 +1,11 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { Grid } from "semantic-ui-react";
 import { Navbar } from "./Navbar";
 import OptionSide from "./OptionSide";
-import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
 import { useMediaQuery } from "react-responsive";
 import MoviesList from "../../features/movies/MoviesList";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ReviewsList from "../../features/reviews/ReviewsList";
 import { ReviewForm } from "../../features/reviews/ReviewForm";
 function App() {
