@@ -72,7 +72,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $result = auth()->user()->review()->with('comment')->with('likes')->find($id);
+        $result = auth()->user()->review()->with('comment.user','user')->with('likes')->find($id);
         if (!$result) {
             return response('Not found', 404);
         }

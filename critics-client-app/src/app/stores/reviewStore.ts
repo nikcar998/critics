@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable } from "mobx";
 import agent from "../api/agent";
 import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review } from "../models/review";
@@ -9,6 +9,9 @@ export default class ReviewStore {
   selectedReview: Review | null = null;
   loading = false;
   page = 1;
+  errors: string[] | null = null
+  
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -25,13 +28,26 @@ export default class ReviewStore {
     }
   };
 
+  loadReview = async(id:string) => {
+    this.setLoading(true);
+    try {
+      this.selectedReview = await agent.Reviews.show(id);
+      this.setLoading(false);
+    } catch (error) {
+      console.log(error);
+      this.setLoading(false);
+    }
+  }
+
   storeReview = async (review: Review) => {
     this.setLoading(true);
     try {
       await agent.Reviews.store(review);
       this.setLoading(false);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      
+      this.errors = err;
+      console.log(this.errors);
       this.setLoading(false);
     }
   }

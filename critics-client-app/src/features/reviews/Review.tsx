@@ -19,7 +19,7 @@ interface Props {
 const Review = ({ review }: Props) => {
   const defaultImageUrl = "/no_picture_available.jpg";
   const reviewLink = "/reviews/" + review.id;
-  const history=useHistory();
+  const history = useHistory();
   return (
     <Fragment>
       <Segment
@@ -28,11 +28,13 @@ const Review = ({ review }: Props) => {
           width: "400px",
           maxHeight: 300,
           padding: 0,
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         raised
         inverted
-        onClick={()=>{history.push(reviewLink)}}
+        onClick={() => {
+          history.push(reviewLink);
+        }}
       >
         <Image
           src={review.cover ? review.cover : defaultImageUrl}
@@ -40,11 +42,15 @@ const Review = ({ review }: Props) => {
           floated="left"
         />
         <Header style={{ lineHeight: "10%", color: "white" }} as="h2">
-          {review.title}
+          {review.title.length > 18
+            ? review.title.slice(0, 18) + "..."
+            : review.title}
         </Header>
         <Divider />
         <Header style={{ lineHeight: "10%", color: "white" }} as="h4">
-          {review.film_title}
+          {review.film_title.length > 18
+            ? review.film_title.slice(0, 18) + "..."
+            : review.film_title}
         </Header>
         <Divider />
 

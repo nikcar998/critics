@@ -16,7 +16,7 @@ class CommentController extends Controller
         if (!$review) {
             return response('Review not found', 404);
         }
-        $result = $review->comment()->where('parent_id', null)->with('replies')->paginate(10);
+        $result = $review->comment()->where('parent_id', null)->with('replies')->with('user')->paginate(10);
         return response($result, 200);
     }
 

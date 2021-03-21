@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 import { Film } from "../models/film";
 import { PaginationExtApi } from "../models/paginationExtApi";
 import { PaginationMyApi } from "../models/paginationMyApi";
@@ -12,22 +13,46 @@ const sleep = (delay: number) => {
 
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.withCredentials = true;
-axios.interceptors.response.use(async (response) => {
-  try {
+axios.interceptors.response.use(
+  async (response) => {
     await sleep(1000);
-    response.headers['Access-Control-Allow-Origin'] = '*';
     return response;
-  } catch (error) {
-    console.log(error);
-    return await Promise.reject(error);
+  },
+  (error: AxiosError) => {
+    const { data, status } = error.response!;
+    switch (status) {
+      case 422:
+      case 400:
+        if (data.errors) {
+          const modalStateErrors = [];
+          for (const key in data.errors) {
+            if (data.errors[key]) {
+              modalStateErrors.push(data.errors[key]);
+            }
+            throw modalStateErrors.flat();
+          }
+        } else {
+          toast.error(data);
+        }
+        break;
+      case 401:
+        toast.error("unauthorized");
+        break;
+      case 404:
+        toast.error("not found");
+        break;
+      case 500:
+        toast.error("server error");
+        break;
+    }
+    return Promise.reject(error);
   }
-  
-});
+);
 axios.interceptors.request.use((config) => {
   //const token = localStorage.getItem("TR_token");
   //if (token) config.headers.Authorization = `Bearer ${token}`;
   config.headers.Authorization = `Bearer 1|VSVTncHYD8S7oP7JZHav3L2HR9McOcC5Dm7rG0U8`;
-  config.headers.Accept = "Application/json"
+  config.headers.Accept = "Application/json";
   return config;
 });
 
@@ -43,9 +68,11 @@ const requests = {
 
 const Movies = {
   listNowPlaying: (page: number) =>
-    requests.get<PaginationExtApi<Film>>("api/film/index/nowPlaying/"+page),
-  listPopular: (page:number) => requests.get<PaginationExtApi<Film>>("api/film/index/popular/"+page),
-  listTopRated: (page:number) => requests.get<PaginationExtApi<Film>>("api/film/index/topRated/"+page),
+    requests.get<PaginationExtApi<Film>>("api/film/index/nowPlaying/" + page),
+  listPopular: (page: number) =>
+    requests.get<PaginationExtApi<Film>>("api/film/index/popular/" + page),
+  listTopRated: (page: number) =>
+    requests.get<PaginationExtApi<Film>>("api/film/index/topRated/" + page),
   show: (id: string) => requests.get<Film>("api/film/show/" + id),
   search: (query: string) =>
     requests.get<PaginationExtApi<Film>>("api/film/search/" + query),

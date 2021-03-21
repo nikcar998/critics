@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export interface Comment {
     id: number,
         user_id: number,
@@ -7,5 +9,6 @@ export interface Comment {
         created_at: string,
         updated_at: string,
         deleted_at: string | null,
-        replies: Comment[]
+        replies: Comment[],
+        user: User
 }

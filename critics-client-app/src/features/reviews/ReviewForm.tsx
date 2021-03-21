@@ -8,6 +8,7 @@ import {
   GridColumn,
   Header,
   Image,
+  Label,
   Segment,
   Select,
 } from "semantic-ui-react";
@@ -16,10 +17,12 @@ import ReviewStore from "../../app/stores/reviewStore";
 import { useStore } from "../../app/stores/store";
 import { Comment } from "../../app/models/comment";
 import axios from "axios";
+import ValidationErrors from "../errors/ValidationErrors";
+import { observer } from "mobx-react-lite";
 
-export const ReviewForm = () => {
+const ReviewForm = () => {
   const { filmStore, reviewStore } = useStore();
-const history = useHistory();
+  const history = useHistory();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
@@ -29,7 +32,8 @@ const history = useHistory();
     "https://image.tmdb.org/t/p/w500" + filmStore.selectedFilm?.poster_path;
   const defaultImageUrl = "/no_picture_available.jpg";
 
-  const countryOptions = [
+  const ratingOptions = [
+    { key: 0, value: 0, text: 0 },
     { key: 1, value: 1, text: 1 },
     { key: 2, value: 2, text: 2 },
     { key: 3, value: 3, text: 3 },
@@ -53,14 +57,19 @@ const history = useHistory();
   };
 
   const [review, setReview] = useState(initialState);
-
+  const [error, setError] = useState<string[]>([]);
   const handleSubmit = () => {
     console.log(review);
 
-        axios.get("/sanctum/csrf-cookie").then((response) => {
-          reviewStore.storeReview(review);
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      reviewStore.storeReview(review).then((resp) => {
+        if (reviewStore.errors) {
+          setError(reviewStore.errors);
+        }else{
           history.push("/reviews");
-        });
+        }
+      });
+    });
   };
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -118,7 +127,8 @@ const history = useHistory();
                 {filmStore.selectedFilm.title}
               </Header>
 
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} error>
+                {error[0] != null && <ValidationErrors errors={error} />}
                 <Form.Input
                   name="title"
                   required
@@ -136,9 +146,11 @@ const history = useHistory();
                   onChange={handleInputChange}
                   style={{ float: "right" }}
                 />
+                <Label size="large">Rating:</Label>
                 <Select
-                  placeholder="Rating"
-                  options={countryOptions}
+                  style={{ marginTop: 10 }}
+                  placeholder="0"
+                  options={ratingOptions}
                   onChange={handleSelectChange}
                 />
                 <Form.Button style={{ marginTop: 10 }} primary>
@@ -152,3 +164,5 @@ const history = useHistory();
     </Fragment>
   );
 };
+
+export default observer(ReviewForm);

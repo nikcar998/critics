@@ -1,19 +1,16 @@
 import { observer } from "mobx-react-lite";
 import React, { Fragment, useEffect, useState } from "react";
-import { Grid, Card, Input, Button, Icon, GridColumn } from "semantic-ui-react";
+import { Card, Input } from "semantic-ui-react";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { useStore } from "../../app/stores/store";
 import { Movie } from "./Movie";
 import { useMediaQuery } from "react-responsive";
 import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
-import axios from "axios";
-import agent from "../../app/api/agent";
 
 const MoviesList = () => {
   const { filmStore } = useStore();
 
   const [searchedFilm, setSearchedFilm] = useState("");
-  const [page, setPage] = useState(1);
 
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchedFilm(event.currentTarget.value);
@@ -25,9 +22,7 @@ const MoviesList = () => {
   });
 
   useEffect(() => {
- 
-      filmStore.loadMovies();
-  
+    filmStore.loadMovies();
   }, [filmStore, filmStore.whatToLoad, filmStore.page]);
 
   return (

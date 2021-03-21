@@ -1,3 +1,4 @@
+import { Comment } from "./comment";
 import { Like } from "./like";
 
 export interface Review {
