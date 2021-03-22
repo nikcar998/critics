@@ -8,7 +8,7 @@ import MoviesList from "../../features/movies/MoviesList";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ReviewsList from "../../features/reviews/ReviewsList";
 import  ReviewForm  from "../../features/reviews/ReviewForm";
-import { ReviewShow } from "../../features/reviews/ReviewShow";
+import  ReviewShow  from "../../features/reviews/ReviewShow";
 import { ToastContainer } from "react-toastify";
 function App() {
   const isDesktop = useMediaQuery({

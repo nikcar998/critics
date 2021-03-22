@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $result = auth()->user()->timeline()->with('comment')->with('likes')->paginate(10);
+        $result = auth()->user()->timeline()->with('comment')->with('likes')->with('user')->paginate(10);
         return response($result, 200);
     }
 
@@ -43,7 +43,7 @@ class ReviewController extends Controller
             'cover' => ['required'],
             'opinion' => ['required', 'max:2000'],
             'year' => ['required'],
-           // 'genres' => ['required'],
+            // 'genres' => ['required'],
             'rating' => ['required', 'integer', 'numeric', 'between:0,5']
         ]);
 
@@ -55,7 +55,7 @@ class ReviewController extends Controller
         $review->cover = $request->cover;
         $review->opinion = $request->opinion;
         $review->year = $request->year;
-       // $review->genres = $request->genres;
+        // $review->genres = $request->genres;
         $review->rating = $request->rating;
         $result = $review->save();
         if ($result) {
@@ -72,7 +72,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $result = auth()->user()->review()->with('comment.user','user')->with('likes')->find($id);
+        $result = auth()->user()->review()->with('comment.user', 'user')->with('comment.likes', 'likes')->with('comment.replies', 'comment')->with('likes')->find($id);
         if (!$result) {
             return response('Not found', 404);
         }

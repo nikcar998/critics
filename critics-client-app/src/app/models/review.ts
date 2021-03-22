@@ -1,5 +1,6 @@
 import { Comment } from "./comment";
 import { Like } from "./like";
+import { User } from "./user";
 
 export interface Review {
     id: number,
@@ -13,4 +14,5 @@ export interface Review {
     film_id:number,
     comment: Comment[],
     likes: Like[],
+    user?:User 
 }

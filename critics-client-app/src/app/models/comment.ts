@@ -1,3 +1,4 @@
+import { Like } from "./like";
 import { User } from "./user";
 
 export interface Comment {
@@ -10,5 +11,6 @@ export interface Comment {
         updated_at: string,
         deleted_at: string | null,
         replies: Comment[],
-        user: User
+        user: User,
+        likes: Like[]
 }

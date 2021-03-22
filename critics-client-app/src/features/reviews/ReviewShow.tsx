@@ -1,4 +1,6 @@
+import { observer } from "mobx-react-lite";
 import React, { Fragment, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Redirect, useParams } from "react-router";
 import {
   Button,
@@ -13,15 +15,21 @@ import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { Comment } from "../../app/models/comment";
 import { Review } from "../../app/models/review";
 import { useStore } from "../../app/stores/store";
+import { CommentForm } from "../comments/CommentForm";
+
 import { Comments } from "../comments/Comments";
 
-export const ReviewShow = () => {
+const ReviewShow = () => {
   const { id } = useParams<{ id: string }>();
   const [review, setReview] = useState<Review | null>(null);
 
   const defaultImageUrl = "/no_picture_available.jpg";
 
   const { reviewStore } = useStore();
+
+  const isDesktop = useMediaQuery({
+    query: "(min-width: 1050px)",
+  });
 
   useEffect(() => {
     reviewStore.loadReview(id).then(() => {
@@ -38,21 +46,69 @@ export const ReviewShow = () => {
           <Fragment>
             {" "}
             <Segment
-              style={{
-                margin: "10px",
-              }}
+              style={
+                isDesktop
+                  ? {
+                      margin: "10px",
+                    }
+                  : {
+                      margin: 0,
+                    }
+              }
               fluid
               inverted
             >
-              <Grid columns={2} divided inverted>
-                <Grid.Row>
-                  <Grid.Column width={4}>
+              <Grid divided inverted>
+                {review.user && (
+                  <Grid.Row columns={1} style={{ margin: 0, padding: 0 }}>
+                    <Grid.Column>
+                      <Segment inverted style={{ margin: 0, padding: 0 }}>
+                        <Image
+                          src={
+                            review.user.avatar
+                              ? "http://127.0.0.1:8000/api/show/avatar?url=" +
+                                review.user.avatar
+                              : defaultImageUrl
+                          }
+                          style={{
+                            height: 20,
+                            width: 20,
+                            marginLeft: 3,
+                            marginBottom: 5,
+                            marginRight: 4,
+                          }}
+                          circular
+                          inline
+                        />
+                        <p
+                          style={{
+                            marginTop: 10,
+                            padding: 0,
+                            marginBottom: 1,
+                            display: "inline-block",
+                          }}
+                        >
+                          {review.user.username
+                            ? review.user.username
+                            : review.user.name}
+                        </p>
+                      </Segment>
+                      <Divider style={{ margin: 0 }} />
+                    </Grid.Column>
+                  </Grid.Row>
+                )}
+                <Grid.Row columns={isDesktop ? 2 : 1}>
+                  <Grid.Column width={isDesktop ? 4 : 16}>
                     <Image
                       src={review.cover ? review.cover : defaultImageUrl}
-                      style={{ height: "100%", width: "100%" }}
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                        marginBottom: 10,
+                      }}
                     />
                   </Grid.Column>
-                  <Grid.Column width={11}>
+                  <Grid.Column width={isDesktop ? 11 : 16}>
                     <Header style={{ color: "white" }} as="h2">
                       {review.title}
                     </Header>
@@ -90,15 +146,14 @@ export const ReviewShow = () => {
                 </Grid.Row>
               </Grid>
             </Segment>
+            <CommentForm />
             {review.comment.length > 0 && (
               <Segment color="black" inverted>
                 <Header as="h3">Comments:</Header>
                 <Divider />
                 {review.comment.map((comment) => {
                   if (!comment.parent_id) {
-                    return (
-                     <Comments comment={comment} />
-                    );
+                    return <Comments comment={comment} />;
                   }
                 })}
               </Segment>
@@ -109,3 +164,5 @@ export const ReviewShow = () => {
     </Fragment>
   );
 };
+
+export default observer(ReviewShow);

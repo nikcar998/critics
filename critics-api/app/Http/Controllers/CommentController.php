@@ -16,17 +16,17 @@ class CommentController extends Controller
         if (!$review) {
             return response('Review not found', 404);
         }
-        $result = $review->comment()->where('parent_id', null)->with('replies')->with('user')->paginate(10);
+        $result = $review->comment()->where('parent_id', null)->with('replies')->with('user')->with('likes')->paginate(10);
         return response($result, 200);
     }
 
     public function show($id)
     {
-        $comment = Comment::find($id);
-        if (!$comment) {
+        $comment = Comment::where('id',$id)->with('replies')->with('user')->with('likes')->get();
+        if (!(count($comment) > 0)) {
             return response('Comment not found', 404);
         }
-        return response([$comment, $comment->replies], 200);
+        return response($comment, 200);
     }
 
     public function store(Request $request)
