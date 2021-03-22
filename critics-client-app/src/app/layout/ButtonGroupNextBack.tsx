@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Divider, Grid, Icon } from "semantic-ui-react";
+import { useEffect, useState } from "react";
+import { Button, Grid, Icon } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 
 interface Props {
@@ -19,10 +19,11 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
         break;
       case "reviewStore":
         setPage(reviewStore.page);
-        reviewStore.reviewsPagination && setTotalPages(reviewStore.reviewsPagination.last_page);
+        reviewStore.reviewsPagination &&
+          setTotalPages(reviewStore.reviewsPagination.last_page);
         break;
     }
-  }, []);
+  }, [filmStore, reviewStore, store]);
   const scrollPages = (nextORBack: boolean) => {
     switch (store) {
       case "filmStore":
@@ -42,7 +43,7 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
     <Grid>
       <Grid.Column textAlign={"center"}>
         <Button.Group style={{ marginTop: "30px" }}>
-          {page != 1 && (
+          {page !== 1 && (
             <Button
               animated
               onClick={() => {

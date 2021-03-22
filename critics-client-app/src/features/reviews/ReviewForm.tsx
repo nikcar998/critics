@@ -5,17 +5,13 @@ import {
   DropdownProps,
   Form,
   Grid,
-  GridColumn,
   Header,
   Image,
   Label,
   Segment,
   Select,
 } from "semantic-ui-react";
-import { Review } from "../../app/models/review";
-import ReviewStore from "../../app/stores/reviewStore";
 import { useStore } from "../../app/stores/store";
-import { Comment } from "../../app/models/comment";
 import axios from "axios";
 import ValidationErrors from "../errors/ValidationErrors";
 import { observer } from "mobx-react-lite";
@@ -59,13 +55,11 @@ const ReviewForm = () => {
   const [review, setReview] = useState(initialState);
   const [error, setError] = useState<string[]>([]);
   const handleSubmit = () => {
-    console.log(review);
-
     axios.get("/sanctum/csrf-cookie").then((response) => {
       reviewStore.storeReview(review).then((resp) => {
         if (reviewStore.errors) {
           setError(reviewStore.errors);
-        }else{
+        } else {
           history.push("/reviews");
         }
       });
@@ -96,12 +90,8 @@ const ReviewForm = () => {
       newReview.cover = imageUrl;
       newReview.year = filmStore.selectedFilm.release_date;
       setReview(newReview);
-      // setReview({...review, film_title:})
-      // setReview({...review, cover:"https://image.tmdb.org/t/p/w500" + filmStore.selectedFilm?.poster_path})
-      // setReview({...review, year:filmStore.selectedFilm?.release_date})
-      // setReview({...review, film_id: filmStore.selectedFilm?.id})
     }
-  }, []);
+  }, [filmStore.selectedFilm, imageUrl]);
 
   if (filmStore.selectedFilm == null) {
     return <Redirect to="/" />;

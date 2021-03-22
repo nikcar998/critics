@@ -14,7 +14,6 @@ export const Movie = ({ oneFilm }: Props) => {
 
   const changeSelectedFilm = (id: number) => {
     filmStore.selectFilm(id).then(() => {
-      console.log(filmStore.selectedFilm);
       history.push("/reviews/store");
     });
   };

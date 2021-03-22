@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Redirect, useParams } from "react-router";
+import { useParams } from "react-router";
 import {
   Button,
   Divider,
@@ -12,7 +12,6 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
-import { Comment } from "../../app/models/comment";
 import { Review } from "../../app/models/review";
 import { useStore } from "../../app/stores/store";
 import { CommentForm } from "../comments/CommentForm";
@@ -35,7 +34,7 @@ const ReviewShow = () => {
     reviewStore.loadReview(id).then(() => {
       setReview(reviewStore.selectedReview);
     });
-  }, []);
+  }, [id, reviewStore]);
 
   return (
     <Fragment>
@@ -154,6 +153,9 @@ const ReviewShow = () => {
                 {review.comment.map((comment) => {
                   if (!comment.parent_id) {
                     return <Comments comment={comment} />;
+                  }
+                  else{
+                    return(null)
                   }
                 })}
               </Segment>

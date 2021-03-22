@@ -5,7 +5,7 @@ interface Props {
   errors: string[] | null;
 }
 export default function ValidationErrors({ errors }: Props) {
-  console.log(['control validation', errors![0]])
+
   return (
     <Message error>
       {errors && (

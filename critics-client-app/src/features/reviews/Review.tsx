@@ -1,18 +1,8 @@
 import { observer } from "mobx-react-lite";
-import { SERVFAIL } from "node:dns";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Link, useHistory } from "react-router-dom";
-import {
-  Button,
-  Card,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  Segment,
-} from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
+import { Divider, Grid, Header, Icon, Image, Segment } from "semantic-ui-react";
 import { Review as ReviewType } from "../../app/models/review";
 
 interface Props {
@@ -23,8 +13,6 @@ const Review = ({ review }: Props) => {
   const [maxCharacters, setMaxCharacters] = useState([18, 190]);
 
   const defaultImageUrl = "/no_picture_available.jpg";
-  const defaultAvatarUrl =
-    "/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
   const reviewLink = "/reviews/" + review.id;
 
   const history = useHistory();
@@ -96,7 +84,12 @@ const Review = ({ review }: Props) => {
             <Grid.Column width={5} style={{ padding: 0 }}>
               <Image
                 src={review.cover ? review.cover : defaultImageUrl}
-                style={{ height: "100%", width: "150px", marginLeft: 7,marginTop:"-10px" }}
+                style={{
+                  height: "100%",
+                  width: "150px",
+                  marginLeft: 7,
+                  marginTop: "-10px",
+                }}
                 rounded
                 centered
               />

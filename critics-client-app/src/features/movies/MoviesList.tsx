@@ -4,7 +4,6 @@ import { Card, Input } from "semantic-ui-react";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { useStore } from "../../app/stores/store";
 import { Movie } from "./Movie";
-import { useMediaQuery } from "react-responsive";
 import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
 
 const MoviesList = () => {
@@ -16,10 +15,6 @@ const MoviesList = () => {
     setSearchedFilm(event.currentTarget.value);
     filmStore.searchFilm(searchedFilm);
   };
-
-  const isDesktop = useMediaQuery({
-    query: "(min-width: 1050px)",
-  });
 
   useEffect(() => {
     filmStore.loadMovies();

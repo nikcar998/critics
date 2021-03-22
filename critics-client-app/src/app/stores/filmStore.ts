@@ -17,7 +17,6 @@ export default class FilmStore {
 
   changeWhatToLoad = (query: string) => {
     this.whatToLoad = query;
-    console.log(this.whatToLoad);
   };
 
   loadMovies = async () => {

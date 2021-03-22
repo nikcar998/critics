@@ -1,11 +1,9 @@
-import React from "react";
 import { useMediaQuery } from "react-responsive";
 import {
   Button,
   Grid,
   GridRow,
   Header,
-  Icon,
   Image,
   Segment,
 } from "semantic-ui-react";

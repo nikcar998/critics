@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, Container, Dropdown, Icon, Menu } from "semantic-ui-react";
+import { Container, Icon, Menu } from "semantic-ui-react";
 import { useMediaQuery } from "react-responsive";
 import { DropdownOptions } from "./DropdownOptions";
 import { Link } from "react-router-dom";

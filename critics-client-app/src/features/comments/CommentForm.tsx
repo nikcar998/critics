@@ -1,6 +1,5 @@
-import React from "react";
 import { useMediaQuery } from "react-responsive";
-import { Button, Form, Grid, Image, Label, Segment } from "semantic-ui-react";
+import { Form, Grid, Image, Segment } from "semantic-ui-react";
 
 export const CommentForm = () => {
   const isDesktop = useMediaQuery({
