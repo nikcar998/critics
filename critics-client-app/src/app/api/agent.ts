@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { Film } from "../models/film";
+import { Like } from "../models/like";
 import { PaginationExtApi } from "../models/paginationExtApi";
 import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review } from "../models/review";
@@ -60,12 +61,13 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
-  post: <T>(url: string, body: {}) =>
+  post: <T>(url: string, body?: {}) =>
     axios.post<T>(url, body).then(responseBody),
   put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
   del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
+///////////////////////////// MOVIES ///////////////////////////////////////////
 const Movies = {
   listNowPlaying: (page: number) =>
     requests.get<PaginationExtApi<Film>>("api/film/index/nowPlaying/" + page),
@@ -78,6 +80,7 @@ const Movies = {
     requests.get<PaginationExtApi<Film>>("api/film/search/" + query),
 };
 
+////////////////////////////////// REVIEWS ///////////////////////////
 const Reviews = {
   listReviews: (page: number) =>
     requests.get<PaginationMyApi<Review>>("api/reviews?page=" + page),
@@ -90,9 +93,19 @@ const Reviews = {
   destroy: (id: string) => requests.del("api/reviews/" + id),
 };
 
+///////////////////////// LIKES ////////////////////
+const Likes = {
+  // listCommentLikes: (id:number) => requests.get<Like[]>("api/comment/likes/show/"+id),
+  // listReviewLikes: (id:number) => requests.get<Like[]>("api/review/likes/show/"+id),
+  storeCommentLike: (id: number) =>
+    requests.post<Like | string>("api/comment/likes/store/" + id),
+  storeReviewLike: (id: number) =>
+    requests.post<Like | string>("api/reviews/likes/store/" + id),
+};
 const agent = {
   Movies,
   Reviews,
+  Likes
 };
 
 export default agent;

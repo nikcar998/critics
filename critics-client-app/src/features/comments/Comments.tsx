@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import {
   Button,
@@ -7,7 +8,9 @@ import {
   Image,
   Segment,
 } from "semantic-ui-react";
+import agent from "../../app/api/agent";
 import { Comment } from "../../app/models/comment";
+import { Like } from "../../app/models/like";
 
 interface Props {
   comment: Comment;
@@ -18,6 +21,19 @@ export const Comments = ({ comment }: Props) => {
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
   });
+  const likeNumberControl=comment.likes.length;
+  const [likesNumber,setLikesNumber]=useState(comment.likes.length)
+
+  function handleNewLike(){
+    agent.Likes.storeCommentLike(comment.id).then((resp)=>{
+      if(likeNumberControl == likesNumber){
+      setLikesNumber((likesNumber + 1))
+      }else{
+        setLikesNumber((likesNumber - 1))
+      }
+    });
+   
+  }
   return (
     <Grid>
       <GridRow columns={2} >
@@ -46,6 +62,7 @@ export const Comments = ({ comment }: Props) => {
             compact
             circular
             size="small"
+            onClick={()=>{handleNewLike()}}
           />
         </Grid.Column>
         <Grid.Column
@@ -77,7 +94,7 @@ export const Comments = ({ comment }: Props) => {
             }}
             as="h6"
           >
-            Likes:{comment.likes ? comment.likes.length : 0}{" "}
+            Likes:{likesNumber}{" "}
           </Header>{" "}
           <Header
             style={{ display: "inline-block", margin: 0, color: "white" }}

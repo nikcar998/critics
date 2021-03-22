@@ -11,6 +11,7 @@ import {
   Image,
   Segment,
 } from "semantic-ui-react";
+import agent from "../../app/api/agent";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { Review } from "../../app/models/review";
 import { useStore } from "../../app/stores/store";
@@ -30,9 +31,28 @@ const ReviewShow = () => {
     query: "(min-width: 1050px)",
   });
 
+  const [likeNumberControl, setLikeNumberControl] = useState(0);
+  const [likesNumber, setLikesNumber] = useState(0);
+
+  function handleNewLike() {
+    if (review) {
+      agent.Likes.storeReviewLike(review.id).then(() => {
+        if (likeNumberControl == likesNumber) {
+          setLikesNumber(likesNumber + 1);
+        } else {
+          setLikesNumber(likesNumber - 1);
+        }
+      });
+    }
+  }
+
   useEffect(() => {
     reviewStore.loadReview(id).then(() => {
       setReview(reviewStore.selectedReview);
+      if (review) {
+        setLikeNumberControl(review.likes.length);
+        setLikesNumber(review.likes.length);
+      }
     });
   }, [id, reviewStore]);
 
@@ -137,9 +157,10 @@ const ReviewShow = () => {
                     <Button
                       color="instagram"
                       style={{ display: "inline-block" }}
+                      onClick={handleNewLike}
                     >
                       {" "}
-                      <Icon name="like" /> likes: {review.likes.length}
+                      <Icon name="like" /> likes: {likesNumber}
                     </Button>
                   </Grid.Column>
                 </Grid.Row>
@@ -153,9 +174,8 @@ const ReviewShow = () => {
                 {review.comment.map((comment) => {
                   if (!comment.parent_id) {
                     return <Comments comment={comment} />;
-                  }
-                  else{
-                    return(null)
+                  } else {
+                    return null;
                   }
                 })}
               </Segment>
