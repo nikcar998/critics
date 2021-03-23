@@ -9,11 +9,11 @@ import { useStore } from "../../app/stores/store";
 //TODO -> scegliere metodo di salvataggio commenti ed eventualmente cambiare la pagina
 //TODO -> togliere richiesta csrf dalla post request
 //this component will give the possibility to store a new comment
-interface Props{
-  setReview: React.Dispatch<React.SetStateAction<Review | null>>
-  review:Review
+interface Props {
+  setReview: React.Dispatch<React.SetStateAction<Review | null>>;
+  review: Review;
 }
-export const CommentForm = ({setReview, review}:Props) => {
+export const CommentForm = ({ setReview, review }: Props) => {
   const { reviewStore } = useStore();
 
   const isDesktop = useMediaQuery({
@@ -39,18 +39,17 @@ export const CommentForm = ({setReview, review}:Props) => {
     setNewComment({ ...newComment, [name]: value });
   };
 
-
   //here i will store a new comment and add it to the "reviews.comment" array that will
   //be handled in the "ReviewShow" and "Comments" components
   const handleSubmit = () => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
       agent.Comments.storeComment(newComment).then((resp) => {
-        resp.user= review.user;
-        setReview({...review, comment:[...review.comment, resp] })
+        resp.user = review.user;
+        // console.log([resp,"1"])
+        setReview({ ...review, comment: [resp, ...review.comment] });
       });
     });
   };
-
 
   //here i will set the necessary values to store the comment
   useEffect(() => {

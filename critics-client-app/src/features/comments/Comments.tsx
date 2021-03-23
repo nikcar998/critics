@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import {
   Button,
@@ -24,6 +24,10 @@ export const Comments = ({ comment }: Props) => {
   });
   const likeNumberControl=comment.likes ? comment.likes.length : 0;
   const [likesNumber,setLikesNumber]=useState(comment.likes ? comment.likes.length : 0)
+//TODO-> togliere console.log()
+useEffect(()=>{
+  console.log(comment);
+},[])
 
   function handleNewLike(){
     agent.Likes.storeCommentLike(comment.id).then((resp)=>{

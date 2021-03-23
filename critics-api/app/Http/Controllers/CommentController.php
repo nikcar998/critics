@@ -16,7 +16,7 @@ class CommentController extends Controller
         if (!$review) {
             return response('Review not found', 404);
         }
-        $result = $review->comment()->where('parent_id', null)->with('replies')->with('user')->with('likes')->paginate(10);
+        $result = $review->comment()->where('parent_id', null)->with('replies')->with('user')->with('likes')->orderBy('created_at', 'desc')->paginate(10);
         return response($result, 200);
     }
 
@@ -64,7 +64,7 @@ class CommentController extends Controller
         if (!$result) {
             return response('Error saving', 500);
         }
-        $response = [$comment->with('replies')->with('user')->with('likes')];
+        $response = $comment;
 
         return response($response, 200);
     }
