@@ -1,6 +1,8 @@
 import React from "react";
 import { Message } from "semantic-ui-react";
 
+
+//this component will be show while loading reviews or movies
 interface Props {
   errors: string[] | null;
 }

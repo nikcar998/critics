@@ -6,6 +6,9 @@ import agent from "../../app/api/agent";
 import { Review } from "../../app/models/review";
 import { useStore } from "../../app/stores/store";
 
+//TODO -> scegliere metodo di salvataggio commenti ed eventualmente cambiare la pagina
+//TODO -> togliere richiesta csrf dalla post request
+//this component will give the possibility to store a new comment
 interface Props{
   setReview: React.Dispatch<React.SetStateAction<Review | null>>
   review:Review
@@ -36,14 +39,20 @@ export const CommentForm = ({setReview, review}:Props) => {
     setNewComment({ ...newComment, [name]: value });
   };
 
+
+  //here i will store a new comment and add it to the "reviews.comment" array that will
+  //be handled in the "ReviewShow" and "Comments" components
   const handleSubmit = () => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
       agent.Comments.storeComment(newComment).then((resp) => {
+        resp.user= review.user;
         setReview({...review, comment:[...review.comment, resp] })
       });
     });
   };
 
+
+  //here i will set the necessary values to store the comment
   useEffect(() => {
     const pivotComment = initialState;
     if (reviewStore.selectedReview) {

@@ -15,10 +15,12 @@ export default class FilmStore {
     makeAutoObservable(this);
   }
 
+  // this function will trigger the useEffect in "MoviesList.tsx", and upload another cathegory of movies
   changeWhatToLoad = (query: string) => {
     this.whatToLoad = query;
   };
 
+  //here will be checked the value of "this.whatToLoad" and then loaded the relative kind of film
   loadMovies = async () => {
     this.setLoadingInitial(true);
     this.loadingInitial = true;
@@ -82,6 +84,7 @@ export default class FilmStore {
     }
   };
 
+  //function used to store the necessary values to create a new review. ->look ReviewForm.tsx
   selectFilm = async (id: number) => {
     try {
       const stringId = id.toString();
@@ -91,6 +94,7 @@ export default class FilmStore {
     }
   };
 
+  //this will change page -> look ButtonGroupNextBack.tsx
   setPage = (plusOrNot: boolean) => {
     if (plusOrNot) {
       if (this.pagination && this.page < this.pagination.total_pages) {
@@ -103,6 +107,7 @@ export default class FilmStore {
     }
   };
 
+  //useful to show loading component
   setLoadingInitial = (state: boolean) => {
     this.loadingInitial = state;
   };

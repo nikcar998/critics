@@ -7,6 +7,9 @@ import { PaginationExtApi } from "../models/paginationExtApi";
 import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review } from "../models/review";
 
+
+//TODO->dopo l'implementazione del login gestire csrf qui o in userStore 
+
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, delay);
@@ -15,6 +18,8 @@ const sleep = (delay: number) => {
 
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.withCredentials = true;
+
+//here i will add 1 sec wait to let compontents show loading style. It will handle errors too.
 axios.interceptors.response.use(
   async (response) => {
     await sleep(1000);
@@ -50,6 +55,11 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+
+//TODO -> make authorization dynamic
+//here i will handle the authorization. Now is made in a static way, it will be implemented to use localStorage
+//to get the user's token
 axios.interceptors.request.use((config) => {
   //const token = localStorage.getItem("TR_token");
   //if (token) config.headers.Authorization = `Bearer ${token}`;

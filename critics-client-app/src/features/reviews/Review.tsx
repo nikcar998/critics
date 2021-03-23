@@ -5,11 +5,15 @@ import { useHistory } from "react-router-dom";
 import { Divider, Grid, Header, Icon, Image, Segment } from "semantic-ui-react";
 import { Review as ReviewType } from "../../app/models/review";
 
+
+//this is the structure of a single review, used by the ReviewList component
 interface Props {
   review: ReviewType;
 }
 
 const Review = ({ review }: Props) => {
+  //max charaacters showed in title[0] and in opinion[1]
+  //this values will change if  the width is less than 1050 px
   const [maxCharacters, setMaxCharacters] = useState([18, 190]);
 
   const defaultImageUrl = "/no_picture_available.jpg";

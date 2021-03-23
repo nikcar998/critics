@@ -11,6 +11,8 @@ import {
 import agent from "../../app/api/agent";
 import { Comment } from "../../app/models/comment";
 
+
+//this is the structure of a single comment
 interface Props {
   comment: Comment;
 }

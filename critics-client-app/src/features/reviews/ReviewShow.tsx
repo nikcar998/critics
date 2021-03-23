@@ -16,14 +16,13 @@ import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { Review } from "../../app/models/review";
 import { useStore } from "../../app/stores/store";
 import { CommentForm } from "../comments/CommentForm";
-
 import { Comments } from "../comments/Comments";
 
+
+//this component show review's details and comments
 const ReviewShow = () => {
   const { id } = useParams<{ id: string }>();
   const [review, setReview] = useState<Review | null>(null);
-  
-
 
   const defaultImageUrl = "/no_picture_available.jpg";
 
@@ -33,6 +32,8 @@ const ReviewShow = () => {
     query: "(min-width: 1050px)",
   });
 
+  //TODO -> migliorare logica like, per ora gestisce solo l'immissine di un like e la sua immediata rimozione
+  //to change the number of like after i will use two control varibles
   const [likeNumberControl, setLikeNumberControl] = useState(0);
   const [likesNumber, setLikesNumber] = useState(0);
 
@@ -169,11 +170,14 @@ const ReviewShow = () => {
                 </Grid.Row>
               </Grid>
             </Segment>
+{/*********************************** COMMENT FORM ************************ */}
             <CommentForm review={review} setReview={setReview} />
             {review.comment.length > 0 && (
               <Segment color="black" inverted>
                 <Header as="h3">Comments:</Header>
                 <Divider />
+                
+{/*********************************** COMMENTS INDEX ************************ */}
                 {review.comment.map((comment) => {
                   if (!comment.parent_id) {
                     return <Comments comment={comment} />;

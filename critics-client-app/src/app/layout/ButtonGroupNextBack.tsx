@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Grid, Icon } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 
+//here i use 2 buttons to handle pagination layout
 interface Props {
   store: string;
 }
@@ -24,6 +25,7 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
         break;
     }
   }, [filmStore, reviewStore, store]);
+
   const scrollPages = (nextORBack: boolean) => {
     switch (store) {
       case "filmStore":

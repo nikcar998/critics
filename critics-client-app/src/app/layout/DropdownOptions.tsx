@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { Dropdown, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 
+//if the screen is not a desktop this will shown and Optionside will be hidden
 export const DropdownOptions = () => {
   const { filmStore } = useStore();
 
@@ -49,7 +50,7 @@ export const DropdownOptions = () => {
             }}
           />
           <Dropdown.Divider />
-          {/********************************** */}
+          {/********************************** Reviews ************ */}
           <Dropdown.Header
             as="h1"
             style={{ color: "red" }}
@@ -60,7 +61,7 @@ export const DropdownOptions = () => {
           <Dropdown.Item text="Timeline" />
           <Dropdown.Item text="Search" />
           <Dropdown.Divider />
-          {/************************** */}
+          {/************************** Profile *****************/}
           <Dropdown.Header
             as="h1"
             style={{ color: "red" }}

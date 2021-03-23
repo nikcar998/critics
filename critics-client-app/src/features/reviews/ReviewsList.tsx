@@ -6,10 +6,10 @@ import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { useStore } from "../../app/stores/store";
 import Review from "./Review";
 
+//this component will show the riviews of a user and his friends.
 const ReviewsList = () => {
   const { reviewStore } = useStore();
 
-  // DA AGGIUNGERE BOTTONE PER PAGINAZIONE ///////////////////
   useEffect(() => {
     reviewStore.loadReviews();
   }, [reviewStore, reviewStore.page]);

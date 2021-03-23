@@ -16,6 +16,8 @@ import axios from "axios";
 import ValidationErrors from "../errors/ValidationErrors";
 import { observer } from "mobx-react-lite";
 
+
+//this component is necessary to store the reviews
 const ReviewForm = () => {
   const { filmStore, reviewStore } = useStore();
   const history = useHistory();
@@ -28,6 +30,7 @@ const ReviewForm = () => {
     "https://image.tmdb.org/t/p/w500" + filmStore.selectedFilm?.poster_path;
   const defaultImageUrl = "/no_picture_available.jpg";
 
+  //values necessary for the <Select /> element, that stores the review's rating
   const ratingOptions = [
     { key: 0, value: 0, text: 0 },
     { key: 1, value: 1, text: 1 },
@@ -37,7 +40,7 @@ const ReviewForm = () => {
     { key: 5, value: 5, text: 5 },
   ];
 
-  //bisongna rendere non statico lo user_id /////////////////////////////////////////////
+  //TODO -> bisongna rendere non statico lo user_id /////////////////////////////////////////////
   const initialState = {
     id: 0,
     user_id: 1,
@@ -54,6 +57,8 @@ const ReviewForm = () => {
 
   const [review, setReview] = useState(initialState);
   const [error, setError] = useState<string[]>([]);
+
+  //TODO -> togliere la richiesta di crsf token
   const handleSubmit = () => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
       reviewStore.storeReview(review).then((resp) => {
@@ -81,6 +86,8 @@ const ReviewForm = () => {
     }
   };
 
+
+  //the necessary values will be added to the review-state, those are necessary to store the new review
   useEffect(() => {
     const newReview = initialState;
 
@@ -93,6 +100,8 @@ const ReviewForm = () => {
     }
   }, [filmStore.selectedFilm, imageUrl]);
 
+//TODO -> creare pagina errore e ridirigere lì
+  //if a user come here without passing from the "MovieList" component will be redirected to the main page
   if (filmStore.selectedFilm == null) {
     return <Redirect to="/" />;
   }
