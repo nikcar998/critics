@@ -22,7 +22,7 @@ class CommentController extends Controller
 
     public function show($id)
     {
-        $comment = Comment::where('id',$id)->with('replies')->with('user')->with('likes')->get();
+        $comment = Comment::where('id', $id)->with('replies')->with('user')->with('likes')->get();
         if (!(count($comment) > 0)) {
             return response('Comment not found', 404);
         }
@@ -32,7 +32,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'review_id'=>['required', 'exists:reviews,id'],
+            'review_id' => ['required', 'exists:reviews,id'],
             'body' => ['required', 'min:4', 'max:1000'],
         ]);
 
@@ -64,9 +64,8 @@ class CommentController extends Controller
         if (!$result) {
             return response('Error saving', 500);
         }
-        $response = [
-            'comment' => $comment,
-        ];
+        $response = [$comment->with('replies')->with('user')->with('likes')];
+
         return response($response, 200);
     }
 

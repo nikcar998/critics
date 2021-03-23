@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import agent from "../api/agent";
+import { Comment } from "../models/comment";
 import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review } from "../models/review";
 
@@ -66,6 +67,15 @@ export default class ReviewStore {
       }
     }
   };
+
+
+  dinamicCommentPush(comment: Comment){
+    if(this.selectedReview){
+      this.selectedReview.comment.push(comment);
+    }
+  }
+
+
   setLoading = (state: boolean) => {
     this.loading = state;
   };

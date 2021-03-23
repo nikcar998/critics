@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
+import { Comment } from "../models/comment";
 import { Film } from "../models/film";
 import { Like } from "../models/like";
 import { PaginationExtApi } from "../models/paginationExtApi";
@@ -102,10 +103,19 @@ const Likes = {
   storeReviewLike: (id: number) =>
     requests.post<Like | string>("api/reviews/likes/store/" + id),
 };
+
+//////////////////////// COMMENTS ////////////////
+const Comments = {
+  showComment: (id:number) => requests.get("api/comment/show/"+id),
+  storeComment: (comment: Comment)=> requests.post<Comment>("api/comment/store", comment),
+  editComment: (id:number, comment:Comment)=> requests.put<Comment>("api/comment/edit/"+id, comment)
+}
+
 const agent = {
   Movies,
   Reviews,
-  Likes
+  Likes,
+  Comments
 };
 
 export default agent;

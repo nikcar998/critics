@@ -22,6 +22,8 @@ import { Comments } from "../comments/Comments";
 const ReviewShow = () => {
   const { id } = useParams<{ id: string }>();
   const [review, setReview] = useState<Review | null>(null);
+  
+
 
   const defaultImageUrl = "/no_picture_available.jpg";
 
@@ -46,6 +48,7 @@ const ReviewShow = () => {
     }
   }
 
+
   useEffect(() => {
     reviewStore.loadReview(id).then(() => {
       setReview(reviewStore.selectedReview);
@@ -55,6 +58,7 @@ const ReviewShow = () => {
       }
     });
   }, [id, reviewStore]);
+
 
   return (
     <Fragment>
@@ -74,7 +78,6 @@ const ReviewShow = () => {
                       margin: 0,
                     }
               }
-              fluid
               inverted
             >
               <Grid divided inverted>
@@ -166,7 +169,7 @@ const ReviewShow = () => {
                 </Grid.Row>
               </Grid>
             </Segment>
-            <CommentForm />
+            <CommentForm review={review} setReview={setReview} />
             {review.comment.length > 0 && (
               <Segment color="black" inverted>
                 <Header as="h3">Comments:</Header>

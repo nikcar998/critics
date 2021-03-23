@@ -10,7 +10,6 @@ import {
 } from "semantic-ui-react";
 import agent from "../../app/api/agent";
 import { Comment } from "../../app/models/comment";
-import { Like } from "../../app/models/like";
 
 interface Props {
   comment: Comment;
@@ -21,12 +20,12 @@ export const Comments = ({ comment }: Props) => {
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
   });
-  const likeNumberControl=comment.likes.length;
-  const [likesNumber,setLikesNumber]=useState(comment.likes.length)
+  const likeNumberControl=comment.likes ? comment.likes.length : 0;
+  const [likesNumber,setLikesNumber]=useState(comment.likes ? comment.likes.length : 0)
 
   function handleNewLike(){
     agent.Likes.storeCommentLike(comment.id).then((resp)=>{
-      if(likeNumberControl == likesNumber){
+      if(likeNumberControl === likesNumber){
       setLikesNumber((likesNumber + 1))
       }else{
         setLikesNumber((likesNumber - 1))
@@ -43,6 +42,7 @@ export const Comments = ({ comment }: Props) => {
           textAlign="right"
           style={{ paddingRight: 0 }}
         >
+          {comment.user &&
           <Image
             src={
               comment.user.avatar
@@ -55,6 +55,7 @@ export const Comments = ({ comment }: Props) => {
             inline
             verticalAlign="top"
           />
+}
           <Button
             icon="like"
             basic
@@ -78,7 +79,7 @@ export const Comments = ({ comment }: Props) => {
             }}
           >
             <Header as="h3" style={{ marginBottom: "5px" }}>
-              {comment.user.name}
+              {comment.user && comment.user.name}
             </Header>
 
             <Header style={{ margin: 0, marginLeft: "15px" }} as="h5">
