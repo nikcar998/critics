@@ -16,14 +16,14 @@ class CommentController extends Controller
         if (!$review) {
             return response('Review not found', 404);
         }
-        $result = $review->comment()->where('parent_id', null)->with('replies')->with('user')->with('likes')->orderBy('created_at', 'desc')->paginate(10);
+        $result = $review->comment()->where('parent_id', null)->with('replies')->with('user')->with('likes')->orderBy('created_at', 'desc')->paginate(8);
         return response($result, 200);
     }
 
     public function show($id)
     {
-        $comment = Comment::where('id', $id)->with('replies')->with('user')->with('likes')->get();
-        if (!(count($comment) > 0)) {
+        $comment = Comment::where('id', $id)->with('replies')->with('replies.user','user')->with('user')->with('likes')->first();
+        if (!$comment) {
             return response('Comment not found', 404);
         }
         return response($comment, 200);

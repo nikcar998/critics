@@ -61,7 +61,7 @@ const ReviewForm = () => {
   //TODO -> togliere la richiesta di crsf token
   const handleSubmit = () => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      reviewStore.storeReview(review).then((resp) => {
+      reviewStore.storeReview(review).then(() => {
         if (reviewStore.errors) {
           setError(reviewStore.errors);
         } else {
@@ -70,6 +70,7 @@ const ReviewForm = () => {
       });
     });
   };
+
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {

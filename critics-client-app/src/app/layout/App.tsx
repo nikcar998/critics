@@ -10,6 +10,7 @@ import ReviewsList from "../../features/reviews/ReviewsList";
 import ReviewForm from "../../features/reviews/ReviewForm";
 import ReviewShow from "../../features/reviews/ReviewShow";
 import { ToastContainer } from "react-toastify";
+import { CommentShow } from "../../features/comments/CommentShow";
 
 //here i will handle all routing. the layout will change using "react-responsive"
 function App() {
@@ -39,6 +40,7 @@ function App() {
                   <Route path="/reviews/store" exact component={ReviewForm} />
                   <Route path="/reviews" exact component={ReviewsList} />
                   <Route path="/reviews/:id" component={ReviewShow} />
+                  <Route path="/comment/:id" component={CommentShow} />
                 </Switch>
               </Grid.Column>
             </Grid.Row>

@@ -117,7 +117,7 @@ const Likes = {
 
 //////////////////////// COMMENTS ////////////////
 const Comments = {
-  showComment: (id:number) => requests.get<Comment>("api/comment/show/"+id),
+  showComment: (id:string) => requests.get<Comment>("api/comment/show/"+id),
   listComments: (id:number,page:number) => requests.get<PaginationMyApi<Comment>>(`api/comment/index/${id}?page=${page}`),
   storeComment: (comment: Comment)=> requests.post<Comment>("api/comment/store", comment),
   editComment: (id:number, comment:Comment)=> requests.put<Comment>("api/comment/edit/"+id, comment)

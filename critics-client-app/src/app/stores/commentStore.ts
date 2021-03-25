@@ -6,7 +6,7 @@ import { PaginationMyApi } from "../models/paginationMyApi";
 export default class CommentStore{
     pagination: PaginationMyApi<Comment> | null=null
     comments: Comment[] = [];
-    selectedComment: Comment[] = [];
+    selectedComment: Comment | null = null;
     loading = false;
     page: number = 1;
 
@@ -25,6 +25,17 @@ export default class CommentStore{
         }
       }
 
+      loadComment = async (id: string) => {
+        this.setLoading(true);
+        try {
+          this.selectedComment = await agent.Comments.showComment(id);
+          this.setLoading(false);
+        } catch (error) {
+          console.log(error);
+          this.setLoading(false);
+        }
+      };
+
       storeComment =async (comment : Comment) => {
         this.setLoading(true);
         try {
@@ -32,6 +43,7 @@ export default class CommentStore{
           this.setLoading(false);
         } catch (err) {
           this.setLoading(false);
+          return err;
         }
       }
     

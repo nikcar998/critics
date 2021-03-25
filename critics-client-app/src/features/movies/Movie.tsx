@@ -33,6 +33,7 @@ export const Movie = ({ oneFilm }: Props) => {
         width: "225px",
         maxHeight: 400,
         overflow: "auto",
+        cursor:"pointer"
       }}
     >
       {isClicked ? (

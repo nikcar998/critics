@@ -17,8 +17,8 @@ import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { Comment } from "../../app/models/comment";
 import { Review } from "../../app/models/review";
 import { useStore } from "../../app/stores/store";
-import { CommentForm } from "../comments/CommentForm";
-import { Comments } from "../comments/Comments";
+import CommentForm from "../comments/CommentForm";
+import Comments from "../comments/Comments";
 
 //this component show review's details and comments
 const ReviewShow = () => {
@@ -177,11 +177,14 @@ const ReviewShow = () => {
               </Grid>
             </Segment>
             {/*********************************** COMMENT FORM ************************ */}
-            <CommentForm
-              comments={comments}
-              setComments={setComments}
-              review={review}
-            />
+            {/**** TODO -> cambiare user con lo user che sarà salvato nello store */}
+            {review.user && (
+              <CommentForm
+                comments={comments}
+                setComments={setComments}
+                user={review.user}
+              />
+            )}
             <Segment color="black" inverted>
               <Header as="h3">Comments:</Header>
               <Divider />

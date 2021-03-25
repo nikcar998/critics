@@ -10,7 +10,7 @@ export default class ReviewStore {
   selectedReview: Review | null = null;
   loading = false;
   page = 1;
-  errors: string[] | null = null;
+  errors: string[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -30,7 +30,6 @@ export default class ReviewStore {
     }
   };
 
-  //TODO-> scegliere se caricare i commenti da qui o da proprio store e aggiustare commento
   //load a single review with like and comments(?)
   loadReview = async (id: string) => {
     this.setLoading(true);

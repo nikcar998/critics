@@ -1,5 +1,7 @@
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useHistory } from "react-router";
 import {
   Button,
   Grid,
@@ -15,51 +17,68 @@ import { Comment } from "../../app/models/comment";
 //this is the structure of a single comment
 interface Props {
   comment: Comment;
+  showOrNot?: boolean 
 }
-export const Comments = ({ comment }: Props) => {
+const Comments = ({ comment, showOrNot }: Props) => {
   const defaultImageUrl =
     "/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
+
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
   });
-  const likeNumberControl=comment.likes ? comment.likes.length : 0;
-  const [likesNumber,setLikesNumber]=useState(comment.likes ? comment.likes.length : 0)
-//TODO-> togliere console.log()
-useEffect(()=>{
-  console.log(comment);
-},[])
 
-  function handleNewLike(){
-    agent.Likes.storeCommentLike(comment.id).then((resp)=>{
-      if(likeNumberControl === likesNumber){
-      setLikesNumber((likesNumber + 1))
-      }else{
-        setLikesNumber((likesNumber - 1))
+  const likeNumberControl = comment.likes ? comment.likes.length : 0;
+  const [likesNumber, setLikesNumber] = useState(
+    comment.likes ? comment.likes.length : 0
+  );
+
+  const history = useHistory();
+
+
+  //TODO -> better like logic
+  function handleNewLike() {
+    agent.Likes.storeCommentLike(comment.id).then((resp) => {
+      if (likeNumberControl === likesNumber) {
+        setLikesNumber(likesNumber + 1);
+      } else {
+        setLikesNumber(likesNumber - 1);
       }
     });
-   
   }
   return (
     <Grid>
-      <GridRow columns={2} >
+      <GridRow columns={2}>
         <Grid.Column
           width={isDesktop ? 1 : 3}
           verticalAlign="top"
           textAlign="right"
           style={{ paddingRight: 0 }}
         >
-          {comment.user &&
-          <Image
-            src={
-              comment.user.avatar
-                ? "http://127.0.0.1:8000/api/show/avatar?url=" +
-                  comment.user.avatar
-                : defaultImageUrl
-            }
+          {comment.user && (
+            <Image
+              src={
+                comment.user.avatar
+                  ? "http://127.0.0.1:8000/api/show/avatar?url=" +
+                    comment.user.avatar
+                  : defaultImageUrl
+              }
+              circular
+              style={{ width: "30px", height: "30px", marginBottom: 5 }}
+              inline
+              verticalAlign="top"
+            />
+          )}
+  {/*************************** here i will give the oprion to show this button or not */}
+       {!showOrNot &&   <Button
+            icon="eye"
+            basic
+            color="teal"
+            compact
             circular
-            style={{ width: "30px", height: "30px", marginBottom: 5 }}
-            inline
-            verticalAlign="top"
+            size="small"
+            onClick={() => {
+              history.push("/comment/"+comment.id)
+            }}
           />
 }
           <Button
@@ -69,7 +88,10 @@ useEffect(()=>{
             compact
             circular
             size="small"
-            onClick={()=>{handleNewLike()}}
+            style={{ marginTop: 3 }}
+            onClick={() => {
+              handleNewLike();
+            }}
           />
         </Grid.Column>
         <Grid.Column
@@ -115,3 +137,5 @@ useEffect(()=>{
     </Grid>
   );
 };
+
+export default observer(Comments)
