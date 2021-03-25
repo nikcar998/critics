@@ -7,7 +7,7 @@ interface Props {
   store: string;
 }
 export const ButtonGroupNextBack = ({ store }: Props) => {
-  const { filmStore, reviewStore } = useStore();
+  const { filmStore, reviewStore, commentStore } = useStore();
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(2);
@@ -23,6 +23,11 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
         reviewStore.reviewsPagination &&
           setTotalPages(reviewStore.reviewsPagination.last_page);
         break;
+      case "commentStore":
+        setPage(commentStore.page);
+        commentStore.pagination &&
+          setTotalPages(commentStore.pagination.last_page);
+        break;
     }
   }, [filmStore, reviewStore, store]);
 
@@ -37,6 +42,11 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
         reviewStore.setPage(nextORBack);
         window.scrollTo(0, 0);
         setPage(reviewStore.page);
+        break;
+      case "commentStore":
+        commentStore.setPage(nextORBack);
+        window.scrollTo(0, 0);
+        setPage(commentStore.page);
         break;
     }
   };

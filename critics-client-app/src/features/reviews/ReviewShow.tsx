@@ -12,21 +12,23 @@ import {
   Segment,
 } from "semantic-ui-react";
 import agent from "../../app/api/agent";
+import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
+import { Comment } from "../../app/models/comment";
 import { Review } from "../../app/models/review";
 import { useStore } from "../../app/stores/store";
 import { CommentForm } from "../comments/CommentForm";
 import { Comments } from "../comments/Comments";
 
-
 //this component show review's details and comments
 const ReviewShow = () => {
   const { id } = useParams<{ id: string }>();
   const [review, setReview] = useState<Review | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   const defaultImageUrl = "/no_picture_available.jpg";
 
-  const { reviewStore } = useStore();
+  const { reviewStore, commentStore } = useStore();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
@@ -49,17 +51,21 @@ const ReviewShow = () => {
     }
   }
 
-
   useEffect(() => {
     reviewStore.loadReview(id).then(() => {
       setReview(reviewStore.selectedReview);
+      if (reviewStore.selectedReview) {
+        commentStore
+          .loadComments(reviewStore.selectedReview.id)
+          .then(() => setComments(commentStore.comments));
+      }
+      //TODO -> like logic not working on first render.
       if (review) {
         setLikeNumberControl(review.likes.length);
         setLikesNumber(review.likes.length);
       }
     });
   }, [id, reviewStore]);
-
 
   return (
     <Fragment>
@@ -170,23 +176,32 @@ const ReviewShow = () => {
                 </Grid.Row>
               </Grid>
             </Segment>
-{/*********************************** COMMENT FORM ************************ */}
-            <CommentForm review={review} setReview={setReview} />
-            {review.comment.length > 0 && (
-              <Segment color="black" inverted>
-                <Header as="h3">Comments:</Header>
-                <Divider />
-                
-{/*********************************** COMMENTS INDEX ************************ */}
-                {review.comment.map((comment) => {
+            {/*********************************** COMMENT FORM ************************ */}
+            <CommentForm
+              comments={comments}
+              setComments={setComments}
+              review={review}
+            />
+            <Segment color="black" inverted>
+              <Header as="h3">Comments:</Header>
+              <Divider />
+
+              {/*********************************** COMMENTS INDEX ************************ */}
+
+              {commentStore.loading ? (
+                <LoadingComponent />
+              ) : (
+                comments.length > 0 &&
+                comments.map((comment) => {
                   if (!comment.parent_id) {
                     return <Comments comment={comment} />;
                   } else {
                     return null;
                   }
-                })}
-              </Segment>
-            )}
+                })
+              )}
+              <ButtonGroupNextBack store="commentStore" />
+            </Segment>
           </Fragment>
         )
       )}

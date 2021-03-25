@@ -20,6 +20,7 @@ axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.withCredentials = true;
 
 //here i will add 1 sec wait to let compontents show loading style. It will handle errors too.
+//it will return the errors from the api.
 axios.interceptors.response.use(
   async (response) => {
     await sleep(1000);
@@ -116,7 +117,8 @@ const Likes = {
 
 //////////////////////// COMMENTS ////////////////
 const Comments = {
-  showComment: (id:number) => requests.get("api/comment/show/"+id),
+  showComment: (id:number) => requests.get<Comment>("api/comment/show/"+id),
+  listComments: (id:number,page:number) => requests.get<PaginationMyApi<Comment>>(`api/comment/index/${id}?page=${page}`),
   storeComment: (comment: Comment)=> requests.post<Comment>("api/comment/store", comment),
   editComment: (id:number, comment:Comment)=> requests.put<Comment>("api/comment/edit/"+id, comment)
 }
