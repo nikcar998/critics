@@ -16,7 +16,7 @@ const Review = ({ review }: Props) => {
   const [maxCharacters, setMaxCharacters] = useState([18, 190]);
 
   const defaultImageUrl = "/images/no_picture_available.jpg";
-  const reviewLink = "/images/reviews/" + review.id;
+  const reviewLink = "/reviews/" + review.id;
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",

@@ -65,7 +65,7 @@ const ReviewShow = () => {
         setLikesNumber(review.likes.length);
       }
     });
-  }, [id, reviewStore, commentStore, review]);
+  }, [id, reviewStore, commentStore]);
 
   return (
     <Fragment>
@@ -197,7 +197,7 @@ const ReviewShow = () => {
                 comments.length > 0 &&
                 comments.map((comment) => {
                   if (!comment.parent_id) {
-                    return <Comments comment={comment} />;
+                    return <Comments key={comment.id} comment={comment} />;
                   } else {
                     return null;
                   }
