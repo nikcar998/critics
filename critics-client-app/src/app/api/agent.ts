@@ -6,6 +6,8 @@ import { Like } from "../models/like";
 import { PaginationExtApi } from "../models/paginationExtApi";
 import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review } from "../models/review";
+import { store } from "../stores/store";
+import {history} from "../.."
 
 
 //TODO->dopo l'implementazione del login gestire csrf qui o in userStore 
@@ -44,13 +46,15 @@ axios.interceptors.response.use(
         }
         break;
       case 401:
-        toast.error("unauthorized");
+        toast.error("Unauthorized");
+        console.log("unauthorized")
         break;
       case 404:
-        toast.error("not found");
+        history.push('/not-found')
         break;
       case 500:
-        toast.error("server error");
+        store.commonStore.setServerError(data);
+        history.push('/server-error');
         break;
     }
     return Promise.reject(error);

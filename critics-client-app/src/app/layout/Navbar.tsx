@@ -15,7 +15,7 @@ export const Navbar = () => {
           <Icon name="film" />
           Critics
         </Menu.Item>
-        <Menu.Item  > <Link to="/">Movies</Link></Menu.Item>
+        <Menu.Item  > <Link to="/movies">Movies</Link></Menu.Item>
         <Menu.Item > <Link to="/reviews">Reviews</Link></Menu.Item>
         {isDesktop && (
          <DropdownOptions />

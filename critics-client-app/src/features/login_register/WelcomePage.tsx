@@ -31,7 +31,7 @@ export const WelcomePage = () => {
             width={isDesktop ? 13 : 15}
             verticalAlign="middle"
             textAlign="center"
-            style={{ paddingRight: 10, paddingBottom: 15, paddingLeft: 20 }}
+            style={{ paddingRight: 10, paddingBottom: 15, paddingLeft: 30 }}
           >
             <Segment.Group>
               <Segment>

@@ -1,13 +1,11 @@
 import React from "react";
-import { useHistory } from "react-router";
+import { history } from "../..";
 import { Dropdown, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 
 //if the screen is not a desktop this will shown and Optionside will be hidden
 export const DropdownOptions = () => {
   const { filmStore } = useStore();
-
-  const history = useHistory();
 
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);

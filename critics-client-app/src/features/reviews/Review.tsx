@@ -1,10 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useHistory } from "react-router-dom";
+import { history } from "../..";
 import { Divider, Grid, Header, Icon, Image, Segment } from "semantic-ui-react";
 import { Review as ReviewType } from "../../app/models/review";
-
 
 //this is the structure of a single review, used by the ReviewList component
 interface Props {
@@ -18,8 +17,6 @@ const Review = ({ review }: Props) => {
 
   const defaultImageUrl = "/images/no_picture_available.jpg";
   const reviewLink = "/images/reviews/" + review.id;
-
-  const history = useHistory();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",

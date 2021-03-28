@@ -1,13 +1,11 @@
 import { observer } from "mobx-react-lite";
-import { useHistory } from "react-router";
+import { history } from "../..";
 import { Button, Grid, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 
 //if the screen is  a desktop this will be shown on the left
 const OptionSide = () => {
   const { filmStore } = useStore();
-
-  const history = useHistory();
 
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);

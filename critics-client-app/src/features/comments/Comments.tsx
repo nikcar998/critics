@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useHistory } from "react-router";
+import { history } from "../..";
 import {
   Button,
   Grid,
@@ -13,11 +13,10 @@ import {
 import agent from "../../app/api/agent";
 import { Comment } from "../../app/models/comment";
 
-
 //this is the structure of a single comment
 interface Props {
   comment: Comment;
-  showOrNot?: boolean 
+  showOrNot?: boolean;
 }
 const Comments = ({ comment, showOrNot }: Props) => {
   const defaultImageUrl =
@@ -31,9 +30,6 @@ const Comments = ({ comment, showOrNot }: Props) => {
   const [likesNumber, setLikesNumber] = useState(
     comment.likes ? comment.likes.length : 0
   );
-
-  const history = useHistory();
-
 
   //TODO -> better like logic
   function handleNewLike() {
@@ -68,19 +64,20 @@ const Comments = ({ comment, showOrNot }: Props) => {
               verticalAlign="top"
             />
           )}
-  {/*************************** here i will give the oprion to show this button or not */}
-       {!showOrNot &&   <Button
-            icon="eye"
-            basic
-            color="teal"
-            compact
-            circular
-            size="small"
-            onClick={() => {
-              history.push("/comment/"+comment.id)
-            }}
-          />
-}
+          {/*************************** here i will give the oprion to show this button or not */}
+          {!showOrNot && (
+            <Button
+              icon="eye"
+              basic
+              color="teal"
+              compact
+              circular
+              size="small"
+              onClick={() => {
+                history.push("/comment/" + comment.id);
+              }}
+            />
+          )}
           <Button
             icon="like"
             basic
@@ -138,4 +135,4 @@ const Comments = ({ comment, showOrNot }: Props) => {
   );
 };
 
-export default observer(Comments)
+export default observer(Comments);

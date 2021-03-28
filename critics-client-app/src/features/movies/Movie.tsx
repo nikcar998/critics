@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { useHistory } from "react-router";
+import { history } from "../..";
 import { Button, Card, Icon, Image, Transition } from "semantic-ui-react";
 import { Film } from "../../app/models/film";
 import { useStore } from "../../app/stores/store";
@@ -9,8 +9,6 @@ interface Props {
 }
 export const Movie = ({ oneFilm }: Props) => {
   const { filmStore } = useStore();
-
-  const history = useHistory();
 
   const changeSelectedFilm = (id: number) => {
     filmStore.selectFilm(id).then(() => {
@@ -33,7 +31,7 @@ export const Movie = ({ oneFilm }: Props) => {
         width: "225px",
         maxHeight: 400,
         overflow: "auto",
-        cursor:"pointer"
+        cursor: "pointer",
       }}
     >
       {isClicked ? (

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Redirect, useHistory } from "react-router";
+import { Redirect } from "react-router";
 import {
   DropdownProps,
   Form,
@@ -15,12 +15,11 @@ import { useStore } from "../../app/stores/store";
 import axios from "axios";
 import ValidationErrors from "../errors/ValidationErrors";
 import { observer } from "mobx-react-lite";
-
+import { history } from "../..";
 
 //this component is necessary to store the reviews
 const ReviewForm = () => {
   const { filmStore, reviewStore } = useStore();
-  const history = useHistory();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
@@ -87,7 +86,6 @@ const ReviewForm = () => {
     }
   };
 
-
   //the necessary values will be added to the review-state, those are necessary to store the new review
   useEffect(() => {
     const newReview = initialState;
@@ -101,7 +99,7 @@ const ReviewForm = () => {
     }
   }, [filmStore.selectedFilm, imageUrl]);
 
-//TODO -> creare pagina errore e ridirigere lì
+  //TODO -> creare pagina errore e ridirigere lì
   //if a user come here without passing from the "MovieList" component will be redirected to the main page
   if (filmStore.selectedFilm == null) {
     return <Redirect to="/" />;
