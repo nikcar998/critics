@@ -6,9 +6,7 @@ import { useMediaQuery } from "react-responsive";
 import { Form, Grid, Image, Segment } from "semantic-ui-react";
 import agent from "../../app/api/agent";
 import { Comment } from "../../app/models/comment";
-import { Review } from "../../app/models/review";
 import { User } from "../../app/models/user";
-import CommentStore from "../../app/stores/commentStore";
 import { useStore } from "../../app/stores/store";
 import ValidationErrors from "../errors/ValidationErrors";
 
@@ -27,13 +25,13 @@ const CommentForm = ({
   user,
   parent_comment,
 }: Props) => {
-  const { reviewStore, commentStore } = useStore();
+  const { reviewStore } = useStore();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
   });
   const defaultAvatarUrl =
-    "/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
+    "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
 
   const initialState = {
     id: 0,
@@ -85,7 +83,7 @@ const CommentForm = ({
       secondPivot.parent_id = parent_comment.id;
       setNewComment(secondPivot);
     }
-  }, []);
+  }, [initialState, parent_comment, reviewStore.selectedReview]);
 
   return (
     <Segment style={{ margin: 5 }} secondary>

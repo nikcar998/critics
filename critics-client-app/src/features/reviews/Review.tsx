@@ -16,8 +16,8 @@ const Review = ({ review }: Props) => {
   //this values will change if  the width is less than 1050 px
   const [maxCharacters, setMaxCharacters] = useState([18, 190]);
 
-  const defaultImageUrl = "/no_picture_available.jpg";
-  const reviewLink = "/reviews/" + review.id;
+  const defaultImageUrl = "/images/no_picture_available.jpg";
+  const reviewLink = "/images/reviews/" + review.id;
 
   const history = useHistory();
 

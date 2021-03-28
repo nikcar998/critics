@@ -123,6 +123,9 @@ const Comments = {
   editComment: (id:number, comment:Comment)=> requests.put<Comment>("api/comment/edit/"+id, comment)
 }
 
+///////////////////////// USER /////////////////
+
+
 const agent = {
   Movies,
   Reviews,

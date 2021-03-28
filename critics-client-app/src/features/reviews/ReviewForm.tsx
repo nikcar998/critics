@@ -28,7 +28,7 @@ const ReviewForm = () => {
 
   const imageUrl =
     "https://image.tmdb.org/t/p/w500" + filmStore.selectedFilm?.poster_path;
-  const defaultImageUrl = "/no_picture_available.jpg";
+  const defaultImageUrl = "/images/no_picture_available.jpg";
 
   //values necessary for the <Select /> element, that stores the review's rating
   const ratingOptions = [

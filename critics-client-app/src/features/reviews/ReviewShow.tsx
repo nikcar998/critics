@@ -26,7 +26,7 @@ const ReviewShow = () => {
   const [review, setReview] = useState<Review | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
 
-  const defaultImageUrl = "/no_picture_available.jpg";
+  const defaultImageUrl = "/images/no_picture_available.jpg";
 
   const { reviewStore, commentStore } = useStore();
 
@@ -42,7 +42,7 @@ const ReviewShow = () => {
   function handleNewLike() {
     if (review) {
       agent.Likes.storeReviewLike(review.id).then(() => {
-        if (likeNumberControl == likesNumber) {
+        if (likeNumberControl === likesNumber) {
           setLikesNumber(likesNumber + 1);
         } else {
           setLikesNumber(likesNumber - 1);
@@ -65,7 +65,7 @@ const ReviewShow = () => {
         setLikesNumber(review.likes.length);
       }
     });
-  }, [id, reviewStore]);
+  }, [id, reviewStore, commentStore, review]);
 
   return (
     <Fragment>

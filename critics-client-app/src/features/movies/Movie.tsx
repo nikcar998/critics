@@ -23,7 +23,7 @@ export const Movie = ({ oneFilm }: Props) => {
   const [visibleImage, setVisibleImage] = useState(true);
 
   const imageUrl = "https://image.tmdb.org/t/p/w500" + oneFilm.poster_path;
-  const defaultImageUrl = "/no_picture_available.jpg";
+  const defaultImageUrl = "/images/no_picture_available.jpg";
 
   return (
     <Card

@@ -29,7 +29,7 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
           setTotalPages(commentStore.pagination.last_page);
         break;
     }
-  }, [filmStore, reviewStore, store]);
+  }, [filmStore, reviewStore, store, commentStore]);
 
   const scrollPages = (nextORBack: boolean) => {
     switch (store) {

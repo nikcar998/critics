@@ -12,16 +12,6 @@ body {
     rgba(8, 8, 8, 1) 99%
   ) !important;
 }
-.reactBody{
-  background: linear-gradient(
-    45deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(121, 9, 9, 1) 58%,
-    rgba(8, 8, 8, 1) 99%
-  ) !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-}
 .ui.inverted.top.fixed.menu {
   background: linear-gradient(
     45deg,

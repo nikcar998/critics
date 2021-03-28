@@ -11,6 +11,7 @@ import ReviewForm from "../../features/reviews/ReviewForm";
 import ReviewShow from "../../features/reviews/ReviewShow";
 import { ToastContainer } from "react-toastify";
 import { CommentShow } from "../../features/comments/CommentShow";
+import { WelcomePage } from "../../features/login_register/WelcomePage";
 
 //here i will handle all routing. the layout will change using "react-responsive"
 function App() {
@@ -21,31 +22,34 @@ function App() {
     <>
       <ToastContainer position="bottom-right" hideProgressBar />
       <Router>
-        <Fragment>
-          <Navbar />
-          <Grid
-            columns={isDesktop ? 2 : 1}
-            divided
-            style={{ margin: "2px", marginTop: "12px" }}
-            className="reactBody"
-          >
-            <Grid.Row>
-              {isDesktop && <OptionSide />}
-              <Grid.Column
-                width={isDesktop ? 12 : 15}
-                style={{ margin: "10px" }}
-              >
-                <Switch>
-                  <Route path="/" exact component={MoviesList} />
-                  <Route path="/reviews/store" exact component={ReviewForm} />
-                  <Route path="/reviews" exact component={ReviewsList} />
-                  <Route path="/reviews/:id" component={ReviewShow} />
-                  <Route path="/comment/:id" component={CommentShow} />
-                </Switch>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Fragment>
+        <Switch>
+          <Route path="/" exact component={WelcomePage} />
+          <Fragment>
+            <Navbar />
+            <Grid
+              columns={isDesktop ? 2 : 1}
+              divided
+              style={{ margin: "2px", marginTop: "12px" }}
+              className="reactBody"
+            >
+              <Grid.Row>
+                {isDesktop && <OptionSide />}
+                <Grid.Column
+                  width={isDesktop ? 12 : 15}
+                  style={{ margin: "10px" }}
+                >
+                  <Switch>
+                    <Route path="/movies" exact component={MoviesList} />
+                    <Route path="/reviews/store" exact component={ReviewForm} />
+                    <Route path="/reviews" exact component={ReviewsList} />
+                    <Route path="/reviews/:id" component={ReviewShow} />
+                    <Route path="/comment/:id" component={CommentShow} />
+                  </Switch>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Fragment>
+        </Switch>
       </Router>
     </>
   );

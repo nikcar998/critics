@@ -25,7 +25,7 @@ export const CommentShow = () => {
     });
 
     console.log(commentStore.selectedComment);
-  }, []);
+  }, [commentStore, id]);
 
   return (
     <>

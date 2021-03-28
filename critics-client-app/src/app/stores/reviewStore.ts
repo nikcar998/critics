@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 import agent from "../api/agent";
-import { Comment } from "../models/comment";
 import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review } from "../models/review";
 

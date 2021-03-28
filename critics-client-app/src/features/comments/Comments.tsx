@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useHistory } from "react-router";
 import {
@@ -21,7 +21,7 @@ interface Props {
 }
 const Comments = ({ comment, showOrNot }: Props) => {
   const defaultImageUrl =
-    "/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
+    "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
