@@ -47,6 +47,7 @@ export default class ReviewStore {
     try {
       await agent.Reviews.store(review);
       this.setLoading(false);
+      this.errors = [];
     } catch (err) {
       this.errors = err;
       console.log(this.errors);
