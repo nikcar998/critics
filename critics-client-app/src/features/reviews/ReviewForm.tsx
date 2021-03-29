@@ -71,7 +71,7 @@ const ReviewForm = () => {
 
   //necessary to handle client validation
   const validationSchema = Yup.object({
-    //title: Yup.string().required("The title is required"),
+    title: Yup.string().required("The title is required"),
     opinion: Yup.string().required("The opinion is required"),
     rating: Yup.string().required("The rating is required"),
   });
@@ -136,14 +136,18 @@ const ReviewForm = () => {
                       placeholder="Write what you think about the movie"
                       rows={3}
                     />
-                    <Label size="large">Rating:</Label>
                     <MySelectInput
+                      label="Rating"
                       name="rating"
                       placeholder="0"
                       options={ratingOptions}
                     />
                     <Button
-                      disabled={ (isSubmitting && error[0]===null) || !dirty || !isValid}
+                      disabled={
+                        (isSubmitting && error[0] === null) ||
+                        !dirty ||
+                        !isValid
+                      }
                       type="submit"
                       style={{ marginTop: 10 }}
                       primary
