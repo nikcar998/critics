@@ -24,7 +24,7 @@ import MySelectInput from "../../app/common/form/MySelectInput";
 import * as Yup from "yup";
 import { Review } from "../../app/models/review";
 
-//this component is necessary to store the reviews
+//this component is necessary to store reviews
 const ReviewForm = () => {
   const { filmStore, reviewStore } = useStore();
 
@@ -52,14 +52,15 @@ const ReviewForm = () => {
   };
 
   const [review, setReview] = useState(initialState);
+  //this state is necessary to menage the errors coming from the server
   const [error, setError] = useState<string[]>([]);
 
   //TODO -> togliere la richiesta di crsf token
   const handleFormSubmit = (review: Review) => {
     console.log(reviewStore.errors[0]);
-    axios.get("/sanctum/csrf-cookie").then((response) => {
+    axios.get("/sanctum/csrf-cookie").then(() => {
       reviewStore.storeReview(review).then(() => {
-        if (reviewStore.errors[0] != null) {
+        if (reviewStore.errors[0]) {
           setError(reviewStore.errors);
         } else {
           history.push("/reviews");
@@ -68,13 +69,14 @@ const ReviewForm = () => {
     });
   };
 
+  //necessary to handle client validation
   const validationSchema = Yup.object({
-    title: Yup.string().required("The title is required"),
+    //title: Yup.string().required("The title is required"),
     opinion: Yup.string().required("The opinion is required"),
     rating: Yup.string().required("The rating is required"),
   });
 
-  //the necessary values will be added to the review-state, those are necessary to store the new review
+  //the necessary values will be added to the state.review in order to store the new review
   useEffect(() => {
     const newReview = initialState;
 
@@ -88,8 +90,8 @@ const ReviewForm = () => {
   }, [filmStore.selectedFilm, imageUrl]);
 
   //TODO -> creare pagina errore e ridirigere lì
-  //if a user come here without passing from the "MovieList" component will be redirected to the main page
-  if (filmStore.selectedFilm == null) {
+  //if a user come here without passing from the "MovieList" component, he will be redirected to the main page
+  if (!filmStore.selectedFilm) {
     return <Redirect to="/" />;
   }
   return (
@@ -112,7 +114,9 @@ const ReviewForm = () => {
               <Header as="h2" style={{ marginTop: 10 }}>
                 {filmStore.selectedFilm.title}
               </Header>
+              {/********************* SERVER VALIDATION SHOW *********** */}
               {error[0] != null && <ValidationErrors errors={error} />}
+              {/********************** FORMIK FORM *********** */}
               <Formik
                 validationSchema={validationSchema}
                 enableReinitialize
@@ -139,7 +143,7 @@ const ReviewForm = () => {
                       options={ratingOptions}
                     />
                     <Button
-                      disabled={ !dirty || !isValid}
+                      disabled={ (isSubmitting && error[0]===null) || !dirty || !isValid}
                       type="submit"
                       style={{ marginTop: 10 }}
                       primary
