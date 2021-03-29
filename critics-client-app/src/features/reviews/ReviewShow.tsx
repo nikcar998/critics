@@ -69,6 +69,7 @@ const ReviewShow = () => {
 
   return (
     <Fragment>
+      {/******************************* LOADING COMPONENT ************************* */}
       {reviewStore.loading ? (
         <LoadingComponent />
       ) : (
@@ -88,6 +89,7 @@ const ReviewShow = () => {
               inverted
             >
               <Grid divided inverted>
+                {/******************************* AVATAR AND USERNAME ************************* */}
                 {review.user && (
                   <Grid.Row columns={1} style={{ margin: 0, padding: 0 }}>
                     <Grid.Column>
@@ -126,7 +128,9 @@ const ReviewShow = () => {
                     </Grid.Column>
                   </Grid.Row>
                 )}
+                {/******************************* IMAGE AND FIELDS ************************* */}
                 <Grid.Row columns={isDesktop ? 2 : 1}>
+                  {/******************************* IMAGE ************************* */}
                   <Grid.Column width={isDesktop ? 4 : 16}>
                     <Image
                       src={review.cover ? review.cover : defaultImageUrl}
@@ -137,13 +141,20 @@ const ReviewShow = () => {
                       }}
                     />
                   </Grid.Column>
+                  {/******************************* FIELDS ************************* */}
                   <Grid.Column width={isDesktop ? 11 : 16}>
-                    <Header style={{ color: "white" }} as="h2">
+                    <Header
+                      style={{ color: "white", overflow: "auto" }}
+                      as="h2"
+                    >
                       {review.title}
                     </Header>
                     <Divider />
                     <Header
-                      style={{ lineHeight: "10%", color: "white" }}
+                      style={{
+                        lineHeight: "10%",
+                        color: "white",
+                      }}
                       as="h4"
                     >
                       {review.film_title}
@@ -157,11 +168,10 @@ const ReviewShow = () => {
                         color: "white",
                         height: "90px",
                         marginTop: 0,
+                        overflow: "auto",
                       }}
                     >
-                      {review.opinion.length > 190
-                        ? review.opinion.slice(0, 190) + "..."
-                        : review.opinion}
+                      {review.opinion}
                     </Header>
                     <Divider />
                     <Button

@@ -42,7 +42,7 @@ const Review = ({ review }: Props) => {
           history.push(reviewLink);
         }}
       >
-        <Grid>
+        <Grid >
           {review.user && (
             <Grid.Row columns={1} style={{ margin: 0, padding: 0 }}>
               <Grid.Column>
@@ -81,7 +81,7 @@ const Review = ({ review }: Props) => {
               </Grid.Column>
             </Grid.Row>
           )}
-          <Grid.Row columns={2}>
+          <Grid.Row columns={2} style={{marginTop:5,paddingBottom:0}}>
             <Grid.Column width={5} style={{ padding: 0 }}>
               <Image
                 src={review.cover ? review.cover : defaultImageUrl}

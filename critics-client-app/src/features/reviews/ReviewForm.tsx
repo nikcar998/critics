@@ -71,8 +71,8 @@ const ReviewForm = () => {
 
   //necessary to handle client validation
   const validationSchema = Yup.object({
-    title: Yup.string().required("The title is required"),
-    opinion: Yup.string().required("The opinion is required"),
+    title: Yup.string().required("The title is required").max(200,"Max 200 characters"),
+    opinion: Yup.string().required("The opinion is required").max(2000,"Max 2000 characters"),
     rating: Yup.string().required("The rating is required"),
   });
 
