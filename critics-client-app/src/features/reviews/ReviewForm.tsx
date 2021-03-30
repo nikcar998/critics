@@ -12,7 +12,6 @@ import {
   Select,
 } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
-import axios from "axios";
 import ValidationErrors from "../errors/ValidationErrors";
 import { observer } from "mobx-react-lite";
 import { history } from "../..";
@@ -60,7 +59,6 @@ const ReviewForm = () => {
     setErrors: any,
     setSubmitting: (isSubmitting: boolean) => void
   ) => {
-    axios.get("/sanctum/csrf-cookie").then(() => {
       reviewStore
         .storeReview(review)
         .then((resp) => {
@@ -71,7 +69,6 @@ const ReviewForm = () => {
           setErrors({ error });
           setSubmitting(false);
         });
-    });
   };
 
   //necessary to handle client validation

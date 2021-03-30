@@ -1,4 +1,3 @@
-import axios from "axios";
 import { ErrorMessage, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
@@ -21,12 +20,10 @@ export default observer(function LoginForm() {
     setErrors: any,
     setSubmitting: (isSubmitting: boolean) => void
   ) {
-    axios.get("/sanctum/csrf-cookie").then((response) => {
       userStore.login(values).catch((error) => {
         setErrors({ error});
         setSubmitting(false);
       });
-    });
   }
 
   return (

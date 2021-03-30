@@ -7,11 +7,10 @@ import { PaginationExtApi } from "../models/paginationExtApi";
 import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review } from "../models/review";
 import { store } from "../stores/store";
-import {history} from "../.."
+import { history } from "../..";
 import { User, UserFormValues, UserWithToken } from "../models/user";
 
-
-//TODO->dopo l'implementazione del login gestire csrf qui o in userStore 
+//TODO->dopo l'implementazione del login gestire csrf qui o in userStore
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -47,29 +46,34 @@ axios.interceptors.response.use(
         }
         break;
       case 401:
-        history.push('/');
+        history.push("/");
         toast.error("Unauthorized");
         break;
       case 404:
-        history.push('/not-found')
+        history.push("/not-found");
         break;
       case 500:
         store.commonStore.setServerError(data);
-        history.push('/server-error');
+        history.push("/server-error");
         break;
     }
     return Promise.reject(error);
   }
 );
 
-
 //TODO -> make authorization dynamic
 //here i will handle the authorization. Now is made in a static way, it will be implemented to use localStorage
 //to get the user's token
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("C_token");
-  if (token) config.headers.Authorization = `Bearer ${token}`; 
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   config.headers.Accept = "Application/json";
+  if (config.method == "POST") {
+    axios.get("/csrf").then(({ data }) => {
+      config.headers.common["X-CSRF-TOKEN"] = data;
+    });
+  }
+
   return config;
 });
 
@@ -121,27 +125,33 @@ const Likes = {
 
 //////////////////////// COMMENTS ////////////////
 const Comments = {
-  showComment: (id:string) => requests.get<Comment>("api/comment/show/"+id),
-  listComments: (id:number,page:number) => requests.get<PaginationMyApi<Comment>>(`api/comment/index/${id}?page=${page}`),
-  storeComment: (comment: CommentFormValues)=> requests.post<Comment>("api/comment/store", comment),
-  editComment: (id:number, comment:Comment)=> requests.put<Comment>("api/comment/edit/"+id, comment)
-}
-
+  showComment: (id: string) => requests.get<Comment>("api/comment/show/" + id),
+  listComments: (id: number, page: number) =>
+    requests.get<PaginationMyApi<Comment>>(
+      `api/comment/index/${id}?page=${page}`
+    ),
+  storeComment: (comment: CommentFormValues) =>
+    requests.post<Comment>("api/comment/store", comment),
+  editComment: (id: number, comment: Comment) =>
+    requests.put<Comment>("api/comment/edit/" + id, comment),
+};
 
 //TODO -> create current user route
 ///////////////////////// USER /////////////////
 const Account = {
-  current: () => requests.get<User>('/api/user/logged'),
-  login: (user: UserFormValues) => requests.post<UserWithToken>('/api/login',user),
-  register: ( user: UserFormValues) =>requests.post<UserWithToken>('/api/register', user),
-}
+  current: () => requests.get<User>("/api/user/logged"),
+  login: (user: UserFormValues) =>
+    requests.post<UserWithToken>("/api/login", user),
+  register: (user: UserFormValues) =>
+    requests.post<UserWithToken>("/api/register", user),
+};
 
 const agent = {
   Movies,
   Reviews,
   Likes,
   Comments,
-  Account
+  Account,
 };
 
 export default agent;

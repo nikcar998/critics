@@ -13,7 +13,7 @@ interface Props {
 const Review = ({ review }: Props) => {
   //max charaacters showed in title[0] and in opinion[1]
   //this values will change if  the width is less than 1050 px
-  const [maxCharacters, setMaxCharacters] = useState([18, 190]);
+  const [maxCharacters, setMaxCharacters] = useState([15, 170, 20]);
 
   const defaultImageUrl = "/images/no_picture_available.jpg";
   const reviewLink = "/reviews/" + review.id;
@@ -103,8 +103,8 @@ const Review = ({ review }: Props) => {
               </Header>
               <Divider />
               <Header style={{ lineHeight: "10%", color: "white" }} as="h4">
-                {review.film_title.length > 18
-                  ? review.film_title.slice(0, 18) + "..."
+                {review.film_title.length > maxCharacters[3]
+                  ? review.film_title.slice(0, maxCharacters[0]) + "..."
                   : review.film_title}
               </Header>
               <Divider />

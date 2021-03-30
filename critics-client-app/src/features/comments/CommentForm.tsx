@@ -1,4 +1,3 @@
-import axios from "axios";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import React, { ChangeEvent, useEffect, useState } from "react";
@@ -54,7 +53,7 @@ const CommentForm = ({
     setErrors: (errors: FormikErrors<CommentFormValues>) => void,
     setSubmitting: (isSubmitting: boolean) => void
   ) => {
-    axios.get("/sanctum/csrf-cookie").then((response) => {
+
       agent.Comments.storeComment(comment)
         .then((resp) => {
           resp.user = user;
@@ -66,7 +65,6 @@ const CommentForm = ({
           setErrors({ error });
           setSubmitting(false);
         });
-    });
   };
 
   const validationSchema = Yup.object({
@@ -96,7 +94,7 @@ const CommentForm = ({
       <Grid>
         <Grid.Row centered={isDesktop} columns={2} style={{ padding: "5 0" }}>
           <Grid.Column
-            width={2}
+            width={isDesktop ? 1 : 2}
             textAlign="right"
             verticalAlign="top"
             style={{ padding: 0, margin: 0 }}
