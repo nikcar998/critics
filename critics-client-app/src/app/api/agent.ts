@@ -8,6 +8,7 @@ import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review } from "../models/review";
 import { store } from "../stores/store";
 import {history} from "../.."
+import { User, UserFormValues, UserWithToken } from "../models/user";
 
 
 //TODO->dopo l'implementazione del login gestire csrf qui o in userStore 
@@ -127,14 +128,21 @@ const Comments = {
   editComment: (id:number, comment:Comment)=> requests.put<Comment>("api/comment/edit/"+id, comment)
 }
 
-///////////////////////// USER /////////////////
 
+//TODO -> create current user route
+///////////////////////// USER /////////////////
+const Account = {
+  current: () => requests.get<User>('/api/account'),
+  login: (user: UserFormValues) => requests.post<UserWithToken>('/api/login',user),
+  register: ( user: UserFormValues) =>requests.post<UserWithToken>('/api/register', user),
+}
 
 const agent = {
   Movies,
   Reviews,
   Likes,
-  Comments
+  Comments,
+  Account
 };
 
 export default agent;

@@ -6,7 +6,7 @@ import {
   Segment,
   Image,
 } from "semantic-ui-react";
-import { LoginForm } from "./LoginForm";
+import  LoginForm  from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 import { WelcomeNavbar } from "./WelcomeNavbar";
 

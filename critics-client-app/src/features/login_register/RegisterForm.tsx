@@ -50,7 +50,7 @@ export const RegisterForm = () => {
             <MyTextInput label="Name" name="name" placeholder="Name" />
             <MyTextInput label="Username" placeholder="UserName" name="username" />
             <MyTextInput label="Email" placeholder="Email" name="email" />
-            <MyTextInput label="Password" placeholder="Password" name="password" />
+            <MyTextInput label="Password" placeholder="Password" name="password" type="password" />
             <Button type="submit" content="Register" primary />
           </Form>
         )}
