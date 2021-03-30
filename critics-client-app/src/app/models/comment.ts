@@ -11,3 +11,11 @@ export interface Comment {
         user?: User ,
         likes: Like[]
 }
+
+export interface CommentFormValues{
+    user_id: number,
+    body: string,
+    review_id: number,
+    parent_id: number | null,
+    error:string[] | null
+}

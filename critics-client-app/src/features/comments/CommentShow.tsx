@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Segment, Header, Divider, Grid } from "semantic-ui-react";
@@ -7,7 +8,7 @@ import { useStore } from "../../app/stores/store";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
 
-export const CommentShow = () => {
+export default observer (function CommentShow () {
   const { id } = useParams<{ id: string }>();
 
   const [comment, setComment] = useState<Comment | null>(null);
@@ -77,4 +78,4 @@ export const CommentShow = () => {
       )}
     </>
   );
-};
+});

@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { Comment } from "../models/comment";
+import { Comment, CommentFormValues } from "../models/comment";
 import { Film } from "../models/film";
 import { Like } from "../models/like";
 import { PaginationExtApi } from "../models/paginationExtApi";
@@ -47,8 +47,8 @@ axios.interceptors.response.use(
         }
         break;
       case 401:
+        history.push('/');
         toast.error("Unauthorized");
-        console.log("unauthorized")
         break;
       case 404:
         history.push('/not-found')
@@ -67,9 +67,8 @@ axios.interceptors.response.use(
 //here i will handle the authorization. Now is made in a static way, it will be implemented to use localStorage
 //to get the user's token
 axios.interceptors.request.use((config) => {
-  //const token = localStorage.getItem("TR_token");
-  //if (token) config.headers.Authorization = `Bearer ${token}`;
-  config.headers.Authorization = `Bearer 1|VSVTncHYD8S7oP7JZHav3L2HR9McOcC5Dm7rG0U8`;
+  const token = localStorage.getItem("C_token");
+  if (token) config.headers.Authorization = `Bearer ${token}`; 
   config.headers.Accept = "Application/json";
   return config;
 });
@@ -124,7 +123,7 @@ const Likes = {
 const Comments = {
   showComment: (id:string) => requests.get<Comment>("api/comment/show/"+id),
   listComments: (id:number,page:number) => requests.get<PaginationMyApi<Comment>>(`api/comment/index/${id}?page=${page}`),
-  storeComment: (comment: Comment)=> requests.post<Comment>("api/comment/store", comment),
+  storeComment: (comment: CommentFormValues)=> requests.post<Comment>("api/comment/store", comment),
   editComment: (id:number, comment:Comment)=> requests.put<Comment>("api/comment/edit/"+id, comment)
 }
 
@@ -132,7 +131,7 @@ const Comments = {
 //TODO -> create current user route
 ///////////////////////// USER /////////////////
 const Account = {
-  current: () => requests.get<User>('/api/account'),
+  current: () => requests.get<User>('/api/user/logged'),
   login: (user: UserFormValues) => requests.post<UserWithToken>('/api/login',user),
   register: ( user: UserFormValues) =>requests.post<UserWithToken>('/api/register', user),
 }

@@ -33,4 +33,25 @@ export default class UserStore {
     this.user = null;
     history.push("/");
   };
+
+  getUser = async () => {
+    try {
+      const user = await agent.Account.current();
+      runInAction(()=> this.user = user);
+    }catch (error){
+      console.log(error)
+    }
+  }
+
+  register = async (creds: UserFormValues) => {
+    try {
+      const user = await agent.Account.register(creds);
+      store.commonStore.setToken(user.token);
+      runInAction(() => (this.user = user.user));
+      console.log(user);
+      history.push("/movies");
+    } catch (error) {
+      throw error;
+    }
+  }
 }

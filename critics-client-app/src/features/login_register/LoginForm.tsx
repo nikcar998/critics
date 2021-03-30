@@ -16,11 +16,16 @@ export default observer(function LoginForm() {
     password: Yup.string().required("The password is required"),
   });
 
-  function handleSubmit(values: UserFormValues, setErrors: any) {
+  function handleSubmit(
+    values: UserFormValues,
+    setErrors: any,
+    setSubmitting: (isSubmitting: boolean) => void
+  ) {
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      userStore
-        .login(values)
-        .catch((error) => setErrors({ error: "invalid email or password" }));
+      userStore.login(values).catch((error) => {
+        setErrors({ error});
+        setSubmitting(false);
+      });
     });
   }
 
@@ -37,9 +42,11 @@ export default observer(function LoginForm() {
         validationSchema={validationSchema}
         enableReinitialize
         initialValues={{ email: "", password: "", error: null }}
-        onSubmit={(values, { setErrors }) => handleSubmit(values, setErrors)}
+        onSubmit={(values, { setErrors, setSubmitting }) =>
+          handleSubmit(values, setErrors, setSubmitting)
+        }
       >
-        {({ handleSubmit, isSubmitting, errors }) => (
+        {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
           <Form
             onSubmit={handleSubmit}
             className="ui form"
@@ -65,6 +72,7 @@ export default observer(function LoginForm() {
               )}
             />
             <Button
+              disabled={!isValid || isSubmitting}
               type="submit"
               content="Login"
               primary

@@ -5,7 +5,7 @@ import { useStore } from "../stores/store";
 
 //if the screen is  a desktop this will be shown on the left
 const OptionSide = () => {
-  const { filmStore } = useStore();
+  const { filmStore, userStore } = useStore();
 
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);
@@ -14,7 +14,7 @@ const OptionSide = () => {
   return (
     <Grid.Column width={3}>
       <Segment.Group raised>
-        {/* FILM SECTION  **********************************************/}
+        {/********************* FILM SECTION  **************************/}
         <Segment className="itemsColor" style={{ padding: 0 }}>
           <Header
             as="h3"
@@ -50,7 +50,7 @@ const OptionSide = () => {
             </Button>
           </Button.Group>
         </Segment>
-        {/************* REVIEWS SECTION *********************************** */}
+        {/********************* REVIEWS SECTION *********************************** */}
         <Segment className="itemsColor" style={{ padding: 0 }}>
           <Header
             as="h4"
@@ -78,7 +78,7 @@ const OptionSide = () => {
             </Button>
           </Button.Group>
         </Segment>
-        {/************** PROFILE SECTION ************************* */}
+        {/*********************** PROFILE SECTION ************************* */}
         <Segment className="itemsColor" style={{ padding: 0 }}>
           <Header
             as="h4"
@@ -122,7 +122,7 @@ const OptionSide = () => {
             </Button>
             <Button
               onClick={() => {
-                console.log("hello");
+                userStore.logout();
               }}
               fluid
             >

@@ -1,24 +1,37 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, reaction } from "mobx";
 import { ServerError } from "../models/serverError";
 
-export default class CommonStore{
-    error: ServerError | null = null;
-    token: string | null  =null;
-    appLoaded = false;
-    constructor(){
-        makeAutoObservable(this);
-    }
+export default class CommonStore {
+  error: ServerError | null = null;
+  token: string | null = window.localStorage.getItem("C_token");
+  appLoaded = false;
 
-    setServerError =(error: ServerError ) => {
-        this.error = error;
-    }
+  constructor() {
+    makeAutoObservable(this);
 
-    setToken = (token:string | null) => {
-        if(token) window.localStorage.setItem('C_token', token);
-        this.token = token;
-    }
+    //every time i will call the "setToken" function this reaction will 
+    // check if ("this.token" != null), and set or remove the local storage item.
+    reaction(
+      () => this.token,
+      (token) => {
+        if (token) {
+          window.localStorage.setItem("C_token", token);
+        } else {
+          window.localStorage.removeItem("C_token");
+        }
+      }
+    );
+  }
 
-    setAppLoaded = () => {
-        this.appLoaded = true
-    }
+  setServerError = (error: ServerError) => {
+    this.error = error;
+  };
+
+  setToken = (token: string | null) => {
+    this.token = token;
+  };
+
+  setAppLoaded = () => {
+    this.appLoaded = true;
+  };
 }

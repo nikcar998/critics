@@ -1,4 +1,5 @@
-import { ErrorMessage, Form, Formik } from "formik";
+import axios from "axios";
+import { ErrorMessage, Form, Formik, FormikErrors } from "formik";
 import React, { Fragment, useState } from "react";
 import {
   Segment,
@@ -10,48 +11,95 @@ import {
 } from "semantic-ui-react";
 import * as Yup from "yup";
 import MyTextInput from "../../app/common/form/MyTextInput";
+import { UserFormValues } from "../../app/models/user";
+import { useStore } from "../../app/stores/store";
+import ValidationErrors from "../errors/ValidationErrors";
 
 export const RegisterForm = () => {
-  const initialState = {
-    id: 0,
+  const { userStore } = useStore();
+
+  const initialValues = {
     name: "",
     username: "",
     email: "",
-    email_verified_at: null,
-    description: null,
-    avatar: null,
-    created_at: null,
-    updated_at: null,
     password: "",
+    error: null,
   };
 
   const validationSchema = Yup.object({
-    name: Yup.string().required("The name is required"),
-    username: Yup.string().required("The username is required"),
+    name: Yup.string()
+      .required("The name is required")
+      .min(4, "Min 4 characters")
+      .max(100, "Max 100 characters"),
+    username: Yup.string()
+      .required("The username is required")
+      .min(4, "Min 4 characters")
+      .max(100, "Max 100 characters"),
     email: Yup.string().required("The email is required").email(),
-    password: Yup.string().required("The password is required"),
-
+    password: Yup.string()
+      .required("The password is required")
+      .min(4, "Min 8 characters")
+      .max(100, "Max 100 characters"),
   });
 
-  const [user, setUser] = useState(initialState);
+  function handleSubmit(
+    values: UserFormValues,
+    setErrors: (errors: FormikErrors<{
+      name: string;
+      username: string;
+      email: string;
+      password: string;
+      error: null;
+  }>) => void,
+    setSubmitting: (isSubmitting: boolean) => void
+  ) {
+    userStore.register(values).catch((error) => {
+      setErrors({ error });
+      setSubmitting(false);
+    });
+  }
 
   return (
     <Segment style={{ width: "95%", margin: "auto" }}>
       <Formik
         validationSchema={validationSchema}
         enableReinitialize
-        initialValues={user}
-        onSubmit={(values) => console.log(values)}
+        initialValues={initialValues}
+        onSubmit={(values, { setErrors, setSubmitting }) =>
+          handleSubmit(values, setErrors, setSubmitting)
+        }
       >
-        {({ handleSubmit }) => (
-          <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
+        {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
+          <Form
+            className="ui form error"
+            onSubmit={handleSubmit}
+            autoComplete="off"
+          >
             <Header as="h3" content="Register:" />
             <Divider />
             <MyTextInput label="Name" name="name" placeholder="Name" />
-            <MyTextInput label="Username" placeholder="UserName" name="username" />
+            <MyTextInput
+              label="Username"
+              placeholder="UserName"
+              name="username"
+            />
             <MyTextInput label="Email" placeholder="Email" name="email" />
-            <MyTextInput label="Password" placeholder="Password" name="password" type="password" />
-            <Button type="submit" content="Register" primary />
+            <MyTextInput
+              label="Password"
+              placeholder="Password"
+              name="password"
+              type="password"
+            />
+            <ErrorMessage
+              name="error"
+              render={() => <ValidationErrors errors={errors.error} />}
+            />
+            <Button
+              disabled={!dirty || !isValid || isSubmitting}
+              type="submit"
+              content="Register"
+              primary
+            />
           </Form>
         )}
       </Formik>

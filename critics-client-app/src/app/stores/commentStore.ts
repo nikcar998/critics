@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import agent from "../api/agent";
-import { Comment } from "../models/comment";
+import { Comment, CommentFormValues } from "../models/comment";
 import { PaginationMyApi } from "../models/paginationMyApi";
 
 export default class CommentStore{
@@ -36,14 +36,14 @@ export default class CommentStore{
         }
       };
 
-      storeComment =async (comment : Comment) => {
+      storeComment =async (comment : CommentFormValues) => {
         this.setLoading(true);
         try {
           await agent.Comments.storeComment(comment);
           this.setLoading(false);
         } catch (err) {
           this.setLoading(false);
-          return err;
+          throw err;
         }
       }
     

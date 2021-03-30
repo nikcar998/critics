@@ -50,8 +50,8 @@ export default class ReviewStore {
       this.errors = [];
     } catch (err) {
       this.errors = err;
-      console.log(this.errors);
       this.setLoading(false);
+      throw err;
     }
   };
 

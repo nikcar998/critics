@@ -5,7 +5,7 @@ import { useStore } from "../stores/store";
 
 //if the screen is not a desktop this will shown and Optionside will be hidden
 export const DropdownOptions = () => {
-  const { filmStore } = useStore();
+  const { filmStore, userStore } = useStore();
 
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);
@@ -71,7 +71,12 @@ export const DropdownOptions = () => {
           <Dropdown.Item text="Edit" />
           <Dropdown.Item text="List" />
           <Dropdown.Item text="Search" />
-          <Dropdown.Item text="Logout" />
+          <Dropdown.Item
+            onClick={() => {
+              userStore.logout();
+            }}
+            text="Logout"
+          />
           <Dropdown.Item text="Delete" />
         </Dropdown.Menu>
       </Dropdown>

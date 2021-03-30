@@ -5,12 +5,12 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Button, Grid, Image, Segment } from "semantic-ui-react";
 import agent from "../../app/api/agent";
-import { Comment } from "../../app/models/comment";
+import { Comment, CommentFormValues } from "../../app/models/comment";
 import { User } from "../../app/models/user";
 import { useStore } from "../../app/stores/store";
 import ValidationErrors from "../errors/ValidationErrors";
 import * as Yup from "yup";
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik, FormikErrors, FormikState } from "formik";
 import MyTextArea from "../../app/common/form/MyTextArea";
 
 //TODO -> scegliere metodo di salvataggio commenti ed eventualmente cambiare la pagina
@@ -28,7 +28,7 @@ const CommentForm = ({
   user,
   parent_comment,
 }: Props) => {
-  const { reviewStore } = useStore();
+  const { reviewStore, userStore } = useStore();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
@@ -37,33 +37,34 @@ const CommentForm = ({
     "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
 
   const initialState = {
-    id: 0,
     user_id: 0,
     body: "",
     review_id: 0,
     parent_id: null,
-    replies: [],
-    likes: [],
+    error: null,
   };
 
-  const [newComment, setNewComment] = useState<Comment>(initialState);
-  //this state is necessary to menage the errors coming from the server
-  const [error, setError] = useState<string[]>([]);
+  const [newComment, setNewComment] = useState<CommentFormValues>(initialState);
 
   //TODO -> remove sanctum request from here
   //here i will store a new comment and add it to the "comments" array
-  const handleFormSubmit = (comment: Comment) => {
+  const handleFormSubmit = (
+    comment: CommentFormValues,
+    resetForm: (nextState?: Partial<FormikState<CommentFormValues>> | undefined) => void,
+    setErrors: (errors: FormikErrors<CommentFormValues>) => void,
+    setSubmitting: (isSubmitting: boolean) => void
+  ) => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
       agent.Comments.storeComment(comment)
         .then((resp) => {
           resp.user = user;
           setComments([resp, ...comments]);
           setNewComment({ ...newComment, body: "" });
-          console.log("hello 2");
+          resetForm();
         })
-        .catch((err) => {
-          setError(err);
-          console.log(toJS(err), " hello 1");
+        .catch((error) => {
+          setErrors({ error });
+          setSubmitting(false);
         });
     });
   };
@@ -92,12 +93,10 @@ const CommentForm = ({
 
   return (
     <Segment style={{ margin: 5 }} secondary>
-      {error[0] != null && <ValidationErrors errors={error} />}
-
       <Grid>
         <Grid.Row centered={isDesktop} columns={2} style={{ padding: "5 0" }}>
           <Grid.Column
-            width={1}
+            width={2}
             textAlign="right"
             verticalAlign="top"
             style={{ padding: 0, margin: 0 }}
@@ -118,31 +117,26 @@ const CommentForm = ({
               validationSchema={validationSchema}
               enableReinitialize
               initialValues={newComment}
-              onSubmit={(values, actions) => {
-                handleFormSubmit(values);
-                actions.resetForm();
-              }}
+              onSubmit={(values, { resetForm, setErrors, setSubmitting }) =>
+                handleFormSubmit(values, resetForm, setErrors, setSubmitting)
+              }
             >
-              {({
-                handleSubmit,
-                isSubmitting,
-                dirty,
-                isValid,
-                handleReset,
-              }) => (
-                <Form className="ui form" onSubmit={handleSubmit}>
+              {({ handleSubmit, isSubmitting, dirty, isValid, errors }) => (
+                <Form className="ui form error" onSubmit={handleSubmit}>
                   <MyTextArea
                     placeholder="Write Comment..."
                     name="body"
                     rows={3}
                     style={{ padding: 2, borderRadius: 15, width: "100%" }}
                   />
+                  <ErrorMessage
+                    name="error"
+                    render={() => <ValidationErrors errors={errors.error} />}
+                  />
                   <Button
                     compact
                     primary
-                    disabled={
-                      (isSubmitting && error[0] === null) || !dirty || !isValid
-                    }
+                    disabled={isSubmitting || !dirty || !isValid}
                     floated="right"
                     type="submit"
                     icon="arrow right"

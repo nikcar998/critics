@@ -1,19 +1,24 @@
+import { observer } from "mobx-react-lite";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
-import {
-  Header,
-  Grid,
-  Segment,
-  Image,
-} from "semantic-ui-react";
-import  LoginForm  from "./LoginForm";
+import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
+import { Header, Grid, Segment, Image } from "semantic-ui-react";
+import { useStore } from "../../app/stores/store";
+import LoginForm from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 import { WelcomeNavbar } from "./WelcomeNavbar";
 
-export const WelcomePage = () => {
+export default observer(function WelcomePage() {
+  const { userStore } = useStore();
+
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
   });
+
+  if(userStore.isLoggedIn){
+    return <Redirect to='/movies' />
+  }
 
   return (
     <Fragment>
@@ -22,10 +27,7 @@ export const WelcomePage = () => {
         <Grid.Row style={{ marginBottom: 30 }}>
           <WelcomeNavbar />
         </Grid.Row>
-        <Grid.Row
-          columns={isDesktop ? 2 : 1}
-          style={{ margin: 0 }}
-        >
+        <Grid.Row columns={isDesktop ? 2 : 1} style={{ margin: 0 }}>
           {/*************************  LEFT COLUMN  ************************* */}
           <Grid.Column
             width={isDesktop ? 13 : 15}
@@ -52,7 +54,9 @@ export const WelcomePage = () => {
               </Segment>
               <Segment>
                 This website uses{" "}
-                <Image src="/images/TMDB_logo.png" size="tiny" inline /> as
+               <a href="https://www.themoviedb.org/" target="_blank" >
+                <Image  src="/images/TMDB_logo.png" style={{width:60,height:23}} inline />
+                </a>  as
                 second database to store the movies you will use to write your
                 own opinions
               </Segment>
@@ -68,4 +72,4 @@ export const WelcomePage = () => {
       </Grid>
     </Fragment>
   );
-};
+});

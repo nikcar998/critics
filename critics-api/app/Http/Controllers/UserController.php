@@ -46,7 +46,7 @@ class UserController extends Controller
             'name' => ['required', 'min:4', 'max:150'],
             'password' => [
                 'required',
-                'min:6',
+                'min:8',
                 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'
             ],
             'email' => ['required', 'email', 'unique:users'],
@@ -166,5 +166,9 @@ class UserController extends Controller
             return response('Search had returned no values.', 404);
         }
         return response($result, 200);
+    }
+
+    public function loggedUser(){
+        return auth()->user();
     }
 }
