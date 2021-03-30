@@ -12,6 +12,7 @@ import {
 } from "semantic-ui-react";
 import agent from "../../app/api/agent";
 import { Comment } from "../../app/models/comment";
+import { Like } from "../../app/models/like";
 
 //this is the structure of a single comment
 interface Props {
@@ -34,11 +35,25 @@ const Comments = ({ comment, showOrNot }: Props) => {
   //TODO -> better like logic
   function handleNewLike() {
     agent.Likes.storeCommentLike(comment.id).then((resp) => {
-      if (likeNumberControl === likesNumber) {
-        setLikesNumber(likesNumber + 1);
-      } else {
-        setLikesNumber(likesNumber - 1);
+      var addOrSub: Like[] | null[] = []
+      if(comment.likes){
+        addOrSub = comment.likes.filter((like) => {
+          return like.id === comment.user_id;
+        });
+      }else{
+        addOrSub = [null]
       }
+        
+        //necessary logic to handle likes
+        if (addOrSub[0] != null) {
+          likeNumberControl === likesNumber
+            ?  setLikesNumber(likesNumber - 1)
+            : setLikesNumber(likesNumber + 1);
+        } else {
+          likeNumberControl === likesNumber
+            ? setLikesNumber(likesNumber + 1)
+            :  setLikesNumber(likesNumber - 1);
+        }
     });
   }
   return (

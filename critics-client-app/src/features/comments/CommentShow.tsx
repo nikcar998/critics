@@ -5,6 +5,7 @@ import { Segment, Header, Divider, Grid } from "semantic-ui-react";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { Comment } from "../../app/models/comment";
 import { useStore } from "../../app/stores/store";
+import UserStore from "../../app/stores/userStore";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
 
@@ -14,7 +15,7 @@ export default observer (function CommentShow () {
   const [comment, setComment] = useState<Comment | null>(null);
   const [replies, setReplies] = useState<Comment[]>([]);
 
-  const { commentStore } = useStore();
+  const { commentStore, userStore } = useStore();
 
   useEffect(() => {
     commentStore.loadComment(id).then(() => {
@@ -41,7 +42,7 @@ export default observer (function CommentShow () {
                 <CommentForm
                   comments={replies}
                   setComments={setReplies}
-                  user={comment.user}
+                  user={userStore.user ? userStore.user : comment.user}
                   parent_comment={comment}
                 />
                 <Segment color="black" inverted>
@@ -53,7 +54,6 @@ export default observer (function CommentShow () {
                   {commentStore.loading ? (
                     <LoadingComponent />
                   ) : (
-                    comment.replies.length > 0 &&
                     replies.map((comment) => {
                       if (comment.parent_id) {
                         return (

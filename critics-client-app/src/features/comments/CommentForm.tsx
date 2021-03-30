@@ -53,7 +53,9 @@ const CommentForm = ({
       agent.Comments.storeComment(comment)
         .then((resp) => {
           resp.user = user;
-          setComments([resp, ...comments]);
+          comments ? 
+          setComments([resp, ...comments]) :
+          setComments([resp]);
           setNewComment({ ...newComment, body: "" });
           resetForm();
         })
