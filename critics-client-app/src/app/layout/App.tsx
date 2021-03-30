@@ -16,6 +16,7 @@ import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
 import { useStore } from "../stores/store";
 import { LoadingComponent } from "./LoadingComponent";
+import axios from "axios";
 
 //here i will handle all routing. the layout will change using "react-responsive"
 function App() {
@@ -25,6 +26,7 @@ function App() {
     query: "(min-width: 1050px)",
   });
   useEffect(() => {
+    axios.get("/sanctum/csrf-cookie")
     if(commonStore.token){
       userStore.getUser().finally(()=> commonStore.setAppLoaded());
     }else{

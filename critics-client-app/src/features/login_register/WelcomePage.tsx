@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Redirect } from "react-router";
-import { Link } from "react-router-dom";
 import { Header, Grid, Segment, Image } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import LoginForm from "./LoginForm";
@@ -54,7 +53,7 @@ export default observer(function WelcomePage() {
               </Segment>
               <Segment>
                 This website uses{" "}
-               <a href="https://www.themoviedb.org/" target="_blank" >
+               <a href="https://www.themoviedb.org/" rel="noreferrer" target="_blank" >
                 <Image  src="/images/TMDB_logo.png" style={{width:60,height:23}} inline />
                 </a>  as
                 second database to store the movies you will use to write your

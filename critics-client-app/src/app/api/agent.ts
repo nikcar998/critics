@@ -21,6 +21,7 @@ const sleep = (delay: number) => {
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.withCredentials = true;
 
+/********************************* RESPONSE ************************************/
 //here i will add 1 sec wait to let compontents show loading style. It will handle errors too.
 //it will return the errors from the api.
 axios.interceptors.response.use(
@@ -61,19 +62,14 @@ axios.interceptors.response.use(
   }
 );
 
-//TODO -> make authorization dynamic
+
+/********************************* REQUEST ************************************/
 //here i will handle the authorization. Now is made in a static way, it will be implemented to use localStorage
 //to get the user's token
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("C_token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   config.headers.Accept = "Application/json";
-  if (config.method == "POST") {
-    axios.get("/csrf").then(({ data }) => {
-      config.headers.common["X-CSRF-TOKEN"] = data;
-    });
-  }
-
   return config;
 });
 

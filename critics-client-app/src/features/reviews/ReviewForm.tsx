@@ -1,15 +1,12 @@
-import React, { ChangeEvent, Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Redirect } from "react-router";
 import {
   Button,
-  DropdownProps,
   Grid,
   Header,
   Image,
-  Label,
   Segment,
-  Select,
 } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import ValidationErrors from "../errors/ValidationErrors";

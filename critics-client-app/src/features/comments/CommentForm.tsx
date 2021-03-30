@@ -1,6 +1,5 @@
-import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Button, Grid, Image, Segment } from "semantic-ui-react";
 import agent from "../../app/api/agent";
@@ -27,7 +26,7 @@ const CommentForm = ({
   user,
   parent_comment,
 }: Props) => {
-  const { reviewStore, userStore } = useStore();
+  const { reviewStore } = useStore();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
