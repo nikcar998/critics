@@ -10,8 +10,6 @@ import { store } from "../stores/store";
 import { history } from "../..";
 import { User, UserFormValues, UserWithToken } from "../models/user";
 
-//TODO->dopo l'implementazione del login gestire csrf qui o in userStore
-
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, delay);
@@ -132,7 +130,6 @@ const Comments = {
     requests.put<Comment>("api/comment/edit/" + id, comment),
 };
 
-//TODO -> create current user route
 ///////////////////////// USER /////////////////
 const Account = {
   current: () => requests.get<User>("/api/user/logged"),

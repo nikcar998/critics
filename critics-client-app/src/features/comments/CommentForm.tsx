@@ -11,8 +11,6 @@ import * as Yup from "yup";
 import { ErrorMessage, Form, Formik, FormikErrors, FormikState } from "formik";
 import MyTextArea from "../../app/common/form/MyTextArea";
 
-//TODO -> scegliere metodo di salvataggio commenti ed eventualmente cambiare la pagina
-//TODO -> togliere richiesta csrf dalla post request
 //this component will give the possibility to store a new comment
 interface Props {
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
@@ -44,7 +42,6 @@ const CommentForm = ({
 
   const [newComment, setNewComment] = useState<CommentFormValues>(initialState);
 
-  //TODO -> remove sanctum request from here
   //here i will store a new comment and add it to the "comments" array
   const handleFormSubmit = (
     comment: CommentFormValues,

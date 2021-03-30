@@ -1,13 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Redirect } from "react-router";
-import {
-  Button,
-  Grid,
-  Header,
-  Image,
-  Segment,
-} from "semantic-ui-react";
+import { Button, Grid, Header, Image, Segment } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import ValidationErrors from "../errors/ValidationErrors";
 import { observer } from "mobx-react-lite";
@@ -19,10 +13,11 @@ import MyTextArea from "../../app/common/form/MyTextArea";
 import MySelectInput from "../../app/common/form/MySelectInput";
 import * as Yup from "yup";
 import { Review } from "../../app/models/review";
+import { toast } from "react-toastify";
 
 //this component is necessary to store reviews
 const ReviewForm = () => {
-  const { filmStore, reviewStore } = useStore();
+  const { filmStore, reviewStore, userStore } = useStore();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
@@ -32,10 +27,9 @@ const ReviewForm = () => {
     "https://image.tmdb.org/t/p/w500" + filmStore.selectedFilm?.poster_path;
   const defaultImageUrl = "/images/no_picture_available.jpg";
 
-  //TODO -> bisongna rendere non statico lo user_id /////////////////////////////////////////////
   const initialState = {
     id: 0,
-    user_id: 1,
+    user_id: 0,
     title: "",
     film_title: "",
     cover: "",
@@ -50,33 +44,32 @@ const ReviewForm = () => {
 
   const [review, setReview] = useState(initialState);
 
-  //TODO -> togliere la richiesta di crsf token
   const handleFormSubmit = (
     review: Review,
     setErrors: any,
     setSubmitting: (isSubmitting: boolean) => void
   ) => {
-      reviewStore
-        .storeReview(review)
-        .then((resp) => {
-          history.push("/reviews");
-        })
-        .catch((error) => {
-          console.log('hello1')
-          setErrors({ error });
-          setSubmitting(false);
-        });
+    reviewStore
+      .storeReview(review)
+      .then((resp) => {
+        history.push("/reviews");
+      })
+      .catch((error) => {
+        console.log("hello1");
+        setErrors({ error });
+        setSubmitting(false);
+      });
   };
 
   //necessary to handle client validation
   const validationSchema = Yup.object({
-     title: Yup.string()
-       .required("The title is required")
-       .max(200, "Max 200 characters"),
-     opinion: Yup.string()
-       .required("The opinion is required")
-       .max(2000, "Max 2000 characters"),
-     rating: Yup.string().required("The rating is required"),
+    title: Yup.string()
+      .required("The title is required")
+      .max(200, "Max 200 characters"),
+    opinion: Yup.string()
+      .required("The opinion is required")
+      .max(2000, "Max 2000 characters"),
+    rating: Yup.string().required("The rating is required"),
   });
 
   //the necessary values will be added to the state.review in order to store the new review
@@ -88,14 +81,17 @@ const ReviewForm = () => {
       newReview.film_title = filmStore.selectedFilm.title;
       newReview.cover = imageUrl;
       newReview.year = filmStore.selectedFilm.release_date;
+      if (userStore.user) {
+        newReview.user_id = userStore.user.id;
+      }
       setReview(newReview);
     }
   }, [filmStore.selectedFilm, imageUrl]);
 
-  //TODO -> creare pagina errore e ridirigere lì
   //if a user come here without passing from the "MovieList" component, he will be redirected to the main page
   if (!filmStore.selectedFilm) {
-    return <Redirect to="/" />;
+    toast.error("You have to select a film first");
+    return <Redirect to="/movies" />;
   }
   return (
     <Fragment>

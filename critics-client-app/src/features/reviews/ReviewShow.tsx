@@ -1,3 +1,4 @@
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -34,18 +35,26 @@ const ReviewShow = () => {
     query: "(min-width: 1050px)",
   });
 
-  //TODO -> migliorare logica like, per ora gestisce solo l'immissine di un like e la sua immediata rimozione
   //to change the number of like after i will use two control varibles
-  const [likeNumberControl, setLikeNumberControl] = useState(0);
   const [likesNumber, setLikesNumber] = useState(0);
-
+  const [likesControlNumber, setLikesControlNumber] = useState(0);
   function handleNewLike() {
     if (review) {
       agent.Likes.storeReviewLike(review.id).then(() => {
-        if (likeNumberControl === likesNumber) {
-          setLikesNumber(likesNumber + 1);
-        } else {
-          setLikesNumber(likesNumber - 1);
+        if (reviewStore.selectedReview) {
+          const addOrSub = review.likes.filter((like) => {
+            return like.id === review.user_id;
+          });
+          //necessary logic to handle likes
+          if (addOrSub[0] != null) {
+            likesControlNumber === likesNumber
+              ?  setLikesNumber(likesNumber - 1)
+              : setLikesNumber(likesNumber + 1);
+          } else {
+            likesControlNumber === likesNumber
+              ? setLikesNumber(likesNumber + 1)
+              :  setLikesNumber(likesNumber - 1);
+          }
         }
       });
     }
@@ -59,10 +68,9 @@ const ReviewShow = () => {
           .loadComments(reviewStore.selectedReview.id)
           .then(() => setComments(commentStore.comments));
       }
-      //TODO -> like logic not working on first render.
-      if (review) {
-        setLikeNumberControl(review.likes.length);
-        setLikesNumber(review.likes.length);
+      if (reviewStore.selectedReview) {
+        setLikesNumber(reviewStore.selectedReview.likes.length);
+        setLikesControlNumber(reviewStore.selectedReview.likes.length);
       }
     });
   }, [id, reviewStore, commentStore]);
