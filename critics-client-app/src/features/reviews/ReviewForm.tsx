@@ -17,7 +17,7 @@ import ValidationErrors from "../errors/ValidationErrors";
 import { observer } from "mobx-react-lite";
 import { history } from "../..";
 import { ratingOptions } from "../../app/common/options/ratingOptions";
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import MyTextArea from "../../app/common/form/MyTextArea";
 import MySelectInput from "../../app/common/form/MySelectInput";
@@ -49,31 +49,40 @@ const ReviewForm = () => {
     film_id: 0,
     comment: [],
     likes: [],
+    error: null,
   };
 
   const [review, setReview] = useState(initialState);
-  //this state is necessary to menage the errors coming from the server
-  const [error, setError] = useState<string[]>([]);
 
   //TODO -> togliere la richiesta di crsf token
-  const handleFormSubmit = (review: Review) => {
-    console.log(reviewStore.errors[0]);
+  const handleFormSubmit = (
+    review: Review,
+    setErrors: any,
+    setSubmitting: (isSubmitting: boolean) => void
+  ) => {
     axios.get("/sanctum/csrf-cookie").then(() => {
-      reviewStore.storeReview(review).then(() => {
-        if (reviewStore.errors[0]) {
-          setError(reviewStore.errors);
-        } else {
+      reviewStore
+        .storeReview(review)
+        .then((resp) => {
           history.push("/reviews");
-        }
-      });
+        })
+        .catch((error) => {
+          console.log('hello1')
+          setErrors({ error });
+          setSubmitting(false);
+        });
     });
   };
 
   //necessary to handle client validation
   const validationSchema = Yup.object({
-    title: Yup.string().required("The title is required").max(200,"Max 200 characters"),
-    opinion: Yup.string().required("The opinion is required").max(2000,"Max 2000 characters"),
-    rating: Yup.string().required("The rating is required"),
+     title: Yup.string()
+       .required("The title is required")
+       .max(200, "Max 200 characters"),
+     opinion: Yup.string()
+       .required("The opinion is required")
+       .max(2000, "Max 2000 characters"),
+     rating: Yup.string().required("The rating is required"),
   });
 
   //the necessary values will be added to the state.review in order to store the new review
@@ -114,17 +123,17 @@ const ReviewForm = () => {
               <Header as="h2" style={{ marginTop: 10 }}>
                 {filmStore.selectedFilm.title}
               </Header>
-              {/********************* SERVER VALIDATION SHOW *********** */}
-              {error[0] != null && <ValidationErrors errors={error} />}
               {/********************** FORMIK FORM *********** */}
               <Formik
                 validationSchema={validationSchema}
                 enableReinitialize
                 initialValues={review}
-                onSubmit={(values) => handleFormSubmit(values)}
+                onSubmit={(values, { setErrors, setSubmitting }) =>
+                  handleFormSubmit(values, setErrors, setSubmitting)
+                }
               >
-                {({ handleSubmit, isSubmitting, dirty, isValid }) => (
-                  <Form className="ui form" onSubmit={handleSubmit}>
+                {({ handleSubmit, isSubmitting, dirty, isValid, errors }) => (
+                  <Form className="ui form error" onSubmit={handleSubmit}>
                     <MyTextInput
                       name="title"
                       label="Title"
@@ -142,12 +151,12 @@ const ReviewForm = () => {
                       placeholder="0"
                       options={ratingOptions}
                     />
+                    <ErrorMessage
+                      name="error"
+                      render={() => <ValidationErrors errors={errors.error} />}
+                    />
                     <Button
-                      disabled={
-                        (isSubmitting && error[0] === null) ||
-                        !dirty ||
-                        !isValid
-                      }
+                      disabled={isSubmitting || !dirty || !isValid}
                       type="submit"
                       style={{ marginTop: 10 }}
                       primary
