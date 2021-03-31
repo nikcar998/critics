@@ -9,7 +9,6 @@ import { Review, ReviewForShow } from "../models/review";
 import { store } from "../stores/store";
 import { history } from "../..";
 import { User, UserFormValues, UserWithToken } from "../models/user";
-import { request } from "node:http";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {

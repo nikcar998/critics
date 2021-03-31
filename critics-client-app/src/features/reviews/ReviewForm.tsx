@@ -86,7 +86,7 @@ const ReviewForm = () => {
       }
       setReview(newReview);
     }
-  }, [filmStore.selectedFilm, imageUrl]);
+  }, [filmStore.selectedFilm, imageUrl, userStore]);
 
   //if a user come here without passing from the "MovieList" component, he will be redirected to the main page
   if (!filmStore.selectedFilm) {

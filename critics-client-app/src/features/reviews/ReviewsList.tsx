@@ -17,7 +17,7 @@ const ReviewsList = (id:Props) => {
     id ?
     reviewStore.loadReviews()
     : reviewStore.loadUserReviews(id)
-  }, [reviewStore, reviewStore.page]);
+  }, [reviewStore, reviewStore.page, id]);
   return (
     <Fragment>
       {reviewStore.loading ? (

@@ -1,4 +1,3 @@
-import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -16,7 +15,7 @@ import agent from "../../app/api/agent";
 import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { Comment } from "../../app/models/comment";
-import { Review, ReviewForShow } from "../../app/models/review";
+import { ReviewForShow } from "../../app/models/review";
 import { useStore } from "../../app/stores/store";
 import CommentForm from "../comments/CommentForm";
 import Comments from "../comments/Comments";

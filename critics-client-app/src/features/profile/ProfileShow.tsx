@@ -1,20 +1,18 @@
 import { observer } from "mobx-react-lite";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
-import { Button, Card, Divider, Grid, Header, Image } from "semantic-ui-react";
+import { Button, Divider, Grid, Header, Image } from "semantic-ui-react";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 import agent from "../../app/api/agent";
-import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { User } from "../../app/models/user";
 import { useStore } from "../../app/stores/store";
-import Review from "../reviews/Review";
 import ReviewsList from "../reviews/ReviewsList";
 
 export default observer(function ProfileShow() {
   const { id } = useParams<{ id: string }>();
-  const { userStore, reviewStore } = useStore();
+  const { userStore } = useStore();
 
   const [user, setUser] = useState<User | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -43,9 +41,9 @@ export default observer(function ProfileShow() {
           setIsFollowing(resp);
         });
     });
-  }, [userStore, id, agent]);
+  }, [userStore, id]);
 
-  return userStore.user && user ? (
+  return userStore.user && user && !userStore.loading? (
     <Fragment>
       {/****************************** PROFILE SEGMENT  ****************************/}
       <Segment style={{ bgColor }}>
