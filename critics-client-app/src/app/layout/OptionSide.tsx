@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { history } from "../..";
 import { Button, Grid, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../stores/store";
+import { Link } from "react-router-dom";
 
 //if the screen is  a desktop this will be shown on the left
 const OptionSide = () => {
@@ -61,9 +62,8 @@ const OptionSide = () => {
           />
           <Button.Group vertical fluid color="black">
             <Button
-              onClick={() => {
-                console.log("hello");
-              }}
+              as={Link}
+              to="/reviews"
               fluid
             >
               Timeline
@@ -89,9 +89,8 @@ const OptionSide = () => {
           />
           <Button.Group vertical fluid color="black">
             <Button
-              onClick={() => {
-                console.log("hello");
-              }}
+             as={Link}
+             to={"/profile/"+ userStore.user?.id}
               fluid
             >
               My Profile

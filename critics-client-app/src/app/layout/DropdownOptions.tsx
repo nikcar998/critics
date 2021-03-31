@@ -2,6 +2,7 @@ import React from "react";
 import { history } from "../..";
 import { Dropdown, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
+import { Link } from "react-router-dom";
 
 //if the screen is not a desktop this will shown and Optionside will be hidden
 export const DropdownOptions = () => {
@@ -56,7 +57,7 @@ export const DropdownOptions = () => {
             content="Reviews"
           />
           <Dropdown.Divider />
-          <Dropdown.Item text="Timeline" />
+          <Dropdown.Item as={Link} to="/reviews" text="Timeline" />
           <Dropdown.Item text="Search" />
           <Dropdown.Divider />
           {/************************** Profile *****************/}
@@ -67,7 +68,7 @@ export const DropdownOptions = () => {
             content="Profile"
           />
           <Dropdown.Divider />
-          <Dropdown.Item text="My Profile"></Dropdown.Item>
+          <Dropdown.Item as={Link}  to={"/profile/"+ userStore.user?.id} text="My Profile"></Dropdown.Item>
           <Dropdown.Item text="Edit" />
           <Dropdown.Item text="List" />
           <Dropdown.Item text="Search" />

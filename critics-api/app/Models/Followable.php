@@ -11,6 +11,11 @@ trait Followable
         return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id');
     }
 
+    public function followers()
+    {
+        return $this->hasMany(Follow::class, 'user_id', 'following_user_id', );
+    }
+
     public function IsFollowing($id)
     {
         return $this->follows()

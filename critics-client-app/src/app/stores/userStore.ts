@@ -6,7 +6,7 @@ import { store } from "./store";
 
 export default class UserStore {
   user: User | null = null;
-
+  selectedUser: User | null = null;
   constructor() {
     makeAutoObservable(this);
   }
@@ -51,6 +51,17 @@ export default class UserStore {
       console.log(user);
       history.push("/movies");
     } catch (error) {
+      throw error;
+    }
+  }
+
+  
+  selectUser = async (id: string) => {
+    try {
+      const user = await agent.Account.details(id);
+      runInAction(()=> this.selectedUser = user);
+    }catch (error){
+      console.log(error)
       throw error;
     }
   }

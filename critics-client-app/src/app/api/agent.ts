@@ -9,6 +9,7 @@ import { Review } from "../models/review";
 import { store } from "../stores/store";
 import { history } from "../..";
 import { User, UserFormValues, UserWithToken } from "../models/user";
+import { request } from "node:http";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -59,7 +60,6 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
 
 /********************************* REQUEST ************************************/
 //here i will handle the authorization. Now is made in a static way, it will be implemented to use localStorage
@@ -132,6 +132,7 @@ const Comments = {
 
 ///////////////////////// USER /////////////////
 const Account = {
+  details: (id: string) => requests.get<User>("/api/details/" + id),
   current: () => requests.get<User>("/api/user/logged"),
   login: (user: UserFormValues) =>
     requests.post<UserWithToken>("/api/login", user),
@@ -139,12 +140,20 @@ const Account = {
     requests.post<UserWithToken>("/api/register", user),
 };
 
+///////////////////////// FOLLOW /////////////////
+const Follow ={
+  isFollowing: (id: number) =>requests.get<boolean>("/api/follow/isFollowing/"+id),
+  toggleFollow: (id:number) => requests.post<string>("/api/follow/toggle/"+id)
+}
+
+
 const agent = {
   Movies,
   Reviews,
   Likes,
   Comments,
   Account,
+  Follow
 };
 
 export default agent;

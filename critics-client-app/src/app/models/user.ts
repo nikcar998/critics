@@ -8,6 +8,8 @@ export interface User {
   avatar: string | null;
   // created_at: string | null;
   // updated_at: string | null;
+  follows?:User[];
+  followers?:User[];
 }
 
 export interface UserFormValues {

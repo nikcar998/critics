@@ -17,6 +17,7 @@ import ServerError from "../../features/errors/ServerError";
 import { useStore } from "../stores/store";
 import { LoadingComponent } from "./LoadingComponent";
 import axios from "axios";
+import ProfileShow from "../../features/profile/ProfileShow";
 
 //here i will handle all routing. the layout will change using "react-responsive"
 function App() {
@@ -62,6 +63,7 @@ function App() {
                     <Route path="/reviews" exact component={ReviewsList} />
                     <Route path="/reviews/:id" component={ReviewShow} />
                     <Route path="/comment/:id" component={CommentShow} />
+                    <Route path="/profile/:id" component={ProfileShow} />
                     <Route path="/server-error" component={ServerError} />
                     <Route component={NotFound} />
                   </Switch>

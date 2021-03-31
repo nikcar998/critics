@@ -54,6 +54,6 @@ class FollowController extends Controller
         if (!$user) {
             return response('User not found', 404);
         }
-        return response(['isFollowing' => auth()->user()->isFollowing($id)], 200);
+        return response( auth()->user()->isFollowing($id), 200);
     }
 }

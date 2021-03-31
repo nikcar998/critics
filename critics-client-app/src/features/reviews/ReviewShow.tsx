@@ -29,7 +29,7 @@ const ReviewShow = () => {
 
   const defaultImageUrl = "/images/no_picture_available.jpg";
 
-  const { reviewStore, commentStore } = useStore();
+  const { reviewStore, commentStore, userStore } = useStore();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
@@ -38,6 +38,7 @@ const ReviewShow = () => {
   //to change the number of like after i will use two control varibles
   const [likesNumber, setLikesNumber] = useState(0);
   const [likesControlNumber, setLikesControlNumber] = useState(0);
+
   function handleNewLike() {
     if (review) {
       agent.Likes.storeReviewLike(review.id).then(() => {
@@ -196,11 +197,11 @@ const ReviewShow = () => {
             </Segment>
             {/*********************************** COMMENT FORM ************************ */}
             {/**** TODO -> cambiare user con lo user che sarà salvato nello store */}
-            {review.user && (
+            {(review.user && userStore.user) && (
               <CommentForm
                 comments={comments}
                 setComments={setComments}
-                user={review.user}
+                user={userStore.user}
               />
             )}
             <Segment color="black" inverted>
