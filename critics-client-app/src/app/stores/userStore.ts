@@ -95,4 +95,36 @@ export default class UserStore {
       throw error;
     }
   };
+
+  searchUsers = async (query: string) => {
+    if (query.length > 2) {
+      this.setLoading(true);
+      try {
+        const pagination = await agent.Account.search(query);
+        runInAction(() => {
+          this.users = pagination.data;
+        });
+        this.setLoading(false);
+      } catch (error) {
+        console.log(error);
+        this.setLoading(false);
+      }
+    }
+  };
+
+  //function for pagination
+  setPage = (plusOrNot: boolean) => {
+    if (plusOrNot) {
+      if (
+        this.pagination &&
+        this.page < this.pagination.last_page
+      ) {
+        this.page++;
+      }
+    } else {
+      if (this.pagination && this.page > 1) {
+        this.page--;
+      }
+    }
+  };
 }

@@ -104,7 +104,23 @@ const OptionSide = () => {
               }}
               fluid
             >
-              Search
+              Followers
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              Following
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              fluid
+            >
+              Notifications
             </Button>
             <Button
               onClick={() => {
@@ -113,14 +129,6 @@ const OptionSide = () => {
               fluid
             >
               Logout
-            </Button>
-            <Button
-              onClick={() => {
-                console.log("hello");
-              }}
-              fluid
-            >
-              Delete
             </Button>
           </Button.Group>
         </Segment>

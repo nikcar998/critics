@@ -75,7 +75,9 @@ export const DropdownOptions = () => {
           ></Dropdown.Item>
           <Dropdown.Item text="Edit" />
           <Dropdown.Item as={Link} to={"/profile/list/users"} text="List" />
-          <Dropdown.Item text="Search" />
+          <Dropdown.Item text="Followers" />
+          <Dropdown.Item text="Following" />
+          <Dropdown.Item text="Notifications" />
           <Dropdown.Item
             onClick={() => {
               userStore.logout();

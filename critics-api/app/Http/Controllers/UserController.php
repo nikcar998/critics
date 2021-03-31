@@ -152,7 +152,7 @@ class UserController extends Controller
 
     public function list()
     {
-        return User::paginate(10);
+        return User::paginate(8);
     }
 
     public function search($query)
@@ -161,10 +161,7 @@ class UserController extends Controller
             return response('Bad request. Insert a minimum of 3 characters.', 422);
         }
         $result = User::where('name', 'like', '%' . $query . '%')
-            ->orWhere('email', 'like', '%' . $query . '%')->orWhere('username', 'like', '%' . $query . '%')->first();
-        if (!$result) {
-            return response('Search had returned no values.', 404);
-        }
+            ->orWhere('email', 'like', '%' . $query . '%')->orWhere('username', 'like', '%' . $query . '%')->paginate(10);
         return response($result, 200);
     }
 

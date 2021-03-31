@@ -139,6 +139,7 @@ const Account = {
   listUsers: (page: number) =>
     requests.get<PaginationMyApi<User>>(`/api/user/list?page=${page}`),
   details: (id: string) => requests.get<User>(`/api/details/${id}`),
+  search: (query: string) =>requests.get<PaginationMyApi<User>>("/api/user/search/"+query),
   login: (user: UserFormValues) =>
     requests.post<UserWithToken>("/api/login", user),
   register: (user: UserFormValues) =>
