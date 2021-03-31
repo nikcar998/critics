@@ -136,8 +136,10 @@ const Comments = {
 
 ///////////////////////// USER /////////////////
 const Account = {
-  details: (id: string) => requests.get<User>("/api/details/" + id),
   current: () => requests.get<User>("/api/user/logged"),
+  listUsers: (page: number) =>
+    requests.get<PaginationMyApi<User>>(`/api/user/list?page=${page}`),
+  details: (id: string) => requests.get<User>(`/api/details/${id}`),
   login: (user: UserFormValues) =>
     requests.post<UserWithToken>("/api/login", user),
   register: (user: UserFormValues) =>

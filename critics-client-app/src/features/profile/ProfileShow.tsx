@@ -6,6 +6,7 @@ import { Button, Card, Divider, Grid, Header, Image } from "semantic-ui-react";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 import agent from "../../app/api/agent";
 import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
+import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { User } from "../../app/models/user";
 import { useStore } from "../../app/stores/store";
 import Review from "../reviews/Review";
@@ -42,7 +43,7 @@ export default observer(function ProfileShow() {
           setIsFollowing(resp);
         });
     });
-  }, []);
+  }, [userStore, id, agent]);
 
   return userStore.user && user ? (
     <Fragment>
@@ -53,9 +54,9 @@ export default observer(function ProfileShow() {
             {/******************* LEFT SIDE *******************/}
             <Grid.Column
               width={isDesktop ? 3 : 5}
-              style={{ padding: 0, margin: 0 }}
+              style={{ padding: 0, margin: 0, height: "100%" }}
             >
-              <Segment.Group style={{ height: "100%" }}>
+              <Segment.Group style={{ ...bgColor, height: "100%" }}>
                 <Segment style={bgColor} textAlign="center">
                   <Image
                     src={
@@ -92,7 +93,10 @@ export default observer(function ProfileShow() {
                   <Header
                     style={bgColor}
                     as="h5"
-                    content={"Description: " + user.description}
+                    content={
+                      "Description: " +
+                      (user.description ? user.description : "")
+                    }
                   />
                 </Segment>
                 <Segment
@@ -120,7 +124,7 @@ export default observer(function ProfileShow() {
                   {user.id !== userStore.user.id && (
                     <Button
                       color="instagram"
-                      content={isFollowing ? "Follow" : "Unfollow"}
+                      content={!isFollowing ? "Follow" : "Unfollow"}
                       size="mini"
                       style={!isDesktop ? { float: "right" } : {}}
                       compact
@@ -133,7 +137,10 @@ export default observer(function ProfileShow() {
           </Grid.Row>
         </Grid>
       </Segment>
+      {/****************************   User's reviews list **************/}
       <ReviewsList id={user.id} />
     </Fragment>
-  ) : null;
+  ) : (
+    <LoadingComponent content="Loading user" />
+  );
 });

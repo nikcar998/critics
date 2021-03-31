@@ -9,7 +9,7 @@ export default class ReviewStore {
   selectedReview: ReviewForShow | null = null;
   loading = false;
   page = 1;
-  errors: string[] = [];
+
 
   constructor() {
     makeAutoObservable(this);

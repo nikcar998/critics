@@ -68,9 +68,13 @@ export const DropdownOptions = () => {
             content="Profile"
           />
           <Dropdown.Divider />
-          <Dropdown.Item as={Link}  to={"/profile/"+ userStore.user?.id} text="My Profile"></Dropdown.Item>
+          <Dropdown.Item
+            as={Link}
+            to={"/profile/" + userStore.user?.id}
+            text="My Profile"
+          ></Dropdown.Item>
           <Dropdown.Item text="Edit" />
-          <Dropdown.Item text="List" />
+          <Dropdown.Item as={Link} to={"/profile/list/users"} text="List" />
           <Dropdown.Item text="Search" />
           <Dropdown.Item
             onClick={() => {

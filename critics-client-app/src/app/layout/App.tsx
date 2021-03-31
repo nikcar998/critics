@@ -18,6 +18,7 @@ import { useStore } from "../stores/store";
 import { LoadingComponent } from "./LoadingComponent";
 import axios from "axios";
 import ProfileShow from "../../features/profile/ProfileShow";
+import ProfileList from "../../features/profile/ProfileList";
 
 //here i will handle all routing. the layout will change using "react-responsive"
 function App() {
@@ -51,7 +52,7 @@ function App() {
               style={{ margin: "2px", marginTop: "12px" }}
               className="reactBody"
             >
-              <Grid.Row>
+              <Grid.Row style={{minHeight:600}} >
                 {isDesktop && <OptionSide />}
                 <Grid.Column
                   width={isDesktop ? 12 : 15}
@@ -61,10 +62,11 @@ function App() {
                     <Route path="/movies" exact component={MoviesList} />
                     <Route path="/reviews/store" exact component={ReviewForm} />
                     <Route path="/reviews" exact component={ReviewsList} />
-                    <Route path="/reviews/:id" component={ReviewShow} />
-                    <Route path="/comment/:id" component={CommentShow} />
-                    <Route path="/profile/:id" component={ProfileShow} />
-                    <Route path="/server-error" component={ServerError} />
+                    <Route path="/reviews/:id" exact component={ReviewShow} />
+                    <Route path="/comment/:id" exact component={CommentShow} />
+                    <Route path="/profile/:id" exact component={ProfileShow} />
+                    <Route path="/profile/list/users" exact component={ProfileList} />
+                    <Route path="/server-error" exact component={ServerError} />
                     <Route component={NotFound} />
                   </Switch>
                 </Grid.Column>

@@ -1,12 +1,18 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { history } from "../..";
 import agent from "../api/agent";
+import { PaginationMyApi } from "../models/paginationMyApi";
 import { User, UserFormValues } from "../models/user";
 import { store } from "./store";
 
 export default class UserStore {
   user: User | null = null;
   selectedUser: User | null = null;
+  pagination: PaginationMyApi<User> | null = null;
+  loading = false;
+  page = 1;
+  users: User[] = [];
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -35,13 +41,17 @@ export default class UserStore {
   };
 
   getUser = async () => {
+    this.setLoading(true);
     try {
       const user = await agent.Account.current();
-      runInAction(()=> this.user = user);
-    }catch (error){
-      console.log(error)
+      runInAction(() => (this.user = user));
+      this.setLoading(false);
+    } catch (error) {
+      console.log(error);
+      this.setLoading(false);
+      throw error;
     }
-  }
+  };
 
   register = async (creds: UserFormValues) => {
     try {
@@ -53,16 +63,36 @@ export default class UserStore {
     } catch (error) {
       throw error;
     }
-  }
+  };
 
-  
+
+
+  listUser = async () => {
+    this.setLoading(true);
+    try {
+      this.pagination = await agent.Account.listUsers(this.page);
+      runInAction(()=> (this.pagination ?  this.users = this.pagination.data : null))
+      this.setLoading(false);
+    } catch (error) {
+      console.log(error);
+      this.setLoading(false);
+    }
+  };
+
+  //useful to show loading component
+  setLoading = (state: boolean) => {
+    this.loading = state;
+  };
   selectUser = async (id: string) => {
+    this.setLoading(true);
     try {
       const user = await agent.Account.details(id);
-      runInAction(()=> this.selectedUser = user);
-    }catch (error){
-      console.log(error)
+      runInAction(() => (this.selectedUser = user));
+      this.setLoading(false);
+    } catch (error) {
+      console.log(error);
+      this.setLoading(false);
       throw error;
     }
-  }
+  };
 }

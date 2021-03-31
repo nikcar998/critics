@@ -53,8 +53,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put("edit", [UserController::class, 'edit']);
     Route::post("edit/avatar", [UserController::class, 'updateAvatar']);
     Route::delete('user/delete', [UserController::class, 'destroy']);
-    Route::get("details/{id}", [UserController::class, 'details']);
     Route::get("user/list", [UserController::class, 'list']);
+    Route::get("details/{id}", [UserController::class, 'details']);
     Route::get("user/search/{query}", [UserController::class, 'search']);
     Route::get("user/logged", [UserController::class, 'loggedUser']);
 

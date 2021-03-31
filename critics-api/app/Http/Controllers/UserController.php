@@ -79,7 +79,7 @@ class UserController extends Controller
 
     function details($id)
     {
-        $result = User::where( 'id',$id)->with('followers')->with('follows')->first();
+        $result = User::where('id',$id)->with('followers')->with('follows')->first();
         if (!$result) {
             return response('Not Found', 404);
         }

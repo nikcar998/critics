@@ -61,11 +61,7 @@ const OptionSide = () => {
             color="red"
           />
           <Button.Group vertical fluid color="black">
-            <Button
-              as={Link}
-              to="/reviews"
-              fluid
-            >
+            <Button as={Link} to="/reviews" fluid>
               Timeline
             </Button>
             <Button
@@ -88,11 +84,7 @@ const OptionSide = () => {
             color="red"
           />
           <Button.Group vertical fluid color="black">
-            <Button
-             as={Link}
-             to={"/profile/"+ userStore.user?.id}
-              fluid
-            >
+            <Button as={Link} to={"/profile/" + userStore.user?.id} fluid>
               My Profile
             </Button>
             <Button
@@ -103,12 +95,7 @@ const OptionSide = () => {
             >
               Edit
             </Button>
-            <Button
-              onClick={() => {
-                console.log("hello");
-              }}
-              fluid
-            >
+            <Button as={Link} to={"/profile/list/users"} fluid>
               List
             </Button>
             <Button
