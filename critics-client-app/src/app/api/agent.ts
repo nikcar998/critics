@@ -98,6 +98,10 @@ const Movies = {
 const Reviews = {
   listReviews: (page: number) =>
     requests.get<PaginationMyApi<Review>>("api/reviews?page=" + page),
+  listUserReviews: (page: number, id: number) =>
+    requests.get<PaginationMyApi<Review>>(
+      "api/reviews/" + id + "?page=" + page
+    ),
   search: (query: string) =>
     requests.get<PaginationMyApi<Review>>("api/reviews/search/" + query),
   show: (id: string) => requests.get<ReviewForShow>("api/reviews/" + id),
@@ -141,11 +145,12 @@ const Account = {
 };
 
 ///////////////////////// FOLLOW /////////////////
-const Follow ={
-  isFollowing: (id: number) =>requests.get<boolean>("/api/follow/isFollowing/"+id),
-  toggleFollow: (id:number) => requests.post<string>("/api/follow/toggle/"+id)
-}
-
+const Follow = {
+  isFollowing: (id: number) =>
+    requests.get<boolean>("/api/follow/isFollowing/" + id),
+  toggleFollow: (id: number) =>
+    requests.post<string>("/api/follow/toggle/" + id),
+};
 
 const agent = {
   Movies,
@@ -153,7 +158,7 @@ const agent = {
   Likes,
   Comments,
   Account,
-  Follow
+  Follow,
 };
 
 export default agent;

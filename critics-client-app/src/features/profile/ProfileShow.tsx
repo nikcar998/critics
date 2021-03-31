@@ -2,15 +2,18 @@ import { observer } from "mobx-react-lite";
 import React, { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
-import { Button, Divider, Grid, Header, Image } from "semantic-ui-react";
+import { Button, Card, Divider, Grid, Header, Image } from "semantic-ui-react";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 import agent from "../../app/api/agent";
+import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
 import { User } from "../../app/models/user";
 import { useStore } from "../../app/stores/store";
+import Review from "../reviews/Review";
+import ReviewsList from "../reviews/ReviewsList";
 
 export default observer(function ProfileShow() {
   const { id } = useParams<{ id: string }>();
-  const { userStore } = useStore();
+  const { userStore, reviewStore } = useStore();
 
   const [user, setUser] = useState<User | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -21,8 +24,8 @@ export default observer(function ProfileShow() {
 
   const defaultImageUrl =
     "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
-
-  const bgColor = { backgroundColor: "#F6EEEC" };
+  const bgImage = "/images/cool-background.png";
+  const bgColor = { backgroundImage: `url(${bgImage})`, color: "#F6EEEC" };
 
   function toggleFollow() {
     userStore.selectedUser &&
@@ -43,7 +46,8 @@ export default observer(function ProfileShow() {
 
   return userStore.user && user ? (
     <Fragment>
-      <Segment style={bgColor}>
+      {/****************************** PROFILE SEGMENT  ****************************/}
+      <Segment style={{ bgColor }}>
         <Grid>
           <Grid.Row columns={2} style={{ padding: 0, margin: 0 }}>
             {/******************* LEFT SIDE *******************/}
@@ -86,6 +90,7 @@ export default observer(function ProfileShow() {
                   style={{ ...bgColor, overflow: "auto", height: "9.6rem" }}
                 >
                   <Header
+                    style={bgColor}
                     as="h5"
                     content={"Description: " + user.description}
                   />
@@ -97,12 +102,20 @@ export default observer(function ProfileShow() {
                   <Header
                     as="h6"
                     content={"Followers: " + user.followers?.length}
-                    style={{ margin: "0px 5px", display: "inline-block" }}
+                    style={{
+                      ...bgColor,
+                      margin: "0px 5px",
+                      display: "inline-block",
+                    }}
                   />
                   <Header
                     as="h6"
                     content={"Following: " + user.follows?.length}
-                    style={{ margin: "0px 4px", display: "inline-block" }}
+                    style={{
+                      ...bgColor,
+                      margin: "0px 4px",
+                      display: "inline-block",
+                    }}
                   />
                   {user.id !== userStore.user.id && (
                     <Button
@@ -120,6 +133,7 @@ export default observer(function ProfileShow() {
           </Grid.Row>
         </Grid>
       </Segment>
+      <ReviewsList id={user.id} />
     </Fragment>
   ) : null;
 });
