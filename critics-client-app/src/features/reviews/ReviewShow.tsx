@@ -16,7 +16,7 @@ import agent from "../../app/api/agent";
 import { ButtonGroupNextBack } from "../../app/layout/ButtonGroupNextBack";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { Comment } from "../../app/models/comment";
-import { Review } from "../../app/models/review";
+import { Review, ReviewForShow } from "../../app/models/review";
 import { useStore } from "../../app/stores/store";
 import CommentForm from "../comments/CommentForm";
 import Comments from "../comments/Comments";
@@ -24,7 +24,7 @@ import Comments from "../comments/Comments";
 //this component show review's details and comments
 const ReviewShow = () => {
   const { id } = useParams<{ id: string }>();
-  const [review, setReview] = useState<Review | null>(null);
+  const [review, setReview] = useState<ReviewForShow | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
 
   const defaultImageUrl = "/images/no_picture_available.jpg";

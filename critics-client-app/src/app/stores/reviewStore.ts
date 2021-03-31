@@ -1,12 +1,12 @@
 import { makeAutoObservable } from "mobx";
 import agent from "../api/agent";
 import { PaginationMyApi } from "../models/paginationMyApi";
-import { Review } from "../models/review";
+import { Review, ReviewForShow } from "../models/review";
 
 export default class ReviewStore {
   reviewsPagination: PaginationMyApi<Review> | null = null;
   reviews: Review[] = [];
-  selectedReview: Review | null = null;
+  selectedReview: ReviewForShow | null = null;
   loading = false;
   page = 1;
   errors: string[] = [];

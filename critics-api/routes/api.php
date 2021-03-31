@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     //reviews auth route
     Route::get("reviews/search/{query}", [ReviewController::class, 'search']);
+    Route::get("reviews/user/{id}", [ReviewController::class, 'indexUser']);
     Route::resource('reviews', ReviewController::class);
 
     //likes routes

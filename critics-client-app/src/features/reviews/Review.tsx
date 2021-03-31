@@ -125,11 +125,11 @@ const Review = ({ review }: Props) => {
               <Divider />
               <p style={{ display: "inline-block", width: "60%" }}>
                 <Icon name="comments" />
-                Comments:{review.comment.length}{" "}
+                Comments:{review.comment_count}{" "}
               </p>
               <p style={{ display: "inline-block" }}>
                 {" "}
-                <Icon name="like" /> likes: {review.likes.length}
+                <Icon name="like" /> likes: {review.likes_count}
               </p>
             </Grid.Column>
           </Grid.Row>

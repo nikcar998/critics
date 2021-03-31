@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $result = auth()->user()->timeline()->with('comment')->with('likes')->with('user')->orderBy('created_at', 'desc')->paginate(8);
+        $result = auth()->user()->timeline()->withCount('comment')->withCount('likes')->with('user')->orderBy('created_at', 'desc')->paginate(8);
         return response($result, 200);
     }
 
@@ -147,4 +147,12 @@ class ReviewController extends Controller
             ->orWhere('opinion', 'like', '%' . $query . '%')->orWhere('film_title', 'like', '%' . $query . '%')->paginate(15);
         return response($result, 200);
     }
+
+    public function indexUser($id)
+    {
+        $result = Review::where('user_id',$id)->withCount('comment')->withCount('likes')->with('user')->orderBy('created_at', 'desc')->paginate(8);
+        return response($result, 200);
+    }
+
+
 }

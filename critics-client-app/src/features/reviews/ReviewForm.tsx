@@ -37,8 +37,8 @@ const ReviewForm = () => {
     opinion: "",
     rating: 0,
     film_id: 0,
-    comment: [],
-    likes: [],
+    comment_count: 0,
+    likes_count: 0,
     error: null,
   };
 

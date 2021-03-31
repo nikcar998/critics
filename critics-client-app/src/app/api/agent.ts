@@ -5,7 +5,7 @@ import { Film } from "../models/film";
 import { Like } from "../models/like";
 import { PaginationExtApi } from "../models/paginationExtApi";
 import { PaginationMyApi } from "../models/paginationMyApi";
-import { Review } from "../models/review";
+import { Review, ReviewForShow } from "../models/review";
 import { store } from "../stores/store";
 import { history } from "../..";
 import { User, UserFormValues, UserWithToken } from "../models/user";
@@ -100,7 +100,7 @@ const Reviews = {
     requests.get<PaginationMyApi<Review>>("api/reviews?page=" + page),
   search: (query: string) =>
     requests.get<PaginationMyApi<Review>>("api/reviews/search/" + query),
-  show: (id: string) => requests.get<Review>("api/reviews/" + id),
+  show: (id: string) => requests.get<ReviewForShow>("api/reviews/" + id),
   store: (review: Review) => requests.post<Review>("api/reviews", review),
   upload: (review: Review) =>
     requests.put<Review>("api/reviews/" + review.id, review),
