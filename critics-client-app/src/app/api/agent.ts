@@ -9,6 +9,7 @@ import { Review, ReviewForShow } from "../models/review";
 import { store } from "../stores/store";
 import { history } from "../..";
 import { User, UserFormValues, UserWithToken } from "../models/user";
+import { Notification } from "../models/notification";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -154,6 +155,15 @@ const Follow = {
     requests.post<string>("/api/follow/toggle/" + id),
 };
 
+
+///////////////////////// NOTIFICATIONS /////////////////
+const Notifications= {
+  countUreadNotifications: () => requests.get<number>("api/notifications/indexUnread"),
+  list: () => requests.get<Notification[]>("api/notifications/index"),
+  readNotifications: () => requests.post<Notification[]>("api/notifications/read")
+
+}
+
 const agent = {
   Movies,
   Reviews,
@@ -161,6 +171,7 @@ const agent = {
   Comments,
   Account,
   Follow,
+  Notifications
 };
 
 export default agent;

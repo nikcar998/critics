@@ -57,49 +57,11 @@ class UserNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        switch ($this->type) {
-            case 'reply':
-                return [
-                    'parent_id' => $this->target_id,
-                    'message' => $this->message,
-                    'type' => $this->type
-                ];
-                break;
-            case 'comment':
-                return [
-                    'review_id' => $this->target_id,
-                    'message' => $this->message,
-                    'type' => $this->type
-                ];
-                break;
-            case 'follows':
-                return [
-                    'follower_id' => $this->target_id,
-                    'message' => $this->message,
-                    'type' => $this->type
-                ];
-                break;
-            case "like to comment":
-                return [
-                    'comment_id' => $this->target_id,
-                    'message' => $this->message,
-                    'type' => $this->type
-                ];
-                break;
-            case "like to review":
-                return [
-                    'review_id' => $this->target_id,
-                    'message' => $this->message,
-                    'type' => $this->type
-                ];
-                break;
-            default:
-                return [
-                    'target_id' => $this->target_id,
-                    'message' => $this->message,
-                    'type' => $this->type
-                ];
-                break;
-        }
+
+        return [
+            'target_id' => $this->target_id,
+            'message' => $this->message,
+            'type' => $this->type
+        ];
     }
 }

@@ -1,17 +1,28 @@
 import { observer } from "mobx-react-lite";
 import { history } from "../..";
-import { Button, Grid, Header, Segment } from "semantic-ui-react";
+import { Button, Grid, Header, Label, Segment } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import agent from "../api/agent";
 
 //if the screen is  a desktop this will be shown on the left
 const OptionSide = () => {
   const { filmStore, userStore } = useStore();
 
+  const [numbOfNotifications, setNumbOfNotifications]=useState(0);
+
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);
     history.push("/");
   };
+
+useEffect(()=>{
+  agent.Notifications.countUreadNotifications().then((resp)=>{
+    setNumbOfNotifications(resp)
+  });
+},[])
+
   return (
     <Grid.Column width={3}>
       <Segment.Group raised>
@@ -121,6 +132,8 @@ const OptionSide = () => {
               fluid
             >
               Notifications
+
+              <Label style={{margin:"auto"}} circular color="red" content={numbOfNotifications} />
             </Button>
             <Button
               onClick={() => {

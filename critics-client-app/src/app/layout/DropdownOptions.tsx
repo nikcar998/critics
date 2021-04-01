@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { history } from "../..";
-import { Dropdown, Menu } from "semantic-ui-react";
+import { Dropdown, Label, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 import { Link } from "react-router-dom";
+import agent from "../api/agent";
 
 //if the screen is not a desktop this will shown and Optionside will be hidden
 export const DropdownOptions = () => {
   const { filmStore, userStore } = useStore();
 
+  const [numbOfNotifications, setNumbOfNotifications] = useState(0);
+
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);
     history.push("/");
   };
+
+  useEffect(() => {
+    agent.Notifications.countUreadNotifications().then((resp) => {
+      setNumbOfNotifications(resp);
+    });
+  }, []);
 
   return (
     <Menu.Item position="right">
@@ -77,7 +86,15 @@ export const DropdownOptions = () => {
           <Dropdown.Item as={Link} to={"/profile/list/users"} text="List" />
           <Dropdown.Item text="Followers" />
           <Dropdown.Item text="Following" />
-          <Dropdown.Item text="Notifications" />
+          <Dropdown.Item>
+            Notifications{" "}
+            <Label
+              style={{ margin: "auto" }}
+              circular
+              color="red"
+              content={numbOfNotifications}
+            />
+          </Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
               userStore.logout();
