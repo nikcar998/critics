@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Review = ({ review }: Props) => {
-  //max charaacters showed in title[0] and in opinion[1]
+  //max characters showed in title[0] and in opinion[1]
   //this values will change if  the width is less than 1050 px
   const [maxCharacters, setMaxCharacters] = useState([15, 170, 20]);
 

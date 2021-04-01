@@ -10,13 +10,13 @@ interface Props{
   id?:number
 }
 //this component will show the riviews of a user and his friends.
-const ReviewsList = (id:Props) => {
+const ReviewsList = ({id}:Props) => {
   const { reviewStore } = useStore();
 
   useEffect(() => {
-    id ?
-    reviewStore.loadReviews()
-    : reviewStore.loadUserReviews(id)
+    (id) ?
+    reviewStore.loadUserReviews(id)
+    : reviewStore.loadReviews()
   }, [reviewStore, reviewStore.page, id]);
   return (
     <Fragment>

@@ -72,7 +72,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $result = auth()->user()->review()->with('comment.user', 'user')->with('comment.likes', 'likes')->with('comment.replies', 'comment')->with('likes')->find($id);
+        $result = Review::where('id', $id)->with('comment.user', 'user')->with('comment.likes', 'likes')->with('comment.replies', 'comment')->with('likes')->first();
         if (!$result) {
             return response('Not found', 404);
         }
@@ -150,9 +150,7 @@ class ReviewController extends Controller
 
     public function indexUser($id)
     {
-        $result = Review::where('user_id',$id)->withCount('comment')->withCount('likes')->with('user')->orderBy('created_at', 'desc')->paginate(8);
+        $result = Review::where('user_id', $id)->withCount('comment')->withCount('likes')->with('user')->orderBy('created_at', 'desc')->paginate(8);
         return response($result, 200);
     }
-
-
 }

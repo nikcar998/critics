@@ -1,3 +1,4 @@
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -43,17 +44,17 @@ const ReviewShow = () => {
       agent.Likes.storeReviewLike(review.id).then(() => {
         if (reviewStore.selectedReview) {
           const addOrSub = review.likes.filter((like) => {
-            return like.id === review.user_id;
+            if (userStore.user) return like.id === userStore.user.id;
           });
           //necessary logic to handle likes
-          if (addOrSub[0] != null) {
+          if (addOrSub[0]) {
             likesControlNumber === likesNumber
-              ?  setLikesNumber(likesNumber - 1)
+              ? setLikesNumber(likesNumber - 1)
               : setLikesNumber(likesNumber + 1);
           } else {
             likesControlNumber === likesNumber
               ? setLikesNumber(likesNumber + 1)
-              :  setLikesNumber(likesNumber - 1);
+              : setLikesNumber(likesNumber - 1);
           }
         }
       });
@@ -196,7 +197,7 @@ const ReviewShow = () => {
             </Segment>
             {/*********************************** COMMENT FORM ************************ */}
             {/**** TODO -> cambiare user con lo user che sarà salvato nello store */}
-            {(review.user && userStore.user) && (
+            {review.user && userStore.user && (
               <CommentForm
                 comments={comments}
                 setComments={setComments}

@@ -99,7 +99,7 @@ const Reviews = {
     requests.get<PaginationMyApi<Review>>("api/reviews?page=" + page),
   listUserReviews: (page: number, id: number) =>
     requests.get<PaginationMyApi<Review>>(
-      "api/reviews/" + id + "?page=" + page
+      "api/reviews/user/" + id + "?page=" + page
     ),
   search: (query: string) =>
     requests.get<PaginationMyApi<Review>>("api/reviews/search/" + query),

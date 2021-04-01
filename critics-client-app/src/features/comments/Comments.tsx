@@ -116,6 +116,8 @@ const Comments = ({ comment, showOrNot }: Props) => {
               border: "1px solid red",
               borderRadius: 15,
               marginBottom: 0,
+              overflow:"auto",
+              overflowWrap: 'break-word'
             }}
           >
             <Header as="h3" style={{ marginBottom: "5px" }}>
