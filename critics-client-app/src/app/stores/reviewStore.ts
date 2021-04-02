@@ -4,7 +4,7 @@ import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review, ReviewForShow } from "../models/review";
 
 export default class ReviewStore {
-  reviewsPagination: PaginationMyApi<Review> | null = null;
+  pagination: PaginationMyApi<Review> | null = null;
   reviews: Review[] = [];
   selectedReview: ReviewForShow | null = null;
   loading = false;
@@ -16,12 +16,12 @@ export default class ReviewStore {
   }
 
   //this function will upload the review list in 2 variables, "this.reviews" that will keep the used reviews
-  //and "this.reviewsPagination" useful for pagination functions
+  //and "this.pagination" useful for pagination functions
   loadReviews = async () => {
     this.setLoading(true);
     try {
-      this.reviewsPagination = await agent.Reviews.listReviews(this.page);
-      this.reviews = this.reviewsPagination.data;
+      this.pagination = await agent.Reviews.listReviews(this.page);
+      this.reviews = this.pagination.data;
       this.setLoading(false);
     } catch (error) {
       console.log(error);
@@ -31,8 +31,8 @@ export default class ReviewStore {
   loadUserReviews = async (id:number) => {
     this.setLoading(true);
     try {
-      this.reviewsPagination = await agent.Reviews.listUserReviews(this.page,id);
-      this.reviews = this.reviewsPagination.data;
+      this.pagination = await agent.Reviews.listUserReviews(this.page,id);
+      this.reviews = this.pagination.data;
       this.setLoading(false);
     } catch (error) {
       console.log(error);
@@ -68,13 +68,13 @@ export default class ReviewStore {
   setPage = (plusOrNot: boolean) => {
     if (plusOrNot) {
       if (
-        this.reviewsPagination &&
-        this.page < this.reviewsPagination.last_page
+        this.pagination &&
+        this.page < this.pagination.last_page
       ) {
         this.page++;
       }
     } else {
-      if (this.reviewsPagination && this.page > 1) {
+      if (this.pagination && this.page > 1) {
         this.page--;
       }
     }

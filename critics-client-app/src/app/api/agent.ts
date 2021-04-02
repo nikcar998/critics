@@ -151,15 +151,18 @@ const Account = {
 const Follow = {
   isFollowing: (id: number) =>
     requests.get<boolean>("/api/follow/isFollowing/" + id),
+    listFollowing: () => requests.get<PaginationMyApi<User>>("api/follow/index"),
+    listFollowers: () => requests.get<PaginationMyApi<User>>("api/follow/index/followers"),
   toggleFollow: (id: number) =>
     requests.post<string>("/api/follow/toggle/" + id),
+
 };
 
 
 ///////////////////////// NOTIFICATIONS /////////////////
 const Notifications= {
   countUreadNotifications: () => requests.get<number>("api/notifications/indexUnread"),
-  list: () => requests.get<Notification[]>("api/notifications/index"),
+  list: (page: number) => requests.get<PaginationMyApi<Notification>>("api/notifications/index?page="+page),
   readNotifications: () => requests.post<Notification[]>("api/notifications/read")
 
 }

@@ -27,14 +27,14 @@ class FollowController extends Controller
         if ($userToNotify) {
             $type = 'follows';
             $message = auth()->user()->username . " is now one of your follower.";
-            $userToNotify->notify(new UserNotification($type, $message, $id));
+            $userToNotify->notify(new UserNotification($type, $message, auth()->id()));
 
 
             return response('You started following the user', 200);
         }
         $type = 'follows';
         $message = auth()->user()->username . " is not one of your follower anymore.";
-        $user->notify(new UserNotification($type, $message, $id));
+        $user->notify(new UserNotification($type, $message, auth()->id()));
 
         return response("You don't follow the user anymore", 200);
     }

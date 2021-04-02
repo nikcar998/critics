@@ -8,7 +8,7 @@ import { useStore } from "../../app/stores/store";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
 
-export default observer (function CommentShow () {
+export default observer(function CommentShow() {
   const { id } = useParams<{ id: string }>();
 
   const [comment, setComment] = useState<Comment | null>(null);
@@ -32,7 +32,9 @@ export default observer (function CommentShow () {
     <>
       {comment && comment.user ? (
         <>
-          <Comments comment={comment} showOrNot={true} />
+          <Segment inverted>
+            <Comments comment={comment} showOrNot={true} />
+          </Segment>
 
           {/*********************************** COMMENT FORM ************************ */}
           <Grid style={{ padding: 10 }}>

@@ -118,17 +118,14 @@ useEffect(()=>{
               Followers
             </Button>
             <Button
-              onClick={() => {
-                console.log("hello");
-              }}
+              as={Link}
+              to="/follows"
               fluid
             >
               Following
             </Button>
             <Button
-              onClick={() => {
-                console.log("hello");
-              }}
+               as={Link} to={"/notifications"}
               fluid
             >
               Notifications

@@ -16,61 +16,64 @@ class LikeController extends Controller
         if (!Review::find($id)) {
             return response('Review not found', 404);
         }
-        $result = $this->handleLike('App\Models\Review', $id);
-        return response($result, 200);
+        $existing_like = Like::withTrashed()->whereLikeableType('App\Models\Review')->whereLikeableId($id)->whereUserId(auth()->id())->first();
+
+        if (is_null($existing_like)) {
+
+            //Notifications, called only when the like is created.
+            $userToNotify = Review::find($id)->user;
+            if ($userToNotify->id != auth()->id()) {
+                $noticationType = "like to review";
+                $message = auth()->user()->username . " liked your review.";
+                $userToNotify->notify(new UserNotification($noticationType, $message, $id));
+            }
+            $like = Like::create([
+                'user_id'       => auth()->id(),
+                'likeable_id'   => $id,
+                'likeable_type' => 'App\Models\Review',
+            ]);
+            return response($like, 200);
+        }
+
+        if (is_null($existing_like->deleted_at)) {
+            $existing_like->delete();
+            return response('like is softly deleted', 200);
+        }
+        $existing_like->restore();
+        return response('like is restored', 200);
     }
     public function storelikeComment($id)
     {
         if (!Comment::find($id)) {
             return response('Comment not found', 404);
-        }
-        $result = $this->handleLike('App\Models\Comment', $id);
-        return response($result, 200);
-    }
-
-    public function handleLike($type, $id)
-    {
-        $existing_like = Like::withTrashed()->whereLikeableType($type)->whereLikeableId($id)->whereUserId(auth()->id())->first();
+        }  
+        $existing_like = Like::withTrashed()->whereLikeableType('App\Models\Comment')->whereLikeableId($id)->whereUserId(auth()->id())->first();
 
         if (is_null($existing_like)) {
 
             //Notifications, called only when the like is created.
-            switch ($type) {
-                case 'App\Models\Comment':
-                    $userToNotify = Comment::find($id)->user;
-                    if ($userToNotify->id != auth()->id()) {
-                        $noticationType = "like to comment";
-                        $message = auth()->user()->username . " liked your comment.";
-                        $userToNotify->notify(new UserNotification($noticationType, $message, $id));
-                    }
-                    break;
-
-                case 'App\Models\Review':
-                    $userToNotify = Review::find($id)->user;
-                    if ($userToNotify->id != auth()->id()) {
-                        $noticationType = "like to review";
-                        $message = auth()->user()->username . " liked your review.";
-                        $userToNotify->notify(new UserNotification($noticationType, $message, $id));
-                    }
-                    break;
+            $userToNotify = Comment::find($id)->user;
+            if ($userToNotify->id != auth()->id()) {
+                $noticationType = "like to comment";
+                $message = auth()->user()->username . " liked your comment.";
+                $userToNotify->notify(new UserNotification($noticationType, $message, $id));
             }
-
-
             $like = Like::create([
                 'user_id'       => auth()->id(),
                 'likeable_id'   => $id,
-                'likeable_type' => $type,
+                'likeable_type' => 'App\Models\Comment',
             ]);
-            return $like;
+            return response($like, 200);
         }
 
         if (is_null($existing_like->deleted_at)) {
             $existing_like->delete();
-            return 'like is softly deleted';
+            return response('like is softly deleted', 200);
         }
         $existing_like->restore();
-        return 'like is restored';
+        return response('like is restored', 200);
     }
+
 
 
     public function showCommentLikes($id)
@@ -78,12 +81,11 @@ class LikeController extends Controller
         if (!Comment::find($id)) {
             return response('Comment not found', 404);
         }
-        $result = $this->showLike('App\Models\Comment', $id);
-        if (is_null($result)) {
-            return response('there are no like in this comment', 404);
+        $likes = Like::withTrashed()->whereLikeableType('App\Models\Comment')->whereLikeableId($id)->where('deleted_at', NULL)->get();
+        if ($likes) {
+            return response(['Likes' => $likes, 'Count' => $likes->count()], 200);
         }
-
-        return response($result, 200);
+        return response('there are no like in this comment', 404);
     }
 
 
@@ -92,20 +94,10 @@ class LikeController extends Controller
         if (!Review::find($id)) {
             return response('Review not found', 404);
         }
-        $result = $this->showLike('App\Models\Review', $id);
-        if (is_null($result)) {
-            return response('there are no like in this review', 404);
-        }
-        return response($result, 200);
-    }
-
-
-    public function showLike($type, $id)
-    {
-        $likes = Like::withTrashed()->whereLikeableType($type)->whereLikeableId($id)->where('deleted_at', NULL)->get();
+        $likes = Like::withTrashed()->whereLikeableType('App\Models\Review')->whereLikeableId($id)->where('deleted_at', NULL)->get();
         if ($likes) {
             return [['Likes' => $likes, 'Count' => $likes->count()]];
         }
-        return null;
+        return response('there are no like in this review', 404);
     }
 }

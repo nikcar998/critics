@@ -19,6 +19,8 @@ import { LoadingComponent } from "./LoadingComponent";
 import axios from "axios";
 import ProfileShow from "../../features/profile/ProfileShow";
 import ProfileList from "../../features/profile/ProfileList";
+import NotificationsList from "../../features/notifications/NotificationsList";
+import FollowList from "../../features/follow/FollowList";
 
 //here i will handle all routing. the layout will change using "react-responsive"
 function App() {
@@ -66,6 +68,8 @@ function App() {
                     <Route path="/comment/:id" exact component={CommentShow} />
                     <Route path="/profile/:id" exact component={ProfileShow} />
                     <Route path="/profile/list/users" exact component={ProfileList} />
+                    <Route path="/follows" exact component={FollowList} />
+                    <Route path="/notifications" exact component={NotificationsList} />
                     <Route path="/server-error" exact component={ServerError} />
                     <Route component={NotFound} />
                   </Switch>

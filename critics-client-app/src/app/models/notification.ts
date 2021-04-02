@@ -4,7 +4,7 @@ export interface Notification {
         notifiable_type: string,
         notifiable_id: number,
         data: {
-            review_id: number,
+            target_id: number,
             message:string,
             type: string
         },

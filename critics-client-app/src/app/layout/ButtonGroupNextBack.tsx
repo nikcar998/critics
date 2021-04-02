@@ -20,8 +20,8 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
         break;
       case "reviewStore":
         setPage(reviewStore.page);
-        reviewStore.reviewsPagination &&
-          setTotalPages(reviewStore.reviewsPagination.last_page);
+        reviewStore.pagination &&
+          setTotalPages(reviewStore.pagination.last_page);
         break;
       case "commentStore":
         setPage(commentStore.page);
@@ -84,6 +84,7 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
                 scrollPages(true);
               }}
             >
+              
               <Button.Content visible>Next</Button.Content>
               <Button.Content hidden>
                 <Icon name="arrow right" />
