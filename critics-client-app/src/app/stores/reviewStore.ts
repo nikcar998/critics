@@ -40,6 +40,18 @@ export default class ReviewStore {
     }
   };
 
+  loadAllReviews = async () => {
+    this.setLoading(true);
+    try {
+      this.pagination = await agent.Reviews.listAllReviews(this.page);
+      this.reviews = this.pagination.data;
+      this.setLoading(false);
+    } catch (error) {
+      console.log(error);
+      this.setLoading(false);
+    }
+  };
+
   //load a single review with like and comments(?)
   loadReview = async (id: string) => {
     this.setLoading(true);

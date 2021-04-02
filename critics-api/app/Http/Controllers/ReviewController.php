@@ -48,7 +48,7 @@ class ReviewController extends Controller
         ]);
 
         $review = new Review();
-        $review->user_id = $request->user_id;
+        $review->user_id = auth()->id();
         $review->film_id = $request->film_id;
         $review->film_title = $request->film_title;
         $review->title = $request->title;
@@ -151,6 +151,11 @@ class ReviewController extends Controller
     public function indexUser($id)
     {
         $result = Review::where('user_id', $id)->withCount('comment')->withCount('likes')->with('user')->orderBy('created_at', 'desc')->paginate(8);
+        return response($result, 200);
+    }
+    public function indexAll()
+    {
+        $result = Review::withCount('comment')->withCount('likes')->with('user')->orderBy('created_at', 'desc')->paginate(8);
         return response($result, 200);
     }
 }

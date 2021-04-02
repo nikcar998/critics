@@ -6,18 +6,21 @@ import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { useStore } from "../../app/stores/store";
 import Review from "./Review";
 
-interface Props{
-  id?:number
+interface Props {
+  id?: number;
+  all?: boolean;
 }
 //this component will show the riviews of a user and his friends.
-const ReviewsList = ({id}:Props) => {
+const ReviewsList = ({ id, all = false }: Props) => {
   const { reviewStore } = useStore();
 
   useEffect(() => {
-    (id) ?
-    reviewStore.loadUserReviews(id)
-    : reviewStore.loadReviews()
-  }, [reviewStore, reviewStore.page, id]);
+    id
+      ? reviewStore.loadUserReviews(id)
+      : all
+      ? reviewStore.loadAllReviews()
+      : reviewStore.loadReviews();
+  }, [reviewStore, reviewStore.page, id, all]);
   return (
     <Fragment>
       {reviewStore.loading ? (

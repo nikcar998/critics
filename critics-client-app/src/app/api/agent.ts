@@ -98,6 +98,8 @@ const Movies = {
 const Reviews = {
   listReviews: (page: number) =>
     requests.get<PaginationMyApi<Review>>("api/reviews?page=" + page),
+    listAllReviews: (page: number) =>
+    requests.get<PaginationMyApi<Review>>("api/reviews/all/?page=" + page),
   listUserReviews: (page: number, id: number) =>
     requests.get<PaginationMyApi<Review>>(
       "api/reviews/user/" + id + "?page=" + page

@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post("notifications/read", [NotificationController::class, 'readNotifications']);
 
     //reviews auth route
+    Route::get("reviews/all", [ReviewController::class, 'indexAll']);
     Route::get("reviews/search/{query}", [ReviewController::class, 'search']);
     Route::get("reviews/user/{id}", [ReviewController::class, 'indexUser']);
     Route::resource('reviews', ReviewController::class);

@@ -76,12 +76,10 @@ useEffect(()=>{
               Timeline
             </Button>
             <Button
-              onClick={() => {
-                console.log("hello");
-              }}
+               as={Link} to="/reviews/all"
               fluid
             >
-              Search
+              All
             </Button>
           </Button.Group>
         </Segment>

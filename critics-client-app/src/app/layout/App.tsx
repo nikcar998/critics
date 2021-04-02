@@ -24,21 +24,22 @@ import FollowList from "../../features/follow/FollowList";
 
 //here i will handle all routing. the layout will change using "react-responsive"
 function App() {
-  const {commonStore, userStore}= useStore()
+  const { commonStore, userStore } = useStore();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
   });
   useEffect(() => {
-    axios.get("/sanctum/csrf-cookie")
-    if(commonStore.token){
-      userStore.getUser().finally(()=> commonStore.setAppLoaded());
-    }else{
+    axios.get("/sanctum/csrf-cookie");
+    if (commonStore.token) {
+      userStore.getUser().finally(() => commonStore.setAppLoaded());
+    } else {
       commonStore.setAppLoaded();
     }
-  }, [commonStore, userStore])
+  }, [commonStore, userStore]);
 
-  if(!commonStore.appLoaded) return <LoadingComponent content="Loading app..." />
+  if (!commonStore.appLoaded)
+    return <LoadingComponent content="Loading app..." />;
   return (
     <>
       <ToastContainer position="bottom-right" hideProgressBar />
@@ -54,7 +55,7 @@ function App() {
               style={{ margin: "2px", marginTop: "12px" }}
               className="reactBody"
             >
-              <Grid.Row style={{minHeight:600}} >
+              <Grid.Row style={{ minHeight: 600 }}>
                 {isDesktop && <OptionSide />}
                 <Grid.Column
                   width={isDesktop ? 12 : 15}
@@ -64,13 +65,38 @@ function App() {
                     <Route path="/movies" exact component={MoviesList} />
                     <Route path="/reviews/store" exact component={ReviewForm} />
                     <Route path="/reviews" exact component={ReviewsList} />
+                    <Route
+                      path="/reviews/all"
+                      exact
+                      component={() => <ReviewsList all={true} />}
+                    />
                     <Route path="/reviews/:id" exact component={ReviewShow} />
                     <Route path="/comment/:id" exact component={CommentShow} />
                     <Route path="/profile/:id" exact component={ProfileShow} />
-                    <Route path="/profile/list/users" exact component={ProfileList} />
-                    <Route path="/following" exact component={() => <FollowList followingOrFollowers={true} /> } />
-                    <Route path="/followers" exact component={() => <FollowList followingOrFollowers={false} /> } />
-                    <Route path="/notifications" exact component={NotificationsList} />
+                    <Route
+                      path="/profile/list/users"
+                      exact
+                      component={ProfileList}
+                    />
+                    <Route
+                      path="/following"
+                      exact
+                      component={() => (
+                        <FollowList followingOrFollowers={true} />
+                      )}
+                    />
+                    <Route
+                      path="/followers"
+                      exact
+                      component={() => (
+                        <FollowList followingOrFollowers={false} />
+                      )}
+                    />
+                    <Route
+                      path="/notifications"
+                      exact
+                      component={NotificationsList}
+                    />
                     <Route path="/server-error" exact component={ServerError} />
                     <Route component={NotFound} />
                   </Switch>

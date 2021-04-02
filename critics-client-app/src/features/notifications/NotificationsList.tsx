@@ -1,8 +1,6 @@
-import { observer } from "mobx-react-lite";
-import React, { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Link } from "react-router-dom";
-import { Button, Divider, Grid, Header, Icon, Segment } from "semantic-ui-react";
+import { Button, Header, Segment } from "semantic-ui-react";
 import agent from "../../app/api/agent";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { Notification } from "../../app/models/notification";

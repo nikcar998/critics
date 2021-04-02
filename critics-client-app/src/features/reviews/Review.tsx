@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import { history } from "../..";
 import { Divider, Grid, Header, Icon, Image, Segment } from "semantic-ui-react";
 import { Review as ReviewType } from "../../app/models/review";
+import { toJS } from "mobx";
 
 //this is the structure of a single review, used by the ReviewList component
 interface Props {
@@ -26,6 +27,7 @@ const Review = ({ review }: Props) => {
     if (!isDesktop) {
       setMaxCharacters([10, 150]);
     }
+    console.log(toJS(review.user))
   }, [isDesktop]);
   return (
     <Fragment>
@@ -52,7 +54,7 @@ const Review = ({ review }: Props) => {
                       review.user.avatar
                         ? "http://127.0.0.1:8000/api/show/avatar?url=" +
                           review.user.avatar
-                        : defaultImageUrl
+                        : "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg"
                     }
                     style={{
                       height: 20,
@@ -73,8 +75,7 @@ const Review = ({ review }: Props) => {
                     }}
                   >
                     {review.user.username
-                      ? review.user.username
-                      : review.user.name}
+                      }
                   </p>
                 </Segment>
                 <Divider style={{ margin: 0 }} />
