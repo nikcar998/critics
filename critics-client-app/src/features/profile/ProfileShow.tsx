@@ -23,8 +23,11 @@ export default observer(function ProfileShow() {
 
   const defaultImageUrl =
     "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
-  const bgImage = "/images/cool-background.png";
-  const bgColor = { backgroundImage: `url(${bgImage})`, color: "#F6EEEC" };
+  const bgColor = {
+    backgroundImage:
+      "linear-gradient(90deg, rgba(0,0,8,1) 0%, rgba(46,46,50,1) 35%, rgba(93,93,99,1) 100%)",
+    color: "#F6EEEC",
+  };
 
   function toggleFollow() {
     userStore.selectedUser &&
@@ -43,11 +46,11 @@ export default observer(function ProfileShow() {
     });
   }, [userStore, id]);
 
-  return userStore.user && user && !userStore.loading? (
+  return userStore.user && user && !userStore.loading ? (
     <Fragment>
       {/****************************** PROFILE SEGMENT  ****************************/}
       <Segment style={{ bgColor }}>
-        <Grid>
+        <Grid >
           <Grid.Row columns={2} style={{ padding: 0, margin: 0 }}>
             {/******************* LEFT SIDE *******************/}
             <Grid.Column

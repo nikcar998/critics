@@ -68,7 +68,8 @@ function App() {
                     <Route path="/comment/:id" exact component={CommentShow} />
                     <Route path="/profile/:id" exact component={ProfileShow} />
                     <Route path="/profile/list/users" exact component={ProfileList} />
-                    <Route path="/follows" exact component={FollowList} />
+                    <Route path="/following" exact component={() => <FollowList followingOrFollowers={true} /> } />
+                    <Route path="/followers" exact component={() => <FollowList followingOrFollowers={false} /> } />
                     <Route path="/notifications" exact component={NotificationsList} />
                     <Route path="/server-error" exact component={ServerError} />
                     <Route component={NotFound} />

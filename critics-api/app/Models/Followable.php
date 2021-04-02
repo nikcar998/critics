@@ -13,8 +13,14 @@ trait Followable
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'follows', 'following_user_id', 'user_id');
+        return $this->belongsToMany(
+            self::class,
+            'follows',
+            'following_user_id',
+            'user_id'
+        );
     }
+    
 
     public function IsFollowing($id)
     {

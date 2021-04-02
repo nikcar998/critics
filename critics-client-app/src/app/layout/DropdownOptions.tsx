@@ -84,8 +84,8 @@ export const DropdownOptions = () => {
           ></Dropdown.Item>
           <Dropdown.Item text="Edit" />
           <Dropdown.Item as={Link} to={"/profile/list/users"} text="List" />
-          <Dropdown.Item text="Followers" />
-          <Dropdown.Item text="Following" />
+          <Dropdown.Item as={Link} to="/followers" text="Followers" />
+          <Dropdown.Item as={Link} to="/following" text="Following" />
           <Dropdown.Item>
             Notifications{" "}
             <Label

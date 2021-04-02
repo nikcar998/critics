@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react";
+import { Button, Divider, Grid, Header, Icon, Segment } from "semantic-ui-react";
 import agent from "../../app/api/agent";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { Notification } from "../../app/models/notification";
@@ -33,6 +33,7 @@ export default function NotificationsList() {
   return notifications ? (
     <Segment style={isDesktop ? { height: 550 } : { height: 650 }} inverted>
       <Header as="h1" style={{ marginLeft: 25 }} content="Notifications: " />
+      <hr style={{padding:0,border:0,borderTop:"1px solid red",marginBottom:15}} />
       {notifications.map((notification) =>
         !loading ? (
           <NotificationShow notification={notification} key={notification.id} />

@@ -140,7 +140,8 @@ const Account = {
   listUsers: (page: number) =>
     requests.get<PaginationMyApi<User>>(`/api/user/list?page=${page}`),
   details: (id: string) => requests.get<User>(`/api/details/${id}`),
-  search: (query: string) =>requests.get<PaginationMyApi<User>>("/api/user/search/"+query),
+  search: (query: string) =>
+    requests.get<PaginationMyApi<User>>("/api/user/search/" + query),
   login: (user: UserFormValues) =>
     requests.post<UserWithToken>("/api/login", user),
   register: (user: UserFormValues) =>
@@ -151,21 +152,27 @@ const Account = {
 const Follow = {
   isFollowing: (id: number) =>
     requests.get<boolean>("/api/follow/isFollowing/" + id),
-    listFollowing: () => requests.get<PaginationMyApi<User>>("api/follow/index"),
-    listFollowers: () => requests.get<PaginationMyApi<User>>("api/follow/index/followers"),
+  listFollowing: (page: number) =>
+    requests.get<PaginationMyApi<User>>("api/follow/index/?page=" + page),
+  listFollowers: (page: number) =>
+    requests.get<PaginationMyApi<User>>(
+      "api/follow/index/followers/?page=" + page
+    ),
   toggleFollow: (id: number) =>
     requests.post<string>("/api/follow/toggle/" + id),
-
 };
 
-
 ///////////////////////// NOTIFICATIONS /////////////////
-const Notifications= {
-  countUreadNotifications: () => requests.get<number>("api/notifications/indexUnread"),
-  list: (page: number) => requests.get<PaginationMyApi<Notification>>("api/notifications/index?page="+page),
-  readNotifications: () => requests.post<Notification[]>("api/notifications/read")
-
-}
+const Notifications = {
+  countUreadNotifications: () =>
+    requests.get<number>("api/notifications/indexUnread"),
+  list: (page: number) =>
+    requests.get<PaginationMyApi<Notification>>(
+      "api/notifications/index?page=" + page
+    ),
+  readNotifications: () =>
+    requests.post<Notification[]>("api/notifications/read"),
+};
 
 const agent = {
   Movies,
@@ -174,7 +181,7 @@ const agent = {
   Comments,
   Account,
   Follow,
-  Notifications
+  Notifications,
 };
 
 export default agent;

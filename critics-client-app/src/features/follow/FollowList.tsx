@@ -1,32 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import { Segment, Header, Image } from "semantic-ui-react";
+import { Segment, Header, Image, Button } from "semantic-ui-react";
 import agent from "../../app/api/agent";
 import { LoadingComponent } from "../../app/layout/LoadingComponent";
 import { User } from "../../app/models/user";
 
-export default function FollowList() {
+interface Props {
+  followingOrFollowers: boolean;
+}
+
+export default function FollowList({ followingOrFollowers }: Props) {
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
   });
 
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
-
-  const bgImage = "/images/cool-background.png";
-  const bgColor = { backgroundImage: `url(${bgImage})`, color: "#F6EEEC" };
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(0);
+  const [controlVar, setControlVar] = useState(0);
+  const bgColor = {
+    background:
+      "linear-gradient(90deg, rgba(0,0,8,1) 0%, rgba(46,46,50,1) 35%, rgba(93,93,99,1) 100%)",
+    color: "#F6EEEC",
+  };
   const defaultImageUrl =
     "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
 
   useEffect(() => {
+    if (followingOrFollowers) {
+      agent.Follow.listFollowing(page).then((resp) => {
+        setUsers(resp.data);
+        setPage(resp.current_page);
+        setLastPage(resp.last_page);
+        setLoading(false);
+      });
+    } else {
+      agent.Follow.listFollowers(page).then((resp) => {
+        setUsers(resp.data);
+        setPage(resp.current_page);
+        setLastPage(resp.last_page);
+        setLoading(false);
+      });
+    }
     setLoading(true);
-    agent.Follow.listFollowing().then((resp) => {
-      setUsers(resp.data);
-      setLoading(false);
-    });
-  }, []);
-  return users[0] ? (
+    console.log(users[0]);
+  }, [controlVar]);
+  return users[0] != undefined ? (
     <>
       <Segment.Group>
         {!loading ? (
@@ -81,6 +102,28 @@ export default function FollowList() {
           <div style={{ height: 400 }}>
             <LoadingComponent content="Loading users..." />
           </div>
+        )}
+        {lastPage > page && (
+          <Button
+            icon="arrow right"
+            style={{ float: "right" }}
+            primary
+            onClick={() => {
+              setPage(page + 1);
+              setControlVar(controlVar + 1);
+            }}
+          />
+        )}
+        {page > 1 && (
+          <Button
+            icon="arrow left"
+            style={{ float: "left" }}
+            primary
+            onClick={() => {
+              setPage(page - 1);
+              setControlVar(controlVar - 1);
+            }}
+          />
         )}
       </Segment.Group>
     </>

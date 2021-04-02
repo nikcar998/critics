@@ -1,7 +1,7 @@
 import React from 'react'
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
-import { Icon, Segment, Grid, Header } from 'semantic-ui-react';
+import { Icon, Segment, Grid, Header, Divider } from 'semantic-ui-react';
 import { Notification } from '../../app/models/notification';
 
 interface Props{
@@ -98,11 +98,12 @@ export default function NotificationShow({notification}:Props) {
                     textAlign="right"
                   >
                     {icon}
+                    
                   </Grid.Column>
                   <Grid.Column
                     width={14}
                     verticalAlign="middle"
-                    style={{ marginLeft: 10 }}
+                    style={{ marginLeft: 10,borderLeft:"1px solid blue" }}
                   >
                     <Header
                       as={isDesktop ? "h3" : "h5"}
@@ -111,6 +112,7 @@ export default function NotificationShow({notification}:Props) {
                       style={{ display: "inline-block" }}
                     />
                   </Grid.Column>
+               
                 </Grid.Row>
               </Grid>
             </Segment>

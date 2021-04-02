@@ -110,16 +110,15 @@ useEffect(()=>{
               List
             </Button>
             <Button
-              onClick={() => {
-                console.log("hello");
-              }}
+              as={Link}
+              to="/followers"
               fluid
             >
               Followers
             </Button>
             <Button
               as={Link}
-              to="/follows"
+              to="/following"
               fluid
             >
               Following
