@@ -29,7 +29,7 @@ export default function NotificationsList() {
     agent.Notifications.readNotifications();
   }, [controlVar]);
   return notifications ? (
-    <Segment style={isDesktop ? { height: 550 } : { height: 650 }} inverted>
+    <Segment style={isDesktop ? { height: 600 } : { height: 730 }} inverted>
       <Header as="h1" style={{ marginLeft: 25 }} content="Notifications: " />
       <hr style={{padding:0,border:0,borderTop:"1px solid red",marginBottom:15}} />
       {notifications.map((notification) =>
@@ -46,6 +46,7 @@ export default function NotificationsList() {
           primary
           onClick={() => {
             setPage(page + 1);
+            window.scrollTo(0,0)
             setControlVar(controlVar + 1);
           }}
         />
@@ -57,6 +58,7 @@ export default function NotificationsList() {
           primary
           onClick={() => {
             setPage(page - 1);
+            window.scrollTo(0,0)
             setControlVar(controlVar - 1);
           }}
         />

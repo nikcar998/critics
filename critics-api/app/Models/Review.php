@@ -26,7 +26,7 @@ class Review extends Model
     }
     function comment()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->latest();
     }
 
     public function likes()

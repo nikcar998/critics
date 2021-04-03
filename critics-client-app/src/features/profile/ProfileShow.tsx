@@ -28,6 +28,11 @@ export default observer(function ProfileShow() {
       "linear-gradient(90deg, rgba(0,0,8,1) 0%, rgba(46,46,50,1) 35%, rgba(93,93,99,1) 100%)",
     color: "#F6EEEC",
   };
+  const bgColor2 = {
+    backgroundImage:
+      "linear-gradient(90deg, rgba(93,93,99,1)  0%, rgba(46,46,50,1) 35%, rgba(0,0,8,1) 100%)",
+    color: "#F6EEEC",
+  };
 
   function toggleFollow() {
     userStore.selectedUser &&
@@ -49,7 +54,7 @@ export default observer(function ProfileShow() {
   return userStore.user && user && !userStore.loading ? (
     <Fragment>
       {/****************************** PROFILE SEGMENT  ****************************/}
-      <Segment style={{ bgColor }}>
+      <Segment  style={isDesktop && {width:"85%", margin:"20px auto"  }}>
         <Grid >
           <Grid.Row columns={2} style={{ padding: 0, margin: 0 }}>
             {/******************* LEFT SIDE *******************/}
@@ -85,14 +90,14 @@ export default observer(function ProfileShow() {
               style={{ padding: 0, margin: 0 }}
             >
               <Segment.Group style={{ height: "100%" }}>
-                <Segment style={bgColor}>
-                  <Header as="h2" style={bgColor} content={user.username} />
+                <Segment style={bgColor2}>
+                  <Header as="h2" style={bgColor2} content={user.username} />
                 </Segment>
                 <Segment
-                  style={{ ...bgColor, overflow: "auto", height: "9.6rem" }}
+                  style={{ ...bgColor2, overflow: "auto", height: "9.6rem" }}
                 >
                   <Header
-                    style={bgColor}
+                    style={bgColor2}
                     as="h5"
                     content={
                       "Description: " +
@@ -102,13 +107,13 @@ export default observer(function ProfileShow() {
                 </Segment>
                 <Segment
                   attached="bottom"
-                  style={{ ...bgColor, padding: "10px 0px" }}
+                  style={{ ...bgColor2, padding: "10px 0px" }}
                 >
                   <Header
                     as="h6"
                     content={"Followers: " + user.followers?.length}
                     style={{
-                      ...bgColor,
+                      color:"#F6EEEC",
                       margin: "0px 5px",
                       display: "inline-block",
                     }}
@@ -117,7 +122,7 @@ export default observer(function ProfileShow() {
                     as="h6"
                     content={"Following: " + user.follows?.length}
                     style={{
-                      ...bgColor,
+                      color:"#F6EEEC",
                       margin: "0px 4px",
                       display: "inline-block",
                     }}

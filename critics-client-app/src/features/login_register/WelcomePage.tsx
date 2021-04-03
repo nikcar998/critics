@@ -34,24 +34,24 @@ export default observer(function WelcomePage() {
             textAlign="center"
             style={{ paddingRight: 10, paddingBottom: 15, paddingLeft: 30 }}
           >
-            <Segment.Group>
-              <Segment>
-                <Header as="h1">Welcome in Critics!</Header>
+            <Segment.Group >
+              <Segment inverted>
+                <Header as="h1">Welcome to Critics!</Header>
               </Segment>
-              <Segment>
+              <Segment >
                 <Image
                   src="/images/welcomeImage.jpg"
                   size="huge"
                   centered
                 ></Image>
               </Segment>
-              <Segment>
+              <Segment inverted>
                 <Header as="h5">
                   This is a social network where you can share your opinion
                   about movies. Meet new people and express yourself!{" "}
                 </Header>
               </Segment>
-              <Segment>
+              <Segment inverted>
                 This website uses{" "}
                <a href="https://www.themoviedb.org/" rel="noreferrer" target="_blank" >
                 <Image  src="/images/TMDB_logo.png" style={{width:60,height:23}} inline />

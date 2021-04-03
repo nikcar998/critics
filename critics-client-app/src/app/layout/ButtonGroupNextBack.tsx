@@ -39,32 +39,29 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
     switch (store) {
       case "filmStore":
         filmStore.setPage(nextORBack);
-        window.scrollTo(0, 0);
         setPage(filmStore.page);
         break;
       case "reviewStore":
         reviewStore.setPage(nextORBack);
-        window.scrollTo(0, 0);
         setPage(reviewStore.page);
         break;
       case "commentStore":
         commentStore.setPage(nextORBack);
-        window.scrollTo(0, 0);
         setPage(commentStore.page);
         break;
       case "userStore":
         userStore.setPage(nextORBack);
-        window.scrollTo(0, 0);
         setPage(userStore.page);
         break;
     }
+    window.scrollTo(0, 0);
   };
 
   return (
     <Grid>
       <Grid.Column textAlign={"center"}>
         <Button.Group style={{ marginTop: "30px" }}>
-          {page !== 1 && (
+          {page > 1 && (
             <Button
               animated
               onClick={() => {
@@ -77,14 +74,13 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
               </Button.Content>
             </Button>
           )}
-          {totalPages > page && (
+          {totalPages != page && (
             <Button
               animated
               onClick={() => {
                 scrollPages(true);
               }}
             >
-              
               <Button.Content visible>Next</Button.Content>
               <Button.Content hidden>
                 <Icon name="arrow right" />

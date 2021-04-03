@@ -28,6 +28,7 @@ const ReviewShow = () => {
   const [comments, setComments] = useState<Comment[]>([]);
 
   const defaultImageUrl = "/images/no_picture_available.jpg";
+  const defaultAvatarUrl = "/images/no_picture_available.jpg";
 
   const { reviewStore, commentStore, userStore } = useStore();
 
@@ -108,7 +109,7 @@ const ReviewShow = () => {
                             review.user.avatar
                               ? "http://127.0.0.1:8000/api/show/avatar?url=" +
                                 review.user.avatar
-                              : defaultImageUrl
+                              : defaultAvatarUrl
                           }
                           style={{
                             height: 20,
