@@ -97,9 +97,7 @@ useEffect(()=>{
               My Profile
             </Button>
             <Button
-              onClick={() => {
-                console.log("hello");
-              }}
+              as={Link} to={"/profile/edit"}
               fluid
             >
               Edit

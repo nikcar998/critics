@@ -2,7 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { history } from "../..";
 import agent from "../api/agent";
 import { PaginationMyApi } from "../models/paginationMyApi";
-import { User, UserFormValues } from "../models/user";
+import { User, UserEditFormValues, UserFormValues } from "../models/user";
 import { store } from "./store";
 
 export default class UserStore {
@@ -79,10 +79,7 @@ export default class UserStore {
     }
   };
 
-  //useful to show loading component
-  setLoading = (state: boolean) => {
-    this.loading = state;
-  };
+ 
   selectUser = async (id: string) => {
     this.setLoading(true);
     try {
@@ -112,6 +109,18 @@ export default class UserStore {
     }
   };
 
+  editUser = async (user: UserEditFormValues) =>{
+    this.setLoading(true)
+    try{
+      await agent.Account.edit(user)
+      this.setLoading(false)
+    }catch(error){
+      console.log(error);
+      this.setLoading(false);
+      throw error;
+    }
+  }
+
   //function for pagination
   setPage = (plusOrNot: boolean) => {
     if (plusOrNot) {
@@ -126,5 +135,9 @@ export default class UserStore {
         this.page--;
       }
     }
+  };
+   //useful to show loading component
+   setLoading = (state: boolean) => {
+    this.loading = state;
   };
 }

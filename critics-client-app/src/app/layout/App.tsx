@@ -73,13 +73,13 @@ function App() {
                     />
                     <Route path="/reviews/:id" exact component={ReviewShow} />
                     <Route path="/comment/:id" exact component={CommentShow} />
-                    <Route path="/profile/edit/:id" exact component={ProfileEdit} />
-                    <Route path="/profile/:id" exact component={ProfileShow} />
+                    <Route path="/profile/edit" exact component={ProfileEdit} />
                     <Route
                       path="/profile/list/users"
                       exact
                       component={ProfileList}
                     />
+                    <Route path="/profile/:id" exact component={ProfileShow} />
                     <Route
                       path="/following"
                       exact

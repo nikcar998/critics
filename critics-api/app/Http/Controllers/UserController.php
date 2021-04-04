@@ -95,16 +95,14 @@ class UserController extends Controller
             'description' => ['max:500']
         ]);
         $result = auth()->user()->update($request->only([
+            'description',
             'name',
             'username',
-            'description'
+            
         ]));
         if ($result) {
-            $response = [
-                'user' => auth()->user(),
-            ];
 
-            return response($response, 201);
+            return response(auth()->user(), 201);
         }
         return response('error during update', 500);;
     }

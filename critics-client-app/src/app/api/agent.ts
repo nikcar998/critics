@@ -8,7 +8,7 @@ import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review, ReviewForShow } from "../models/review";
 import { store } from "../stores/store";
 import { history } from "../..";
-import { User, UserFormValues, UserWithToken } from "../models/user";
+import { User, UserEditFormValues, UserFormValues, UserWithToken } from "../models/user";
 import { Notification } from "../models/notification";
 
 const sleep = (delay: number) => {
@@ -148,6 +148,7 @@ const Account = {
     requests.post<UserWithToken>("/api/login", user),
   register: (user: UserFormValues) =>
     requests.post<UserWithToken>("/api/register", user),
+  edit: (user: UserEditFormValues) => requests.put("api/edit", user)
 };
 
 ///////////////////////// FOLLOW /////////////////

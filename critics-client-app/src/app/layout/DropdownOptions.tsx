@@ -67,7 +67,7 @@ export const DropdownOptions = () => {
           />
           <Dropdown.Divider />
           <Dropdown.Item as={Link} to="/reviews" text="Timeline" />
-          <Dropdown.Item text="Search" />
+          <Dropdown.Item as={Link} to="/reviews/all" text="All" />
           <Dropdown.Divider />
           {/************************** Profile *****************/}
           <Dropdown.Header
@@ -82,7 +82,7 @@ export const DropdownOptions = () => {
             to={"/profile/" + userStore.user?.id}
             text="My Profile"
           ></Dropdown.Item>
-          <Dropdown.Item text="Edit" />
+          <Dropdown.Item as={Link} to={"/profile/edit"} text="Edit" />
           <Dropdown.Item as={Link} to={"/profile/list/users"} text="List" />
           <Dropdown.Item as={Link} to="/followers" text="Followers" />
           <Dropdown.Item as={Link} to="/following" text="Following" />
@@ -101,7 +101,6 @@ export const DropdownOptions = () => {
             }}
             text="Logout"
           />
-          <Dropdown.Item text="Delete" />
         </Dropdown.Menu>
       </Dropdown>
     </Menu.Item>

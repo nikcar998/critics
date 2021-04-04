@@ -8,6 +8,7 @@ import { useStore } from "../../app/stores/store";
 import { UserEditFormValues } from "../../app/models/user";
 import { observer } from "mobx-react-lite";
 import MyTextArea from "../../app/common/form/MyTextArea";
+import { history } from "../..";
 
 export default observer(function ProfileEdit() {
   const { userStore } = useStore();
@@ -19,13 +20,13 @@ export default observer(function ProfileEdit() {
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(4, "Min 4 characters")
-      .max(100, "Max 100 characters"),
+      .max(100, "Max 150 characters"),
     username: Yup.string()
       .min(4, "Min 4 characters")
       .max(100, "Max 100 characters"),
     description: Yup.string()
       .min(4, "Min 8 characters")
-      .max(100, "Max 100 characters"),
+      .max(100, "Max 500 characters"),
   });
   useEffect(() => {
     userStore.user &&
@@ -45,7 +46,10 @@ export default observer(function ProfileEdit() {
         initialValues={{ ...initialValues, error: null }}
         onSubmit={(values, { setErrors, setSubmitting }) =>
           // handleSubmit(values, setErrors, setSubmitting)
-          console.log(values)
+          userStore
+            .editUser(values)
+            .then(() =>{ history.push("/profile/"+userStore.user?.id)})
+            .catch((error) => {setErrors({error})})
         }
       >
         {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
