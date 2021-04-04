@@ -18,6 +18,11 @@ export interface UserFormValues {
   username?:string;
   name?:string;
 }
+export interface UserEditFormValues {
+  description:string;
+  username:string;
+  name:string;
+}
 
 export interface UserWithToken{
   user:User,

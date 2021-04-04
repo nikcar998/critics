@@ -1,4 +1,3 @@
-import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -45,7 +44,11 @@ const ReviewShow = () => {
       agent.Likes.storeReviewLike(review.id).then(() => {
         if (reviewStore.selectedReview) {
           const addOrSub = review.likes.filter((like) => {
-            if (userStore.user) return like.id === userStore.user.id;
+            if (userStore.user) {
+              return like.id === userStore.user.id;
+            } else {
+              return null;
+            }
           });
           //necessary logic to handle likes
           if (addOrSub[0]) {

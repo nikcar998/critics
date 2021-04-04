@@ -36,7 +36,7 @@ export default function NotificationsList() {
         !loading ? (
           <NotificationShow notification={notification} key={notification.id} />
         ) : (
-          <LoadingComponent content="Loading page..." />
+          <LoadingComponent content="Loading page..." key={notification.id} />
         )
       )}
       {lastPage > page && (

@@ -86,7 +86,7 @@ export const DropdownOptions = () => {
           <Dropdown.Item as={Link} to={"/profile/list/users"} text="List" />
           <Dropdown.Item as={Link} to="/followers" text="Followers" />
           <Dropdown.Item as={Link} to="/following" text="Following" />
-          <Dropdown.Item>
+          <Dropdown.Item as={Link} to="/notifications">
             Notifications{" "}
             <Label
               style={{ margin: "auto" }}

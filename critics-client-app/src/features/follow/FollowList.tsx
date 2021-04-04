@@ -47,7 +47,7 @@ export default function FollowList({ followingOrFollowers }: Props) {
     setLoading(true);
     console.log(users[0]);
   }, [controlVar]);
-  return users[0] != undefined ? (
+  return users[0] !== undefined ? (
     <>
       <Segment.Group>
         {!loading ? (

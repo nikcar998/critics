@@ -21,6 +21,7 @@ import ProfileShow from "../../features/profile/ProfileShow";
 import ProfileList from "../../features/profile/ProfileList";
 import NotificationsList from "../../features/notifications/NotificationsList";
 import FollowList from "../../features/follow/FollowList";
+import ProfileEdit from "../../features/profile/ProfileEdit";
 
 //here i will handle all routing. the layout will change using "react-responsive"
 function App() {
@@ -72,6 +73,7 @@ function App() {
                     />
                     <Route path="/reviews/:id" exact component={ReviewShow} />
                     <Route path="/comment/:id" exact component={CommentShow} />
+                    <Route path="/profile/edit/:id" exact component={ProfileEdit} />
                     <Route path="/profile/:id" exact component={ProfileShow} />
                     <Route
                       path="/profile/list/users"

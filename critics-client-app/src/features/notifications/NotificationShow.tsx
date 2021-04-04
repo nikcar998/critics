@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import {
-  Icon,
-  Segment,
-  Grid,
-  Header,
-  Divider,
-  IconProps,
-  SemanticICONS,
-} from "semantic-ui-react";
+import { Icon, Segment, Grid, Header, SemanticICONS } from "semantic-ui-react";
 import { Notification } from "../../app/models/notification";
 
 interface Props {
@@ -19,32 +11,33 @@ export default function NotificationShow({ notification }: Props) {
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
   });
-  var destinationUrl = "";
+
   const [IconName, setIconName] = useState<SemanticICONS>("comments");
+  const [destinationUrl, setDestinationUrl] = useState("");
   useEffect(() => {
     switch (notification.data.type) {
       case "reply":
         setIconName("comments");
-        destinationUrl = "/comment/" + notification.data.target_id;
+        setDestinationUrl("/comment/" + notification.data.target_id);
         break;
       case "comment":
         setIconName("comment");
-        destinationUrl = "/reviews/" + notification.data.target_id;
+        setDestinationUrl("/reviews/" + notification.data.target_id);
         break;
       case "follows":
         setIconName("users");
-        destinationUrl = "/profile/" + notification.data.target_id;
+        setDestinationUrl("/profile/" + notification.data.target_id);
         break;
       case "like to comment":
         setIconName("like");
-        destinationUrl = "/comment/" + notification.data.target_id;
+        setDestinationUrl("/comment/" + notification.data.target_id);
         break;
       case "like to review":
         setIconName("like");
-        destinationUrl = "/reviews/" + notification.data.target_id;
+        setDestinationUrl("/reviews/" + notification.data.target_id);
         break;
     }
-  }, []);
+  }, [notification]);
 
   return (
     <Link to={destinationUrl}>
@@ -69,17 +62,19 @@ export default function NotificationShow({ notification }: Props) {
           <Grid.Row columns={2}>
             <Grid.Column
               width={1}
-              style={{ padding: 1, margin: 0, borderRight: isDesktop ? "1px solid blue" : "none" }}
-              compact
+              style={{
+                padding: 1,
+                margin: 0,
+                borderRight: isDesktop ? "1px solid blue" : "none",
+              }}
               textAlign="right"
             >
               <Icon
                 name={IconName}
                 color="teal"
                 size="big"
-                style={{ marginLeft: 5}}
+                style={{ marginLeft: 5 }}
               />
-              
             </Grid.Column>
             <Grid.Column
               width={14}

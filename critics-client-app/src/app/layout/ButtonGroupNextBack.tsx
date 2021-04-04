@@ -74,7 +74,7 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
               </Button.Content>
             </Button>
           )}
-          {totalPages != page && (
+          {totalPages !== page && (
             <Button
               animated
               onClick={() => {
