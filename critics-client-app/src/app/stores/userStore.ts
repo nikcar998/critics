@@ -33,6 +33,18 @@ export default class UserStore {
     }
   };
 
+  register = async (creds: UserFormValues) => {
+    try {
+      const user = await agent.Account.register(creds);
+      store.commonStore.setToken(user.token);
+      runInAction(() => (this.user = user.user));
+      history.push("/movies");
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
   logout = () => {
     store.commonStore.setToken(null);
     window.localStorage.removeItem("C_token");
@@ -52,19 +64,6 @@ export default class UserStore {
       throw error;
     }
   };
-
-  register = async (creds: UserFormValues) => {
-    try {
-      const user = await agent.Account.register(creds);
-      store.commonStore.setToken(user.token);
-      runInAction(() => (this.user = user.user));
-      history.push("/movies");
-    } catch (error) {
-      throw error;
-    }
-  };
-
-
 
   listUser = async () => {
     this.setLoading(true);

@@ -1,6 +1,7 @@
 import { makeAutoObservable, reaction } from "mobx";
 import { ServerError } from "../models/serverError";
 
+//useful to handle errors and authorization
 export default class CommonStore {
   error: ServerError | null = null;
   token: string | null = window.localStorage.getItem("C_token");

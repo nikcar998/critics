@@ -10,18 +10,20 @@ import agent from "../api/agent";
 const OptionSide = () => {
   const { filmStore, userStore } = useStore();
 
-  const [numbOfNotifications, setNumbOfNotifications]=useState(0);
+  //useful to set the number of notifications
+  const [numbOfNotifications, setNumbOfNotifications] = useState(0);
 
+  //this function let the user change which kind of film to list without changing the routes
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);
     history.push("/");
   };
 
-useEffect(()=>{
-  agent.Notifications.countUreadNotifications().then((resp)=>{
-    setNumbOfNotifications(resp)
-  });
-},[])
+  useEffect(() => {
+    agent.Notifications.countUreadNotifications().then((resp) => {
+      setNumbOfNotifications(resp);
+    });
+  }, []);
 
   return (
     <Grid.Column width={3}>
@@ -75,10 +77,7 @@ useEffect(()=>{
             <Button as={Link} to="/reviews" fluid>
               Timeline
             </Button>
-            <Button
-               as={Link} to="/reviews/all"
-              fluid
-            >
+            <Button as={Link} to="/reviews/all" fluid>
               All
             </Button>
           </Button.Group>
@@ -96,37 +95,33 @@ useEffect(()=>{
             <Button as={Link} to={"/profile/" + userStore.user?.id} fluid>
               My Profile
             </Button>
-            <Button
-              as={Link} to={"/profile/edit"}
-              fluid
-            >
+            <Button as={Link} to={"/profile/edit"} fluid>
               Edit
             </Button>
             <Button as={Link} to={"/profile/list/users"} fluid>
               List
             </Button>
-            <Button
-              as={Link}
-              to="/followers"
-              fluid
-            >
+            <Button as={Link} to="/followers" fluid>
               Followers
             </Button>
-            <Button
-              as={Link}
-              to="/following"
-              fluid
-            >
+            <Button as={Link} to="/following" fluid>
               Following
             </Button>
             <Button
-               as={Link} to={"/notifications"}
-               onClick={()=>{setNumbOfNotifications(0)}}
+              as={Link}
+              to={"/notifications"}
+              onClick={() => {
+                setNumbOfNotifications(0);
+              }}
               fluid
             >
               Notifications
-
-              <Label style={{margin:"auto"}} circular color="red" content={numbOfNotifications} />
+              <Label
+                style={{ margin: "auto" }}
+                circular
+                color="red"
+                content={numbOfNotifications}
+              />
             </Button>
             <Button
               onClick={() => {

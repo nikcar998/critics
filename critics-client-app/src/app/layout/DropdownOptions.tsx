@@ -6,11 +6,14 @@ import { Link } from "react-router-dom";
 import agent from "../api/agent";
 
 //if the screen is not a desktop this will shown and Optionside will be hidden
+//and the "optionSide" will be shown
 export const DropdownOptions = () => {
   const { filmStore, userStore } = useStore();
 
+  //useful to set the number of notifications
   const [numbOfNotifications, setNumbOfNotifications] = useState(0);
 
+  //this function let the user change which kind of film to list without changing the routes
   const changeWhichMoviesToUpload = (filmKind: string) => {
     filmStore.changeWhatToLoad(filmKind);
     history.push("/");
@@ -86,7 +89,13 @@ export const DropdownOptions = () => {
           <Dropdown.Item as={Link} to={"/profile/list/users"} text="List" />
           <Dropdown.Item as={Link} to="/followers" text="Followers" />
           <Dropdown.Item as={Link} to="/following" text="Following" />
-          <Dropdown.Item as={Link} to="/notifications" onClick={()=>{setNumbOfNotifications(0)}}>
+          <Dropdown.Item
+            as={Link}
+            to="/notifications"
+            onClick={() => {
+              setNumbOfNotifications(0);
+            }}
+          >
             Notifications{" "}
             <Label
               style={{ margin: "auto" }}

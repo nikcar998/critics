@@ -28,6 +28,8 @@ export default class ReviewStore {
       this.setLoading(false);
     }
   };
+
+  //load the reviews of a user
   loadUserReviews = async (id:number) => {
     this.setLoading(true);
     try {
@@ -40,6 +42,7 @@ export default class ReviewStore {
     }
   };
 
+  //show all reviews
   loadAllReviews = async () => {
     this.setLoading(true);
     try {

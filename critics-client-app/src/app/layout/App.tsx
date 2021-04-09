@@ -43,7 +43,9 @@ function App() {
     return <LoadingComponent content="Loading app..." />;
   return (
     <>
+      {/****** some errors will be shown by this ToastContainer e.g.: authorization errors */}
       <ToastContainer position="bottom-right" hideProgressBar />
+      {/****** if not authorized the user will be redirected here */}
       <Route path="/" exact component={WelcomePage} />
       <Route
         path={"/(.+)"}
@@ -63,7 +65,9 @@ function App() {
                   style={{ margin: "10px" }}
                 >
                   <Switch>
+                    {/****** movies route */}
                     <Route path="/movies" exact component={MoviesList} />
+                    {/****** reviews routes */}
                     <Route path="/reviews/store" exact component={ReviewForm} />
                     <Route path="/reviews" exact component={ReviewsList} />
                     <Route
@@ -72,7 +76,9 @@ function App() {
                       component={() => <ReviewsList all={true} />}
                     />
                     <Route path="/reviews/:id" exact component={ReviewShow} />
+                    {/****** comment route */}
                     <Route path="/comment/:id" exact component={CommentShow} />
+                    {/****** profiles routes */}
                     <Route path="/profile/edit" exact component={ProfileEdit} />
                     <Route
                       path="/profile/list/users"
@@ -87,6 +93,7 @@ function App() {
                         <FollowList followingOrFollowers={true} />
                       )}
                     />
+                    {/****** follow route */}
                     <Route
                       path="/followers"
                       exact
@@ -94,6 +101,7 @@ function App() {
                         <FollowList followingOrFollowers={false} />
                       )}
                     />
+                    {/****** notification route */}
                     <Route
                       path="/notifications"
                       exact

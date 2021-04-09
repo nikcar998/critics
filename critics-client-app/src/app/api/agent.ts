@@ -62,8 +62,6 @@ axios.interceptors.response.use(
 );
 
 /********************************* REQUEST ************************************/
-//here i will handle the authorization. Now is made in a static way, it will be implemented to use localStorage
-//to get the user's token
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("C_token");
   if (token) config.headers.Authorization = `Bearer ${token}`;

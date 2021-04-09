@@ -3,6 +3,8 @@ import { Button, Grid, Icon } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 
 //here i use 2 buttons to handle pagination layout
+
+//this prop is useful to understand which store is used
 interface Props {
   store: string;
 }
@@ -11,29 +13,6 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(2);
-
-  useEffect(() => {
-    switch (store) {
-      case "filmStore":
-        setPage(filmStore.page);
-        filmStore.pagination && setTotalPages(filmStore.pagination.total_pages);
-        break;
-      case "reviewStore":
-        setPage(reviewStore.page);
-        reviewStore.pagination &&
-          setTotalPages(reviewStore.pagination.last_page);
-        break;
-      case "commentStore":
-        setPage(commentStore.page);
-        commentStore.pagination &&
-          setTotalPages(commentStore.pagination.last_page);
-        break;
-      case "userStore":
-        setPage(userStore.page);
-        userStore.pagination && setTotalPages(userStore.pagination.last_page);
-        break;
-    }
-  }, [filmStore, reviewStore, store, commentStore, userStore]);
 
   const scrollPages = (nextORBack: boolean) => {
     switch (store) {
@@ -56,6 +35,29 @@ export const ButtonGroupNextBack = ({ store }: Props) => {
     }
     window.scrollTo(0, 0);
   };
+  
+  useEffect(() => {
+    switch (store) {
+      case "filmStore":
+        setPage(filmStore.page);
+        filmStore.pagination && setTotalPages(filmStore.pagination.total_pages);
+        break;
+      case "reviewStore":
+        setPage(reviewStore.page);
+        reviewStore.pagination &&
+          setTotalPages(reviewStore.pagination.last_page);
+        break;
+      case "commentStore":
+        setPage(commentStore.page);
+        commentStore.pagination &&
+          setTotalPages(commentStore.pagination.last_page);
+        break;
+      case "userStore":
+        setPage(userStore.page);
+        userStore.pagination && setTotalPages(userStore.pagination.last_page);
+        break;
+    }
+  }, [filmStore, reviewStore, store, commentStore, userStore]);
 
   return (
     <Grid>
