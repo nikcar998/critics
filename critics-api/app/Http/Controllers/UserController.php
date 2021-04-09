@@ -111,14 +111,12 @@ class UserController extends Controller
     public function updateAvatar(Request $request)
     {
         $request->validate([
-            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:4096']
         ]);
-
-        $user = auth()->user();
-        $user->avatar = request('avatar')->store('avatars');
-        $result = $user->update();
+        auth()->user()->avatar = request('avatar')->store('avatars');
+        $result = auth()->user()->update();
         if ($result) {
-            return response($user, 200);
+            return response(auth()->user(), 200);
         }
         return response('Error updating avatar', 500);
     }

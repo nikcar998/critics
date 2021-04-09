@@ -10,6 +10,7 @@ import { store } from "../stores/store";
 import { history } from "../..";
 import { User, UserEditFormValues, UserFormValues, UserWithToken } from "../models/user";
 import { Notification } from "../models/notification";
+import { ImageType } from "react-images-uploading";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -68,6 +69,7 @@ axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("C_token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   config.headers.Accept = "Application/json";
+  config.headers.ContentType = "multipart/form-data";
   return config;
 });
 
@@ -148,7 +150,8 @@ const Account = {
     requests.post<UserWithToken>("/api/login", user),
   register: (user: UserFormValues) =>
     requests.post<UserWithToken>("/api/register", user),
-  edit: (user: UserEditFormValues) => requests.put("api/edit", user)
+  edit: (user: UserEditFormValues) => requests.put("api/edit", user),
+  editAvatar: (avatar:FormData) => requests.post("api/edit/avatar", avatar)
 };
 
 ///////////////////////// FOLLOW /////////////////

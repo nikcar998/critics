@@ -21,7 +21,7 @@ import ProfileShow from "../../features/profile/ProfileShow";
 import ProfileList from "../../features/profile/ProfileList";
 import NotificationsList from "../../features/notifications/NotificationsList";
 import FollowList from "../../features/follow/FollowList";
-import ProfileEdit from "../../features/profile/ProfileEdit";
+import ProfileEdit from "../../features/profile_edit/ProfileEdit";
 
 //here i will handle all routing. the layout will change using "react-responsive"
 function App() {

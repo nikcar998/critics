@@ -54,7 +54,7 @@ export default observer(function ProfileShow() {
   return userStore.user && user && !userStore.loading ? (
     <Fragment>
       {/****************************** PROFILE SEGMENT  ****************************/}
-      <Segment  style={isDesktop && {width:"85%", margin:"20px auto"  }}>
+      <Segment  style={isDesktop ? {width:"85%", margin:"20px auto"  } : {width:"110%",marginLeft:"-15px"}}>
         <Grid >
           <Grid.Row columns={2} style={{ padding: 0, margin: 0 }}>
             {/******************* LEFT SIDE *******************/}
@@ -63,7 +63,7 @@ export default observer(function ProfileShow() {
               style={{ padding: 0, margin: 0, height: "100%" }}
             >
               <Segment.Group style={{ ...bgColor, height: "100%" }}>
-                <Segment style={bgColor} textAlign="center">
+                <Segment style={isDesktop ? bgColor : {...bgColor, padding:"10px 0px 20px"}} textAlign="center">
                   <Image
                     src={
                       user.avatar
@@ -71,8 +71,8 @@ export default observer(function ProfileShow() {
                           user.avatar
                         : defaultImageUrl
                     }
-                    size="small"
-                    avatar
+                   style={{width:150, height:135, border:"1px solid white"}}
+                   circular
                   ></Image>
                 </Segment>
                 <Segment

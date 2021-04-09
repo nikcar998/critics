@@ -9,6 +9,9 @@ import { UserEditFormValues } from "../../app/models/user";
 import { observer } from "mobx-react-lite";
 import MyTextArea from "../../app/common/form/MyTextArea";
 import { history } from "../..";
+import { useMediaQuery } from "react-responsive";
+import ImageUpload from "./ImageUpload";
+
 
 export default observer(function ProfileEdit() {
   const { userStore } = useStore();
@@ -17,6 +20,11 @@ export default observer(function ProfileEdit() {
     username: "",
     description: "",
   });
+
+  const isDesktop = useMediaQuery({
+    query: "(min-width: 1050px)",
+  });
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(4, "Min 4 characters")
@@ -28,6 +36,8 @@ export default observer(function ProfileEdit() {
       .min(4, "Min 8 characters")
       .max(100, "Max 500 characters"),
   });
+ 
+ 
   useEffect(() => {
     userStore.user &&
       setInitialValues({
@@ -39,7 +49,7 @@ export default observer(function ProfileEdit() {
       });
   }, [userStore]);
   return (
-    <Segment>
+    <Segment style={isDesktop ? { width: "85%", margin: "10px auto" } : {}}>
       <Formik
         validationSchema={validationSchema}
         enableReinitialize
@@ -48,8 +58,12 @@ export default observer(function ProfileEdit() {
           // handleSubmit(values, setErrors, setSubmitting)
           userStore
             .editUser(values)
-            .then(() =>{ history.push("/profile/"+userStore.user?.id)})
-            .catch((error) => {setErrors({error})})
+            .then(() => {
+              history.push("/profile/" + userStore.user?.id);
+            })
+            .catch((error) => {
+              setErrors({ error });
+            })
         }
       >
         {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
@@ -58,7 +72,7 @@ export default observer(function ProfileEdit() {
             onSubmit={handleSubmit}
             autoComplete="off"
           >
-            <Header as="h3" content="Register:" />
+            <Header as="h3" content="Edit your profile: " />
             <Divider />
             <MyTextInput label="Name" name="name" placeholder="Name" />
             <MyTextInput
@@ -85,6 +99,8 @@ export default observer(function ProfileEdit() {
           </Form>
         )}
       </Formik>
+<ImageUpload />
+   
     </Segment>
   );
 });
