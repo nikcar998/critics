@@ -50,6 +50,10 @@ export default observer(function ProfileEdit() {
   }, [userStore]);
   return (
     <Segment style={isDesktop ? { width: "85%", margin: "10px auto" } : {}}>
+      <Header as="h3" content="Edit your profile: " />
+      <Divider />
+      <ImageUpload />
+      <p style={{fontSize:10}} >You can also drag an image over you avatar to change it.</p>
       <Formik
         validationSchema={validationSchema}
         enableReinitialize
@@ -72,7 +76,7 @@ export default observer(function ProfileEdit() {
             onSubmit={handleSubmit}
             autoComplete="off"
           >
-            <Header as="h3" content="Edit your profile: " />
+            
             <Divider />
             <MyTextInput label="Name" name="name" placeholder="Name" />
             <MyTextInput
@@ -99,7 +103,7 @@ export default observer(function ProfileEdit() {
           </Form>
         )}
       </Formik>
-<ImageUpload />
+
    
     </Segment>
   );

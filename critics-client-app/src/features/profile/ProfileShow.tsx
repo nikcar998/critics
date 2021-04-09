@@ -54,7 +54,7 @@ export default observer(function ProfileShow() {
   return userStore.user && user && !userStore.loading ? (
     <Fragment>
       {/****************************** PROFILE SEGMENT  ****************************/}
-      <Segment  style={isDesktop ? {width:"85%", margin:"20px auto"  } : {width:"110%",marginLeft:"-15px"}}>
+      <Segment  style={isDesktop ? {width:"85%", margin:"20px auto"  } : {width:"110%",marginLeft:"-20px"}}>
         <Grid >
           <Grid.Row columns={2} style={{ padding: 0, margin: 0 }}>
             {/******************* LEFT SIDE *******************/}
