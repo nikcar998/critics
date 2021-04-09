@@ -121,6 +121,7 @@ useEffect(()=>{
             </Button>
             <Button
                as={Link} to={"/notifications"}
+               onClick={()=>{setNumbOfNotifications(0)}}
               fluid
             >
               Notifications

@@ -32,7 +32,6 @@ const Comments = ({ comment, showOrNot }: Props) => {
     comment.likes ? comment.likes.length : 0
   );
 
-  //TODO -> better like logic
   function handleNewLike() {
     agent.Likes.storeCommentLike(comment.id).then((resp) => {
       var addOrSub: Like[] | null[] = []
@@ -79,7 +78,9 @@ const Comments = ({ comment, showOrNot }: Props) => {
               verticalAlign="top"
             />
           )}
-          {/*************************** here i will give the oprion to show this button or not */}
+          {/*************************** here i will give the option to show this button or not. Useful to distinguish if
+           * the comment is in a list and when the comment is the main content of the page
+           */}
           {!showOrNot && (
             <Button
               icon="eye"
@@ -121,7 +122,7 @@ const Comments = ({ comment, showOrNot }: Props) => {
             }}
           >
             <Header as="h3" style={{ marginBottom: "5px" }}>
-              {comment.user && comment.user.name}
+              {comment.user && comment.user.username}
             </Header>
 
             <Header style={{ margin: 0, marginLeft: "15px" }} as="h5">
