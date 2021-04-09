@@ -54,7 +54,7 @@ export default observer(function ProfileShow() {
   return userStore.user && user && !userStore.loading ? (
     <Fragment>
       {/****************************** PROFILE SEGMENT  ****************************/}
-      <Segment  style={isDesktop ? {width:"85%", margin:"20px auto"  } : {width:"110%",marginLeft:"-20px"}}>
+      <Segment  style={isDesktop ? {width:"85%", margin:"20px auto"  } : {width:"110%",marginLeft:"-17px"}}>
         <Grid >
           <Grid.Row columns={2} style={{ padding: 0, margin: 0 }}>
             {/******************* LEFT SIDE *******************/}
@@ -111,7 +111,7 @@ export default observer(function ProfileShow() {
                 >
                   <Header
                     as="h6"
-                    content={"Followers: " + user.followers?.length}
+                    content={"Followers: " + user.followers_count}
                     style={{
                       color:"#F6EEEC",
                       margin: "0px 5px",
@@ -120,7 +120,7 @@ export default observer(function ProfileShow() {
                   />
                   <Header
                     as="h6"
-                    content={"Following: " + user.follows?.length}
+                    content={"Following: " + user.follows_count}
                     style={{
                       color:"#F6EEEC",
                       margin: "0px 4px",

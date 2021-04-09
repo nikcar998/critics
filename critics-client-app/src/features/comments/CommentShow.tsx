@@ -22,10 +22,7 @@ export default observer(function CommentShow() {
         setComment(commentStore.selectedComment);
         setReplies(commentStore.selectedComment.replies);
       }
-      console.log(commentStore.selectedComment);
     });
-
-    console.log(commentStore.selectedComment);
   }, [commentStore, id]);
 
   return (

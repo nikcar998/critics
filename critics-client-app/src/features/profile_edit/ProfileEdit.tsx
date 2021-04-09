@@ -49,11 +49,11 @@ export default observer(function ProfileEdit() {
       });
   }, [userStore]);
   return (
-    <Segment style={isDesktop ? { width: "85%", margin: "10px auto" } : {}}>
-      <Header as="h3" content="Edit your profile: " />
+    <Segment style={isDesktop ? { width: "85%", margin: "10px auto",  backgroundColor: "#F6EEEC" } : {  backgroundColor: "#F6EEEC"}}>
+      <Header as="h2" content="Edit your profile: " />
       <Divider />
       <ImageUpload />
-      <p style={{fontSize:10}} >You can also drag an image over you avatar to change it.</p>
+      <p style={{fontSize:10}} >You can also drag an image over your avatar to change it.</p>
       <Formik
         validationSchema={validationSchema}
         enableReinitialize

@@ -12,6 +12,7 @@ export default class UserStore {
   loading = false;
   page = 1;
   users: User[] = [];
+    
 
   constructor() {
     makeAutoObservable(this);
@@ -26,7 +27,6 @@ export default class UserStore {
       const user = await agent.Account.login(creds);
       store.commonStore.setToken(user.token);
       runInAction(() => (this.user = user.user));
-      console.log(user);
       history.push("/movies");
     } catch (error) {
       throw error;
@@ -58,7 +58,6 @@ export default class UserStore {
       const user = await agent.Account.register(creds);
       store.commonStore.setToken(user.token);
       runInAction(() => (this.user = user.user));
-      console.log(user);
       history.push("/movies");
     } catch (error) {
       throw error;

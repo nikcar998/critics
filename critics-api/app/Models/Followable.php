@@ -22,7 +22,7 @@ trait Followable
     }
     
 
-    public function IsFollowing($id)
+    public function isFollowing($id)
     {
         return $this->follows()
             ->where('following_user_id', $id)->exists();

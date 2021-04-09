@@ -27,7 +27,6 @@ class Comment extends Model
     {
         return $this->morphToMany('App\Models\User', 'likeable')->whereDeletedAt(null);
     }
-
     public function getIsLikedAttribute()
     {
         $like = $this->likes()->whereUserId(auth()->id())->first();

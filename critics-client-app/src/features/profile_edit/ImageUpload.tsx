@@ -15,13 +15,11 @@ export default function ImageUpload() {
     addUpdateIndex: number[] | undefined
   ) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
     if (imageList[0].file) {
       let formData = new FormData();
       formData.append("avatar", imageList[0].file);
       agent.Account.editAvatar(formData);
-      console.log(imageList[0].file);
     }
   };
 
@@ -29,7 +27,6 @@ export default function ImageUpload() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        console.log(images);
       }}
     >
       <ImageUploading value={images} onChange={onChange}>
@@ -44,27 +41,26 @@ export default function ImageUpload() {
         }) => (
           // write your building UI
           <div className="upload__image-wrapper">
-            {userStore.user && !(imageList[0]) ?(
-              <Image
-                src={
-                  userStore.user.avatar
+            <Image
+              src={
+                userStore.user && !imageList[0]
+                  ? userStore.user.avatar
                     ? "http://127.0.0.1:8000/api/show/avatar?url=" +
                       userStore.user.avatar
                     : defaultImageUrl
-                }
-                style={{ width: 150, height: 135, border: "1px solid white" }}
-                circular
-                inline
-                {...dragProps}
-              ></Image>
-            ) :( <Image
-              src={imageList[0].dataURL}
-              style={{ width: 150, height: 135, border: "1px solid white" }}
+                  : imageList[0].dataURL
+              }
+              style={{ width: 150, height: 150, border: "1px solid white" }}
               circular
               inline
               {...dragProps}
-            ></Image>) }
-            <Button style={{ margin: "auto 20px" }} onClick={onImageUpload} primary>
+            ></Image>
+
+            <Button
+              style={{ margin: "auto 20px" }}
+              onClick={onImageUpload}
+              primary
+            >
               Change
             </Button>
           </div>

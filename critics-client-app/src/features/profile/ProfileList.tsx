@@ -53,7 +53,7 @@ export default observer(function ProfileList() {
           users.map((user) => {
             return (
               <Segment
-                style={{ ...bgColor, borderBottom: "solid 1px", padding: 0 }}
+                style={{ ...bgColor, borderBottom: "solid 1px", padding: "0px 5px" }}
                 key={user.id}
               >
                 <Link to={"/profile/" + user.id}>
@@ -76,7 +76,7 @@ export default observer(function ProfileList() {
                   <Header
                     as="h2"
                     content={user.username}
-                    color="red"
+                    color="blue"
                     style={{ display: "inline-block" }}
                   />
                 </Link>

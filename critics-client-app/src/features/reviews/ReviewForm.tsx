@@ -55,7 +55,6 @@ const ReviewForm = () => {
         history.push("/reviews");
       })
       .catch((error) => {
-        console.log("hello1");
         setErrors({ error });
         setSubmitting(false);
       });

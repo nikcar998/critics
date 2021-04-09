@@ -45,15 +45,14 @@ export default function FollowList({ followingOrFollowers }: Props) {
       });
     }
     setLoading(true);
-    console.log(users[0]);
-  }, [controlVar]);
+  }, [controlVar, followingOrFollowers, page]);
   return users[0] !== undefined ? (
     <>
       <Segment.Group>
         {!loading ? (
           users.map((user) => (
             <Segment
-              style={{ ...bgColor, borderBottom: "solid 1px", padding: 0 }}
+              style={{ ...bgColor, borderBottom: "1px solid white", padding: 0 }}
               key={user.id}
             >
               <Link to={"/profile/" + user.id}>
@@ -75,8 +74,8 @@ export default function FollowList({ followingOrFollowers }: Props) {
                 />
                 <Header
                   as="h2"
-                  content={user.username}
-                  color="red"
+                  content={user.username.slice(0,20)}
+                  color="blue"
                   style={{ display: "inline-block" }}
                 />
               </Link>

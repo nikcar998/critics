@@ -10,7 +10,6 @@ import { store } from "../stores/store";
 import { history } from "../..";
 import { User, UserEditFormValues, UserFormValues, UserWithToken } from "../models/user";
 import { Notification } from "../models/notification";
-import { ImageType } from "react-images-uploading";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
