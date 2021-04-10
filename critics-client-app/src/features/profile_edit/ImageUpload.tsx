@@ -3,10 +3,14 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 import { Button, Image } from "semantic-ui-react";
 import agent from "../../app/api/agent";
 import { useStore } from "../../app/stores/store";
+
+//this component gives the possibility to update user's avatar
+//it uses  "react-images-uploading"
 export default function ImageUpload() {
   const [images, setImages] = React.useState<ImageListType>([]);
   const { userStore } = useStore();
 
+  //default avatar
   const defaultImageUrl =
     "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
 
