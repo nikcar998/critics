@@ -8,7 +8,12 @@ import { PaginationMyApi } from "../models/paginationMyApi";
 import { Review, ReviewForShow } from "../models/review";
 import { store } from "../stores/store";
 import { history } from "../..";
-import { User, UserEditFormValues, UserFormValues, UserWithToken } from "../models/user";
+import {
+  User,
+  UserEditFormValues,
+  UserFormValues,
+  UserWithToken,
+} from "../models/user";
 import { Notification } from "../models/notification";
 
 const sleep = (delay: number) => {
@@ -45,6 +50,7 @@ axios.interceptors.response.use(
           toast.error(data);
         }
         break;
+      // this case is useful to stop any user from accessing unauthorized routes.
       case 401:
         history.push("/");
         toast.error("Unauthorized");
@@ -97,7 +103,7 @@ const Movies = {
 const Reviews = {
   listReviews: (page: number) =>
     requests.get<PaginationMyApi<Review>>("api/reviews?page=" + page),
-    listAllReviews: (page: number) =>
+  listAllReviews: (page: number) =>
     requests.get<PaginationMyApi<Review>>("api/reviews/all/?page=" + page),
   listUserReviews: (page: number, id: number) =>
     requests.get<PaginationMyApi<Review>>(
@@ -148,7 +154,8 @@ const Account = {
   register: (user: UserFormValues) =>
     requests.post<UserWithToken>("/api/register", user),
   edit: (user: UserEditFormValues) => requests.put("api/edit", user),
-  editAvatar: (avatar:FormData) => requests.post("api/edit/avatar", avatar)
+  //this is the only "account function" not used in the userStore
+  editAvatar: (avatar: FormData) => requests.post("api/edit/avatar", avatar),
 };
 
 ///////////////////////// FOLLOW /////////////////

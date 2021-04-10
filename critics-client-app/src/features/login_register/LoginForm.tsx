@@ -7,6 +7,8 @@ import MyTextInput from "../../app/common/form/MyTextInput";
 import { UserFormValues } from "../../app/models/user";
 import { useStore } from "../../app/stores/store";
 
+//this component will handle the login logic.
+//it's pretty simple because it uses the logic used for every other form.
 export default observer(function LoginForm() {
   const { userStore } = useStore();
 
@@ -20,10 +22,10 @@ export default observer(function LoginForm() {
     setErrors: any,
     setSubmitting: (isSubmitting: boolean) => void
   ) {
-      userStore.login(values).catch((error) => {
-        setErrors({ error});
-        setSubmitting(false);
-      });
+    userStore.login(values).catch((error) => {
+      setErrors({ error });
+      setSubmitting(false);
+    });
   }
 
   return (

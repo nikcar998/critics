@@ -30,6 +30,8 @@ function App() {
   const isDesktop = useMediaQuery({
     query: "(min-width: 1050px)",
   });
+
+  //here first i will ask for the csrf-cookie, then check if there is a token and get the current user
   useEffect(() => {
     axios.get("/sanctum/csrf-cookie");
     if (commonStore.token) {

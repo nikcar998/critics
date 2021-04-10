@@ -14,7 +14,9 @@ import agent from "../../app/api/agent";
 import { Comment } from "../../app/models/comment";
 import { Like } from "../../app/models/like";
 
-//this is the structure of a single comment
+//this is the structure of a single comment used in a list
+
+//these props
 interface Props {
   comment: Comment;
   showOrNot?: boolean;
@@ -32,6 +34,8 @@ const Comments = ({ comment, showOrNot }: Props) => {
     comment.likes ? comment.likes.length : 0
   );
 
+  //this is the necessary logic to understand if the user is adding a like or removing one.
+  //TODO-> improve back-end logic to make these functions faster
   function handleNewLike() {
     agent.Likes.storeCommentLike(comment.id).then((resp) => {
       var addOrSub: Like[] | null[] = []
@@ -58,6 +62,8 @@ const Comments = ({ comment, showOrNot }: Props) => {
   return (
     <Grid>
       <GridRow columns={2}>
+        {/**** here i show the user's avatar and two buttons to like the comment or see it 
+         * as the main content of the page */}
         <Grid.Column
           width={isDesktop ? 1 : 3}
           verticalAlign="top"
@@ -78,8 +84,8 @@ const Comments = ({ comment, showOrNot }: Props) => {
               verticalAlign="top"
             />
           )}
-          {/*************************** here i will give the option to show this button or not. Useful to distinguish if
-           * the comment is in a list and when the comment is the main content of the page
+          {/****************** here i will give the option to show this button or not. Useful to distinguish
+           *  if the comment is in a list and when the comment is the main content of the page
            */}
           {!showOrNot && (
             <Button
@@ -107,6 +113,7 @@ const Comments = ({ comment, showOrNot }: Props) => {
             }}
           />
         </Grid.Column>
+        {/********* here i show user's username and the comment's text */}
         <Grid.Column
           width={isDesktop ? 14 : 13}
           style={{ marginLeft: 0, paddingLeft: 4 }}

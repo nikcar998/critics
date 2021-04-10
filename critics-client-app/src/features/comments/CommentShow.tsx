@@ -8,6 +8,7 @@ import { useStore } from "../../app/stores/store";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
 
+//this component will show a single comment with his replies
 export default observer(function CommentShow() {
   const { id } = useParams<{ id: string }>();
 
@@ -15,6 +16,7 @@ export default observer(function CommentShow() {
   const [replies, setReplies] = useState<Comment[]>([]);
 
   const { commentStore, userStore } = useStore();
+
 
   useEffect(() => {
     commentStore.loadComment(id).then(() => {
@@ -30,6 +32,7 @@ export default observer(function CommentShow() {
       {comment && comment.user ? (
         <>
           <Segment inverted>
+            {/** show the main comment  */}
             <Comments comment={comment} showOrNot={true} />
           </Segment>
 

@@ -3,6 +3,8 @@ import React from "react";
 import { Container, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 
+//this component will be shown every time there is a 500 error,
+//it will also show the description of the error 
 const ServerError = () => {
   const { commonStore } = useStore();
   return (

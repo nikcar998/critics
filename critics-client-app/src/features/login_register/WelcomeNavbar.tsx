@@ -1,5 +1,6 @@
 import { Menu, Container, Icon } from "semantic-ui-react";
 
+//this is the navbar shown in whe "WelcomPage.tsx" component, it is useful only for aesthetics purposes
 export const WelcomeNavbar = () => {
   return (
     <>

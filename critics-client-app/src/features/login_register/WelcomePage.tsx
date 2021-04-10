@@ -8,6 +8,7 @@ import LoginForm from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 import { WelcomeNavbar } from "./WelcomeNavbar";
 
+//homepage for unauthorized users
 export default observer(function WelcomePage() {
   const { userStore } = useStore();
 

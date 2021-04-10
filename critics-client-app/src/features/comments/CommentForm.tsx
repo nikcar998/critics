@@ -12,6 +12,8 @@ import { ErrorMessage, Form, Formik, FormikErrors, FormikState } from "formik";
 import MyTextArea from "../../app/common/form/MyTextArea";
 
 //this component will give the possibility to store a new comment
+
+//these props are useful to use this form in both "CommentShow.tsx" and "ReviewShow.tsx" components
 interface Props {
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   comments: Comment[];
@@ -42,7 +44,8 @@ const CommentForm = ({
 
   const [newComment, setNewComment] = useState<CommentFormValues>(initialState);
 
-  //here i will store a new comment and add it to the "comments" array
+  //here i will store a new comment, add it to the "comments" array and then reset 
+  //the form if there are no errors
   const handleFormSubmit = (
     comment: CommentFormValues,
     resetForm: (nextState?: Partial<FormikState<CommentFormValues>> | undefined) => void,
@@ -73,9 +76,10 @@ const CommentForm = ({
   });
 
   //here i will set the necessary values to store the comment
+  //these will change if the "parent_comment" prop exists or not
   useEffect(() => {
     const pivotComment = initialState;
-    if (reviewStore.selectedReview) {
+    if (reviewStore.selectedReview && !parent_comment) {
       pivotComment.review_id = reviewStore.selectedReview.id;
       setNewComment(pivotComment);
     }

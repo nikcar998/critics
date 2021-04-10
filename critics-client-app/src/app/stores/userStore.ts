@@ -18,10 +18,13 @@ export default class UserStore {
     makeAutoObservable(this);
   }
 
+  //this function will check if the user il logged in and pass this value to the "WelcomePage.tsx" component
+  //if the user is logged in, he won't be able to see the component.
   get isLoggedIn() {
     return !!this.user;
   }
 
+  //log the user and then redirect to the "/movies" route
   login = async (creds: UserFormValues) => {
     try {
       const user = await agent.Account.login(creds);
@@ -33,6 +36,8 @@ export default class UserStore {
     }
   };
 
+  
+  //register the user and then redirect to the "/movies" route
   register = async (creds: UserFormValues) => {
     try {
       const user = await agent.Account.register(creds);
@@ -44,7 +49,7 @@ export default class UserStore {
     }
   };
 
-
+//log out the user and redirect to the "WelcomePage.tsx" component
   logout = () => {
     store.commonStore.setToken(null);
     window.localStorage.removeItem("C_token");
@@ -52,6 +57,7 @@ export default class UserStore {
     history.push("/");
   };
 
+  //get the current user
   getUser = async () => {
     this.setLoading(true);
     try {
@@ -65,6 +71,7 @@ export default class UserStore {
     }
   };
 
+  //get the list of all users
   listUser = async () => {
     this.setLoading(true);
     try {
@@ -77,7 +84,7 @@ export default class UserStore {
     }
   };
 
- 
+ //get one user, useful for "ProfileShow.tsx" component
   selectUser = async (id: string) => {
     this.setLoading(true);
     try {
@@ -91,6 +98,7 @@ export default class UserStore {
     }
   };
 
+  //this function will search for some users, it is implemented using "ProfileList.tsx" component like "this.listUser"
   searchUsers = async (query: string) => {
     if (query.length > 2) {
       this.setLoading(true);
@@ -107,6 +115,8 @@ export default class UserStore {
     }
   };
 
+  //edit user informations but not the avatar. To change the avatar I will use
+  //directly the agent object
   editUser = async (user: UserEditFormValues) =>{
     this.setLoading(true)
     try{

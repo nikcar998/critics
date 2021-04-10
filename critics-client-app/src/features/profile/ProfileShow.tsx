@@ -10,7 +10,10 @@ import { User } from "../../app/models/user";
 import { useStore } from "../../app/stores/store";
 import ReviewsList from "../reviews/ReviewsList";
 
+//this component shows user's informations and his reviews and
+//gives the possibility to follow or unfollow the user
 export default observer(function ProfileShow() {
+  //route paramater to know whitch user to look for
   const { id } = useParams<{ id: string }>();
   const { userStore } = useStore();
 
@@ -21,8 +24,11 @@ export default observer(function ProfileShow() {
     query: "(min-width: 1050px)",
   });
 
+  //default avatar image
   const defaultImageUrl =
     "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
+
+  //these colors will be used in the main segment's componet
   const bgColor = {
     backgroundImage:
       "linear-gradient(90deg, rgba(0,0,8,1) 0%, rgba(46,46,50,1) 35%, rgba(93,93,99,1) 100%)",
@@ -54,8 +60,14 @@ export default observer(function ProfileShow() {
   return userStore.user && user && !userStore.loading ? (
     <Fragment>
       {/****************************** PROFILE SEGMENT  ****************************/}
-      <Segment  style={isDesktop ? {width:"85%", margin:"20px auto"  } : {width:"110%",marginLeft:"-17px"}}>
-        <Grid >
+      <Segment
+        style={
+          isDesktop
+            ? { width: "85%", margin: "20px auto" }
+            : { width: "110%", marginLeft: "-17px" }
+        }
+      >
+        <Grid>
           <Grid.Row columns={2} style={{ padding: 0, margin: 0 }}>
             {/******************* LEFT SIDE *******************/}
             <Grid.Column
@@ -63,7 +75,14 @@ export default observer(function ProfileShow() {
               style={{ padding: 0, margin: 0, height: "100%" }}
             >
               <Segment.Group style={{ ...bgColor, height: "100%" }}>
-                <Segment style={isDesktop ? bgColor : {...bgColor, padding:"10px 0px 20px"}} textAlign="center">
+                <Segment
+                  style={
+                    isDesktop
+                      ? bgColor
+                      : { ...bgColor, padding: "10px 0px 20px" }
+                  }
+                  textAlign="center"
+                >
                   <Image
                     src={
                       user.avatar
@@ -71,8 +90,12 @@ export default observer(function ProfileShow() {
                           user.avatar
                         : defaultImageUrl
                     }
-                   style={{width:150, height:135, border:"1px solid white"}}
-                   circular
+                    style={{
+                      width: 150,
+                      height: 135,
+                      border: "1px solid white",
+                    }}
+                    circular
                   ></Image>
                 </Segment>
                 <Segment
@@ -113,7 +136,7 @@ export default observer(function ProfileShow() {
                     as="h6"
                     content={"Followers: " + user.followers_count}
                     style={{
-                      color:"#F6EEEC",
+                      color: "#F6EEEC",
                       margin: "0px 5px",
                       display: "inline-block",
                     }}
@@ -122,7 +145,7 @@ export default observer(function ProfileShow() {
                     as="h6"
                     content={"Following: " + user.follows_count}
                     style={{
-                      color:"#F6EEEC",
+                      color: "#F6EEEC",
                       margin: "0px 4px",
                       display: "inline-block",
                     }}
@@ -143,7 +166,7 @@ export default observer(function ProfileShow() {
           </Grid.Row>
         </Grid>
       </Segment>
-      {/****************************   User's reviews list **************/}
+      {/****************************   USER'S REVIEWS LIST **************/}
       <ReviewsList id={user.id} />
     </Fragment>
   ) : (

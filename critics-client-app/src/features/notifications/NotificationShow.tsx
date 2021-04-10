@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Icon, Segment, Grid, Header, SemanticICONS } from "semantic-ui-react";
 import { Notification } from "../../app/models/notification";
 
+//this component will show a single notification (it is used in the "NotificationsList.tsx" component)
 interface Props {
   notification: Notification;
 }
@@ -14,6 +15,9 @@ export default function NotificationShow({ notification }: Props) {
 
   const [IconName, setIconName] = useState<SemanticICONS>("comments");
   const [destinationUrl, setDestinationUrl] = useState("");
+
+  //depending on whitch type of notification this component get, the icon and
+  //the destination URL will change
   useEffect(() => {
     switch (notification.data.type) {
       case "reply":
@@ -60,6 +64,7 @@ export default function NotificationShow({ notification }: Props) {
       >
         <Grid>
           <Grid.Row columns={2}>
+            {/*** ICON SIDE */}
             <Grid.Column
               width={1}
               style={{
@@ -76,6 +81,7 @@ export default function NotificationShow({ notification }: Props) {
                 style={{ marginLeft: 5 }}
               />
             </Grid.Column>
+            {/*** TEXT SIDE */}
             <Grid.Column
               width={14}
               verticalAlign="middle"

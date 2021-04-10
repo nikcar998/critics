@@ -11,6 +11,9 @@ import { UserFormValues } from "../../app/models/user";
 import { useStore } from "../../app/stores/store";
 import ValidationErrors from "../errors/ValidationErrors";
 
+
+//this component will handle the registering logic.
+//it's pretty simple because it uses the logic used for every other form.
 export const RegisterForm = () => {
   const { userStore } = useStore();
 

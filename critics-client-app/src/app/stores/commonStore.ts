@@ -28,10 +28,12 @@ export default class CommonStore {
     this.error = error;
   };
 
+  //this function is useful only to call the reaction()
   setToken = (token: string | null) => {
     this.token = token;
   };
 
+  //useful to know if all the necessary values of logged user are ready to be used
   setAppLoaded = () => {
     this.appLoaded = true;
   };
