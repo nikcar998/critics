@@ -16,6 +16,7 @@ import { Review } from "../../app/models/review";
 import { toast } from "react-toastify";
 
 //this component is necessary to store reviews
+//it can be accessed only from "Movie.tsx" component
 const ReviewForm = () => {
   const { filmStore, reviewStore, userStore } = useStore();
 
@@ -51,9 +52,7 @@ const ReviewForm = () => {
   ) => {
     reviewStore
       .storeReview(review)
-      .then((resp) => {
-        history.push("/reviews");
-      })
+      .then(() => history.push("/reviews"))
       .catch((error) => {
         setErrors({ error });
         setSubmitting(false);
@@ -87,7 +86,7 @@ const ReviewForm = () => {
     }
   }, [filmStore.selectedFilm, imageUrl, userStore]);
 
-  //if a user come here without passing from the "MovieList" component, he will be redirected to the main page
+  //if a user come here without passing from the "Movie.tsx" component, he will be redirected to the main page
   if (!filmStore.selectedFilm) {
     toast.error("You have to select a film first");
     return <Redirect to="/movies" />;

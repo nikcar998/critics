@@ -12,7 +12,7 @@ import { history } from "../..";
 import { useMediaQuery } from "react-responsive";
 import ImageUpload from "./ImageUpload";
 
-
+//this component shows "ImageUpload.tsx" and a form to edit profile informations
 export default observer(function ProfileEdit() {
   const { userStore } = useStore();
   const [initialValues, setInitialValues] = useState<UserEditFormValues>({
@@ -37,7 +37,7 @@ export default observer(function ProfileEdit() {
       .max(100, "Max 500 characters"),
   });
  
- 
+ //here I initialize the values in the form 
   useEffect(() => {
     userStore.user &&
       setInitialValues({
@@ -52,14 +52,15 @@ export default observer(function ProfileEdit() {
     <Segment style={isDesktop ? { width: "85%", margin: "10px auto",  backgroundColor: "#F6EEEC" } : {  backgroundColor: "#F6EEEC"}}>
       <Header as="h2" content="Edit your profile: " />
       <Divider />
+      {/*************** IMAGE_UPLOAD COMPONENT **** */}
       <ImageUpload />
       <p style={{fontSize:10}} >You can also drag an image over your avatar to change it.</p>
+      {/************ FORMIK FORM **** */}
       <Formik
         validationSchema={validationSchema}
         enableReinitialize
         initialValues={{ ...initialValues, error: null }}
-        onSubmit={(values, { setErrors, setSubmitting }) =>
-          // handleSubmit(values, setErrors, setSubmitting)
+        onSubmit={(values, { setErrors}) =>
           userStore
             .editUser(values)
             .then(() => {

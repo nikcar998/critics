@@ -5,13 +5,13 @@ import { history } from "../..";
 import { Divider, Grid, Header, Icon, Image, Segment } from "semantic-ui-react";
 import { Review as ReviewType } from "../../app/models/review";
 
-//this is the structure of a single review, used by the ReviewList component
+//this is the structure of a single review, used by the "ReviewList.tsx" component
 interface Props {
   review: ReviewType;
 }
 
 const Review = ({ review }: Props) => {
-  //max characters showed in title[0] and in opinion[1]
+  //max characters showed in title "[0]", in opinion "[1]" and film_title "[2]"
   //this values will change if  the width is less than 1050 px
   const [maxCharacters, setMaxCharacters] = useState([15, 170, 20]);
 
@@ -24,7 +24,7 @@ const Review = ({ review }: Props) => {
 
   useEffect(() => {
     if (!isDesktop) {
-      setMaxCharacters([10, 150]);
+      setMaxCharacters([10, 150, 15]);
     }
   }, [isDesktop]);
   return (
@@ -44,7 +44,9 @@ const Review = ({ review }: Props) => {
       >
         <Grid >
           {review.user && (
+            
             <Grid.Row columns={1} style={{ margin: 0, padding: 0 }}>
+              {/************ USERNAME AND AVATAR *********** */}
               <Grid.Column>
                 <Segment inverted style={{ margin: 0, padding: 0 }}>
                   <Image
@@ -80,8 +82,10 @@ const Review = ({ review }: Props) => {
               </Grid.Column>
             </Grid.Row>
           )}
+          {/********** REVIEW'S PREVIEW *****/}
           <Grid.Row columns={2} style={{marginTop:5,paddingBottom:0}}>
             <Grid.Column width={5} style={{ padding: 0 }}>
+              {/** POSTER */}
               <Image
                 src={review.cover ? review.cover : defaultImageUrl}
                 style={{
@@ -94,6 +98,7 @@ const Review = ({ review }: Props) => {
                 centered
               />
             </Grid.Column>
+             {/** REVIEW INFORMATIONS */}
             <Grid.Column width={11}>
               <Header style={{ lineHeight: "10%", color: "white" }} as="h2">
                 {review.title.length > maxCharacters[0]
@@ -102,7 +107,7 @@ const Review = ({ review }: Props) => {
               </Header>
               <Divider />
               <Header style={{ lineHeight: "10%", color: "white" }} as="h4">
-                {review.film_title.length > maxCharacters[3]
+                {review.film_title.length > maxCharacters[2]
                   ? review.film_title.slice(0, maxCharacters[0]) + "..."
                   : review.film_title}
               </Header>

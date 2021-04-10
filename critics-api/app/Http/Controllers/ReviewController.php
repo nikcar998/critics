@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $result = auth()->user()->timeline()->withCount('comment')->withCount('likes')->with('user')->orderBy('created_at', 'desc')->paginate(8);
+        $result = auth()->user()->timeline()->withCount('comment')->withCount('likes')->with('user')->orderBy('created_at', 'desc')->paginate(6);
         return response($result, 200);
     }
 

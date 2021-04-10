@@ -20,14 +20,16 @@ import { useStore } from "../../app/stores/store";
 import CommentForm from "../comments/CommentForm";
 import Comments from "../comments/Comments";
 
-//this component show review's details and comments
+//this component shows the review's details and comments
 const ReviewShow = () => {
+  //route paramater to know whitch review to look for
   const { id } = useParams<{ id: string }>();
   const [review, setReview] = useState<ReviewForShow | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
 
   const defaultImageUrl = "/images/no_picture_available.jpg";
-  const defaultAvatarUrl = "/images/no_picture_available.jpg";
+  const defaultAvatarUrl =
+    "/images/avatar-social-media-isolated-icon-design-vector-10704283.jpg";
 
   const { reviewStore, commentStore, userStore } = useStore();
 
@@ -35,10 +37,12 @@ const ReviewShow = () => {
     query: "(min-width: 1050px)",
   });
 
-  //to change the number of like after i will use two control varibles
+  //to change the number of like after "handleNewLike()" i will use two control varibles
   const [likesNumber, setLikesNumber] = useState(0);
   const [likesControlNumber, setLikesControlNumber] = useState(0);
 
+  //this is the necessary logic to understand if the user is adding a like or removing one.
+  //TODO-> improve back-end logic to make this function faster
   function handleNewLike() {
     if (review) {
       agent.Likes.storeReviewLike(review.id).then(() => {
@@ -72,8 +76,6 @@ const ReviewShow = () => {
         commentStore
           .loadComments(reviewStore.selectedReview.id)
           .then(() => setComments(commentStore.comments));
-      }
-      if (reviewStore.selectedReview) {
         setLikesNumber(reviewStore.selectedReview.likes.length);
         setLikesControlNumber(reviewStore.selectedReview.likes.length);
       }
@@ -91,13 +93,7 @@ const ReviewShow = () => {
             {" "}
             <Segment
               style={
-                isDesktop
-                  ? {
-                      margin: "10px",
-                    }
-                  : {
-                      margin: 0,
-                    }
+               {margin: isDesktop ? "10px" : "0px"}
               }
               inverted
             >
@@ -141,9 +137,9 @@ const ReviewShow = () => {
                     </Grid.Column>
                   </Grid.Row>
                 )}
-                {/******************************* IMAGE AND FIELDS ************************* */}
+                {/******************************* POSTER AND FIELDS ************************* */}
                 <Grid.Row columns={isDesktop ? 2 : 1}>
-                  {/******************************* IMAGE ************************* */}
+                  {/************* POSTER ****** */}
                   <Grid.Column width={isDesktop ? 4 : 16}>
                     <Image
                       src={review.cover ? review.cover : defaultImageUrl}
@@ -154,7 +150,7 @@ const ReviewShow = () => {
                       }}
                     />
                   </Grid.Column>
-                  {/******************************* FIELDS ************************* */}
+                  {/******** FIELDS ********** */}
                   <Grid.Column width={isDesktop ? 11 : 16}>
                     <Header
                       style={{ color: "white", overflow: "auto" }}
@@ -187,6 +183,7 @@ const ReviewShow = () => {
                       {review.opinion}
                     </Header>
                     <Divider />
+                    <Header as="h5" style={{color:"white", display: "inline-block", margin:"10px 10px 0px 5px"}} content={"Rating: " + review.rating} />
                     <Button
                       color="instagram"
                       style={{ display: "inline-block" }}
@@ -200,7 +197,6 @@ const ReviewShow = () => {
               </Grid>
             </Segment>
             {/*********************************** COMMENT FORM ************************ */}
-            {/**** TODO -> cambiare user con lo user che sarà salvato nello store */}
             {review.user && userStore.user && (
               <CommentForm
                 comments={comments}
@@ -226,6 +222,7 @@ const ReviewShow = () => {
                   }
                 })
               )}
+              {/*** necessary component to handle store pagination */}
               <ButtonGroupNextBack store="commentStore" />
             </Segment>
           </Fragment>

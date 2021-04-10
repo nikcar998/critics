@@ -10,7 +10,7 @@ interface Props {
   id?: number;
   all?: boolean;
 }
-//this component will show the riviews of a user and his friends.
+//this component will show the riviews of a user and his friends or of a single user.
 const ReviewsList = ({ id, all = false }: Props) => {
   const { reviewStore } = useStore();
 

@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { Button, Image } from "semantic-ui-react";
 import agent from "../../app/api/agent";
 import { useStore } from "../../app/stores/store";
 
-//this component gives the possibility to update user's avatar
+//this component gives the possibility to update the user's avatar
 //it uses  "react-images-uploading"
 export default function ImageUpload() {
-  const [images, setImages] = React.useState<ImageListType>([]);
+  const [images, setImages] = useState<ImageListType>([]);
+  const [loading, setLoading] = useState(false);
   const { userStore } = useStore();
 
   //default avatar
@@ -16,14 +17,14 @@ export default function ImageUpload() {
 
   const onChange = (
     imageList: ImageListType,
-    addUpdateIndex: number[] | undefined
   ) => {
     // data for submit
     setImages(imageList);
     if (imageList[0].file) {
       let formData = new FormData();
       formData.append("avatar", imageList[0].file);
-      agent.Account.editAvatar(formData);
+      setLoading(true);
+      agent.Account.editAvatar(formData).finally(()=>setLoading(false));
     }
   };
 
@@ -37,13 +38,10 @@ export default function ImageUpload() {
         {({
           imageList,
           onImageUpload,
-          onImageRemoveAll,
-          onImageUpdate,
-          onImageRemove,
           isDragging,
           dragProps,
         }) => (
-          // write your building UI
+          // 
           <div className="upload__image-wrapper">
             <Image
               src={
@@ -54,7 +52,7 @@ export default function ImageUpload() {
                     : defaultImageUrl
                   : imageList[0].dataURL
               }
-              style={{ width: 150, height: 150, border: "1px solid white" }}
+              style={{ width: 150, height: 150, border: !isDragging ? "1px solid black" : "1px solid red" }}
               circular
               inline
               {...dragProps}
@@ -64,6 +62,7 @@ export default function ImageUpload() {
               style={{ margin: "auto 20px" }}
               onClick={onImageUpload}
               primary
+              loading={loading}
             >
               Change
             </Button>
